@@ -6,10 +6,10 @@ import com.flower.mall.common.NewBeeMallException;
 import com.flower.mall.common.ServiceResultEnum;
 import com.flower.mall.controller.vo.FlowerMallShoppingCartItemVO;
 import com.flower.mall.controller.vo.FlowerMallUserVO;
-import com.flower.mall.entity.NewBeeMallShoppingCartItem;
+import com.flower.mall.entity.MallShoppingCartItem;
 import com.flower.mall.service.NewBeeMallShoppingCartService;
 import com.flower.mall.util.Result;
-import com.flower.mall.util.ResultGenerator;
+import com.flower.mall.util.MallResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
@@ -54,32 +54,32 @@ public class ShoppingCartController {
 
     @PostMapping("/shop-cart")
     @ResponseBody
-    public Result saveNewBeeMallShoppingCartItem(@RequestBody NewBeeMallShoppingCartItem newBeeMallShoppingCartItem,
+    public Result saveNewBeeMallShoppingCartItem(@RequestBody MallShoppingCartItem mallShoppingCartItem,
                                                  HttpSession httpSession) {
         FlowerMallUserVO user = (FlowerMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        newBeeMallShoppingCartItem.setUserId(user.getUserId());
-        String saveResult = newBeeMallShoppingCartService.saveNewBeeMallCartItem(newBeeMallShoppingCartItem);
+        mallShoppingCartItem.setUserId(user.getUserId());
+        String saveResult = newBeeMallShoppingCartService.saveNewBeeMallCartItem(mallShoppingCartItem);
         //添加成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(saveResult)) {
-            return ResultGenerator.genSuccessResult();
+            return MallResult.createSuccessRes();
         }
         //添加失败
-        return ResultGenerator.genFailResult(saveResult);
+        return MallResult.createFailRes(saveResult);
     }
 
     @PutMapping("/shop-cart")
     @ResponseBody
-    public Result updateNewBeeMallShoppingCartItem(@RequestBody NewBeeMallShoppingCartItem newBeeMallShoppingCartItem,
+    public Result updateNewBeeMallShoppingCartItem(@RequestBody MallShoppingCartItem mallShoppingCartItem,
                                                    HttpSession httpSession) {
         FlowerMallUserVO user = (FlowerMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        newBeeMallShoppingCartItem.setUserId(user.getUserId());
-        String updateResult = newBeeMallShoppingCartService.updateNewBeeMallCartItem(newBeeMallShoppingCartItem);
+        mallShoppingCartItem.setUserId(user.getUserId());
+        String updateResult = newBeeMallShoppingCartService.updateNewBeeMallCartItem(mallShoppingCartItem);
         //修改成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(updateResult)) {
-            return ResultGenerator.genSuccessResult();
+            return MallResult.createSuccessRes();
         }
         //修改失败
-        return ResultGenerator.genFailResult(updateResult);
+        return MallResult.createFailRes(updateResult);
     }
 
     @DeleteMapping("/shop-cart/{newBeeMallShoppingCartItemId}")
@@ -90,10 +90,10 @@ public class ShoppingCartController {
         Boolean deleteResult = newBeeMallShoppingCartService.deleteById(newBeeMallShoppingCartItemId,user.getUserId());
         //删除成功
         if (deleteResult) {
-            return ResultGenerator.genSuccessResult();
+            return MallResult.createSuccessRes();
         }
         //删除失败
-        return ResultGenerator.genFailResult(ServiceResultEnum.OPERATE_ERROR.getResult());
+        return MallResult.createFailRes(ServiceResultEnum.OPERATE_ERROR.getResult());
     }
 
     @GetMapping("/shop-cart/settle")

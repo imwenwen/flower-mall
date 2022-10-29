@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class NewBeeMallOrder {
+public class MallOrder {
     private Long orderId;
 
     private String orderNo;

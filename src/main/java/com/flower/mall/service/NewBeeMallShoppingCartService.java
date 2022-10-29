@@ -2,7 +2,7 @@
 package com.flower.mall.service;
 
 import com.flower.mall.controller.vo.FlowerMallShoppingCartItemVO;
-import com.flower.mall.entity.NewBeeMallShoppingCartItem;
+import com.flower.mall.entity.MallShoppingCartItem;
 
 import java.util.List;
 
@@ -11,18 +11,18 @@ public interface NewBeeMallShoppingCartService {
     /**
      * 保存商品至购物车中
      *
-     * @param newBeeMallShoppingCartItem
+     * @param mallShoppingCartItem
      * @return
      */
-    String saveNewBeeMallCartItem(NewBeeMallShoppingCartItem newBeeMallShoppingCartItem);
+    String saveNewBeeMallCartItem(MallShoppingCartItem mallShoppingCartItem);
 
     /**
      * 修改购物车中的属性
      *
-     * @param newBeeMallShoppingCartItem
+     * @param mallShoppingCartItem
      * @return
      */
-    String updateNewBeeMallCartItem(NewBeeMallShoppingCartItem newBeeMallShoppingCartItem);
+    String updateNewBeeMallCartItem(MallShoppingCartItem mallShoppingCartItem);
 
     /**
      * 获取购物项详情
@@ -30,7 +30,7 @@ public interface NewBeeMallShoppingCartService {
      * @param newBeeMallShoppingCartItemId
      * @return
      */
-    NewBeeMallShoppingCartItem getNewBeeMallCartItemById(Long newBeeMallShoppingCartItemId);
+    MallShoppingCartItem getNewBeeMallCartItemById(Long newBeeMallShoppingCartItemId);
 
     /**
      * 删除购物车中的商品

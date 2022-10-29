@@ -5,7 +5,7 @@ import lombok.Data;
 
 import java.util.Date;
 @Data
-public class NewBeeMallOrderItem {
+public class MallOrderItem {
     private Long orderItemId;
 
     private Long orderId;

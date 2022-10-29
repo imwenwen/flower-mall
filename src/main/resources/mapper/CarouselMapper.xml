@@ -48,11 +48,11 @@
     where carousel_id = #{carouselId,jdbcType=INTEGER}
   </delete>
     <insert id="insert" parameterType="com.flower.mall.entity.Carousel">
-    insert into mall_carousel (carousel_id, carousel_url, redirect_url,
+    insert into mall_carousel (carousel_id, carousel_url,
       carousel_rank, deleted, create_time,
       create_user, update_time, update_user
       )
-    values (#{carouselId,jdbcType=INTEGER}, #{carouselUrl,jdbcType=VARCHAR}, #{redirectUrl,jdbcType=VARCHAR}, 
+    values (#{carouselId,jdbcType=INTEGER}, #{carouselUrl,jdbcType=VARCHAR},
       #{carouselRank,jdbcType=INTEGER}, #{deleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP},
       #{createUser,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=INTEGER}
       )
@@ -65,9 +65,6 @@
             </if>
             <if test="carouselUrl != null">
                 carousel_url,
-            </if>
-            <if test="redirectUrl != null">
-                redirect_url,
             </if>
             <if test="carouselRank != null">
                 carousel_rank,
@@ -95,9 +92,6 @@
             <if test="carouselUrl != null">
                 #{carouselUrl,jdbcType=VARCHAR},
             </if>
-            <if test="redirectUrl != null">
-                #{redirectUrl,jdbcType=VARCHAR},
-            </if>
             <if test="carouselRank != null">
                 #{carouselRank,jdbcType=INTEGER},
             </if>
@@ -124,9 +118,6 @@
             <if test="carouselUrl != null">
                 carousel_url = #{carouselUrl,jdbcType=VARCHAR},
             </if>
-            <if test="redirectUrl != null">
-                redirect_url = #{redirectUrl,jdbcType=VARCHAR},
-            </if>
             <if test="carouselRank != null">
                 carousel_rank = #{carouselRank,jdbcType=INTEGER},
             </if>
@@ -151,7 +142,6 @@
     <update id="updateByPrimaryKey" parameterType="com.flower.mall.entity.Carousel">
     update mall_carousel
     set carousel_url = #{carouselUrl,jdbcType=VARCHAR},
-      redirect_url = #{redirectUrl,jdbcType=VARCHAR},
       carousel_rank = #{carouselRank,jdbcType=INTEGER},
       deleted = #{deleted,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},

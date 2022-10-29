@@ -4,7 +4,7 @@ package com.flower.mall.controller.common;
 import com.flower.mall.common.Constants;
 import com.flower.mall.util.NewBeeMallUtils;
 import com.flower.mall.util.Result;
-import com.flower.mall.util.ResultGenerator;
+import com.flower.mall.util.MallResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -53,12 +53,12 @@ public class UploadController {
                 }
             }
             file.transferTo(destFile);
-            Result resultSuccess = ResultGenerator.genSuccessResult();
+            Result resultSuccess = MallResult.createSuccessRes();
             resultSuccess.setData(NewBeeMallUtils.getHost(new URI(httpServletRequest.getRequestURL() + "")) + "/upload/" + newFileName);
             return resultSuccess;
         } catch (IOException e) {
             e.printStackTrace();
-            return ResultGenerator.genFailResult("文件上传失败");
+            return MallResult.createFailRes("文件上传失败");
         }
     }
 
@@ -72,7 +72,7 @@ public class UploadController {
             int total = 0;
             while (iter.hasNext()) {
                 if (total > 5) {
-                    return ResultGenerator.genFailResult("最多上传5张图片");
+                    return MallResult.createFailRes("最多上传5张图片");
                 }
                 total += 1;
                 MultipartFile file = multiRequest.getFile(iter.next());
@@ -80,10 +80,10 @@ public class UploadController {
             }
         }
         if (CollectionUtils.isEmpty(multipartFiles)) {
-            return ResultGenerator.genFailResult("参数异常");
+            return MallResult.createFailRes("参数异常");
         }
         if (multipartFiles != null && multipartFiles.size() > 5) {
-            return ResultGenerator.genFailResult("最多上传5张图片");
+            return MallResult.createFailRes("最多上传5张图片");
         }
         List<String> fileNames = new ArrayList(multipartFiles.size());
         for (int i = 0; i < multipartFiles.size(); i++) {
@@ -108,10 +108,10 @@ public class UploadController {
                 fileNames.add(NewBeeMallUtils.getHost(new URI(httpServletRequest.getRequestURL() + "")) + "/upload/" + newFileName);
             } catch (IOException e) {
                 e.printStackTrace();
-                return ResultGenerator.genFailResult("文件上传失败");
+                return MallResult.createFailRes("文件上传失败");
             }
         }
-        Result resultSuccess = ResultGenerator.genSuccessResult();
+        Result resultSuccess = MallResult.createSuccessRes();
         resultSuccess.setData(fileNames);
         return resultSuccess;
     }

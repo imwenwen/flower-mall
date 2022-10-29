@@ -5,7 +5,6 @@ $(function () {
         colModel: [
             {label: 'id', name: 'carouselId', index: 'carouselId', width: 50, key: true, hidden: true},
             {label: '轮播图', name: 'carouselUrl', index: 'carouselUrl', width: 180, formatter: coverImageFormatter},
-            {label: '跳转链接', name: 'redirectUrl', index: 'redirectUrl', width: 120},
             {label: '排序值', name: 'carouselRank', index: 'carouselRank', width: 120},
             {label: '添加时间', name: 'createTime', index: 'createTime', width: 120}
         ],
@@ -90,8 +89,7 @@ $('#saveButton').click(function () {
     var carouselUrl = $('#carouselImg')[0].src;
     var data = {
         "carouselUrl": carouselUrl,
-        "carouselRank": carouselRank,
-        "redirectUrl": redirectUrl
+        "carouselRank": carouselRank
     };
     var url = '/admin/carousels/save';
     var id = getSelectedRowWithoutAlert();
@@ -144,7 +142,6 @@ function carouselEdit() {
             //填充数据至modal
             $("#carouselImg").attr("src", r.data.carouselUrl);
             $("#carouselImg").attr("style", "height: 64px;width: 64px;display:block;");
-            $("#redirectUrl").val(r.data.redirectUrl);
             $("#carouselRank").val(r.data.carouselRank);
         }
     });
@@ -191,7 +188,6 @@ function deleteCarousel() {
 
 
 function reset() {
-    $("#redirectUrl").val('##');
     $("#carouselRank").val(0);
     $("#carouselImg").attr("src", '/admin/dist/img/img-upload.png');
     $("#carouselImg").attr("style", "height: 64px;width: 64px;display:block;");

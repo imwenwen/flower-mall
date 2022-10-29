@@ -4,7 +4,7 @@ package com.flower.mall.controller.admin;
 import com.flower.mall.service.NewBeeMallUserService;
 import com.flower.mall.util.PageQueryUtil;
 import com.flower.mall.util.Result;
-import com.flower.mall.util.ResultGenerator;
+import com.flower.mall.util.MallResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -34,10 +34,10 @@ public class NewBeeMallUserController {
     @ResponseBody
     public Result list(@RequestParam Map<String, Object> params) {
         if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit"))) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return MallResult.createFailRes("参数异常！");
         }
         PageQueryUtil pageUtil = new PageQueryUtil(params);
-        return ResultGenerator.genSuccessResult(newBeeMallUserService.getNewBeeMallUsersPage(pageUtil));
+        return MallResult.createSuccessRes(newBeeMallUserService.getNewBeeMallUsersPage(pageUtil));
     }
 
     /**
@@ -47,15 +47,15 @@ public class NewBeeMallUserController {
     @ResponseBody
     public Result delete(@RequestBody Integer[] ids, @PathVariable int lockStatus) {
         if (ids.length < 1) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return MallResult.createFailRes("参数异常！");
         }
         if (lockStatus != 0 && lockStatus != 1) {
-            return ResultGenerator.genFailResult("操作非法！");
+            return MallResult.createFailRes("操作非法！");
         }
         if (newBeeMallUserService.lockUsers(ids, lockStatus)) {
-            return ResultGenerator.genSuccessResult();
+            return MallResult.createSuccessRes();
         } else {
-            return ResultGenerator.genFailResult("禁用失败");
+            return MallResult.createFailRes("禁用失败");
         }
     }
 }

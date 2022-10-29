@@ -1,7 +1,7 @@
 
 package com.flower.mall.dao;
 
-import com.flower.mall.entity.NewBeeMallOrder;
+import com.flower.mall.entity.MallOrder;
 import com.flower.mall.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,23 +10,23 @@ import java.util.List;
 public interface NewBeeMallOrderMapper {
     int deleteByPrimaryKey(Long orderId);
 
-    int insert(NewBeeMallOrder record);
+    int insert(MallOrder record);
 
-    int insertSelective(NewBeeMallOrder record);
+    int insertSelective(MallOrder record);
 
-    NewBeeMallOrder selectByPrimaryKey(Long orderId);
+    MallOrder selectByPrimaryKey(Long orderId);
 
-    NewBeeMallOrder selectByOrderNo(String orderNo);
+    MallOrder selectByOrderNo(String orderNo);
 
-    int updateByPrimaryKeySelective(NewBeeMallOrder record);
+    int updateByPrimaryKeySelective(MallOrder record);
 
-    int updateByPrimaryKey(NewBeeMallOrder record);
+    int updateByPrimaryKey(MallOrder record);
 
-    List<NewBeeMallOrder> findNewBeeMallOrderList(PageQueryUtil pageUtil);
+    List<MallOrder> findNewBeeMallOrderList(PageQueryUtil pageUtil);
 
     int getTotalNewBeeMallOrders(PageQueryUtil pageUtil);
 
-    List<NewBeeMallOrder> selectByPrimaryKeys(@Param("orderIds") List<Long> orderIds);
+    List<MallOrder> selectByPrimaryKeys(@Param("orderIds") List<Long> orderIds);
 
     int checkOut(@Param("orderIds") List<Long> orderIds);
 

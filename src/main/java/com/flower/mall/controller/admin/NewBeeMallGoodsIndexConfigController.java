@@ -8,7 +8,7 @@ import com.flower.mall.entity.IndexConfig;
 import com.flower.mall.service.FlowerMallIndexConfigService;
 import com.flower.mall.util.PageQueryUtil;
 import com.flower.mall.util.Result;
-import com.flower.mall.util.ResultGenerator;
+import com.flower.mall.util.MallResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -45,10 +45,10 @@ public class NewBeeMallGoodsIndexConfigController {
     @ResponseBody
     public Result list(@RequestParam Map<String, Object> params) {
         if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit"))) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return MallResult.createFailRes("参数异常！");
         }
         PageQueryUtil pageUtil = new PageQueryUtil(params);
-        return ResultGenerator.genSuccessResult(flowerMallIndexConfigService.getConfigsPage(pageUtil));
+        return MallResult.createSuccessRes(flowerMallIndexConfigService.getConfigsPage(pageUtil));
     }
 
     /**
@@ -60,13 +60,13 @@ public class NewBeeMallGoodsIndexConfigController {
         if (Objects.isNull(indexConfig.getConfigType())
                 || StringUtils.isEmpty(indexConfig.getConfigName())
                 || Objects.isNull(indexConfig.getConfigRank())) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return MallResult.createFailRes("参数异常！");
         }
         String result = flowerMallIndexConfigService.saveIndexConfig(indexConfig);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
-            return ResultGenerator.genSuccessResult();
+            return MallResult.createSuccessRes();
         } else {
-            return ResultGenerator.genFailResult(result);
+            return MallResult.createFailRes(result);
         }
     }
 
@@ -81,13 +81,13 @@ public class NewBeeMallGoodsIndexConfigController {
                 || Objects.isNull(indexConfig.getConfigId())
                 || StringUtils.isEmpty(indexConfig.getConfigName())
                 || Objects.isNull(indexConfig.getConfigRank())) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return MallResult.createFailRes("参数异常！");
         }
         String result = flowerMallIndexConfigService.updateIndexConfig(indexConfig);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
-            return ResultGenerator.genSuccessResult();
+            return MallResult.createSuccessRes();
         } else {
-            return ResultGenerator.genFailResult(result);
+            return MallResult.createFailRes(result);
         }
     }
 
@@ -99,9 +99,9 @@ public class NewBeeMallGoodsIndexConfigController {
     public Result info(@PathVariable("id") Long id) {
         IndexConfig config = flowerMallIndexConfigService.getIndexConfigById(id);
         if (config == null) {
-            return ResultGenerator.genFailResult("未查询到数据");
+            return MallResult.createFailRes("未查询到数据");
         }
-        return ResultGenerator.genSuccessResult(config);
+        return MallResult.createSuccessRes(config);
     }
 
     /**
@@ -111,12 +111,12 @@ public class NewBeeMallGoodsIndexConfigController {
     @ResponseBody
     public Result delete(@RequestBody Long[] ids) {
         if (ids.length < 1) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return MallResult.createFailRes("参数异常！");
         }
         if (flowerMallIndexConfigService.deleteBatch(ids)) {
-            return ResultGenerator.genSuccessResult();
+            return MallResult.createSuccessRes();
         } else {
-            return ResultGenerator.genFailResult("删除失败");
+            return MallResult.createFailRes("删除失败");
         }
     }
 

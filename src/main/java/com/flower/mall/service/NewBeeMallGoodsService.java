@@ -1,7 +1,7 @@
 
 package com.flower.mall.service;
 
-import com.flower.mall.entity.NewBeeMallGoods;
+import com.flower.mall.entity.MallGoods;
 import com.flower.mall.util.PageQueryUtil;
 import com.flower.mall.util.PageResult;
 
@@ -22,15 +22,15 @@ public interface NewBeeMallGoodsService {
      * @param goods
      * @return
      */
-    String saveNewBeeMallGoods(NewBeeMallGoods goods);
+    String saveNewBeeMallGoods(MallGoods goods);
 
     /**
      * 批量新增商品数据
      *
-     * @param newBeeMallGoodsList
+     * @param mallGoodsList
      * @return
      */
-    void batchSaveNewBeeMallGoods(List<NewBeeMallGoods> newBeeMallGoodsList);
+    void batchSaveNewBeeMallGoods(List<MallGoods> mallGoodsList);
 
     /**
      * 修改商品信息
@@ -38,7 +38,7 @@ public interface NewBeeMallGoodsService {
      * @param goods
      * @return
      */
-    String updateNewBeeMallGoods(NewBeeMallGoods goods);
+    String updateNewBeeMallGoods(MallGoods goods);
 
     /**
      * 获取商品详情
@@ -46,7 +46,7 @@ public interface NewBeeMallGoodsService {
      * @param id
      * @return
      */
-    NewBeeMallGoods getNewBeeMallGoodsById(Long id);
+    MallGoods getNewBeeMallGoodsById(Long id);
 
     /**
      * 批量修改销售状态(上架下架)

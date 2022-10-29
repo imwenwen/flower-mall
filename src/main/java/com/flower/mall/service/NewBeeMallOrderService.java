@@ -5,7 +5,7 @@ import com.flower.mall.controller.vo.FlowerMallOrderDetailVO;
 import com.flower.mall.controller.vo.FlowerMallOrderItemVO;
 import com.flower.mall.controller.vo.FlowerMallShoppingCartItemVO;
 import com.flower.mall.controller.vo.FlowerMallUserVO;
-import com.flower.mall.entity.NewBeeMallOrder;
+import com.flower.mall.entity.MallOrder;
 import com.flower.mall.util.PageQueryUtil;
 import com.flower.mall.util.PageResult;
 
@@ -23,10 +23,10 @@ public interface NewBeeMallOrderService {
     /**
      * 订单信息修改
      *
-     * @param newBeeMallOrder
+     * @param mallOrder
      * @return
      */
-    String updateOrderInfo(NewBeeMallOrder newBeeMallOrder);
+    String updateOrderInfo(MallOrder mallOrder);
 
     /**
      * 配货
@@ -76,7 +76,7 @@ public interface NewBeeMallOrderService {
      * @param orderNo
      * @return
      */
-    NewBeeMallOrder getNewBeeMallOrderByOrderNo(String orderNo);
+    MallOrder getNewBeeMallOrderByOrderNo(String orderNo);
 
     /**
      * 我的订单列表

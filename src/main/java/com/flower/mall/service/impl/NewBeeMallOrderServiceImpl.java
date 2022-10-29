@@ -7,9 +7,9 @@ import com.flower.mall.dao.NewBeeMallGoodsMapper;
 import com.flower.mall.dao.NewBeeMallOrderItemMapper;
 import com.flower.mall.dao.NewBeeMallOrderMapper;
 import com.flower.mall.dao.NewBeeMallShoppingCartItemMapper;
-import com.flower.mall.entity.NewBeeMallGoods;
-import com.flower.mall.entity.NewBeeMallOrder;
-import com.flower.mall.entity.NewBeeMallOrderItem;
+import com.flower.mall.entity.MallGoods;
+import com.flower.mall.entity.MallOrder;
+import com.flower.mall.entity.MallOrderItem;
 import com.flower.mall.entity.StockNumDTO;
 import com.flower.mall.service.NewBeeMallOrderService;
 import com.flower.mall.util.BeanUtil;
@@ -42,20 +42,20 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
 
     @Override
     public PageResult getNewBeeMallOrdersPage(PageQueryUtil pageUtil) {
-        List<NewBeeMallOrder> newBeeMallOrders = newBeeMallOrderMapper.findNewBeeMallOrderList(pageUtil);
+        List<MallOrder> mallOrders = newBeeMallOrderMapper.findNewBeeMallOrderList(pageUtil);
         int total = newBeeMallOrderMapper.getTotalNewBeeMallOrders(pageUtil);
-        PageResult pageResult = new PageResult(newBeeMallOrders, total, pageUtil.getLimit(), pageUtil.getPage());
+        PageResult pageResult = new PageResult(mallOrders, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }
 
     @Override
     @Transactional
-    public String updateOrderInfo(NewBeeMallOrder newBeeMallOrder) {
-        NewBeeMallOrder temp = newBeeMallOrderMapper.selectByPrimaryKey(newBeeMallOrder.getOrderId());
+    public String updateOrderInfo(MallOrder mallOrder) {
+        MallOrder temp = newBeeMallOrderMapper.selectByPrimaryKey(mallOrder.getOrderId());
         //不为空且orderStatus>=0且状态为出库之前可以修改部分信息
         if (temp != null && temp.getOrderStatus() >= 0 && temp.getOrderStatus() < 3) {
-            temp.setTotalPrice(newBeeMallOrder.getTotalPrice());
-            temp.setUserAddress(newBeeMallOrder.getUserAddress());
+            temp.setTotalPrice(mallOrder.getTotalPrice());
+            temp.setUserAddress(mallOrder.getUserAddress());
             temp.setUpdateTime(new Date());
             if (newBeeMallOrderMapper.updateByPrimaryKeySelective(temp) > 0) {
                 return ServiceResultEnum.SUCCESS.getResult();
@@ -69,16 +69,16 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
     @Transactional
     public String checkDone(Long[] ids) {
         //查询所有的订单 判断状态 修改状态和更新时间
-        List<NewBeeMallOrder> orders = newBeeMallOrderMapper.selectByPrimaryKeys(Arrays.asList(ids));
+        List<MallOrder> orders = newBeeMallOrderMapper.selectByPrimaryKeys(Arrays.asList(ids));
         String errorOrderNos = "";
         if (!CollectionUtils.isEmpty(orders)) {
-            for (NewBeeMallOrder newBeeMallOrder : orders) {
-                if (newBeeMallOrder.getDeleted() == 1) {
-                    errorOrderNos += newBeeMallOrder.getOrderNo() + " ";
+            for (MallOrder mallOrder : orders) {
+                if (mallOrder.getDeleted() == 1) {
+                    errorOrderNos += mallOrder.getOrderNo() + " ";
                     continue;
                 }
-                if (newBeeMallOrder.getOrderStatus() != 1) {
-                    errorOrderNos += newBeeMallOrder.getOrderNo() + " ";
+                if (mallOrder.getOrderStatus() != 1) {
+                    errorOrderNos += mallOrder.getOrderNo() + " ";
                 }
             }
             if (StringUtils.isEmpty(errorOrderNos)) {
@@ -105,16 +105,16 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
     @Transactional
     public String checkOut(Long[] ids) {
         //查询所有的订单 判断状态 修改状态和更新时间
-        List<NewBeeMallOrder> orders = newBeeMallOrderMapper.selectByPrimaryKeys(Arrays.asList(ids));
+        List<MallOrder> orders = newBeeMallOrderMapper.selectByPrimaryKeys(Arrays.asList(ids));
         String errorOrderNos = "";
         if (!CollectionUtils.isEmpty(orders)) {
-            for (NewBeeMallOrder newBeeMallOrder : orders) {
-                if (newBeeMallOrder.getDeleted() == 1) {
-                    errorOrderNos += newBeeMallOrder.getOrderNo() + " ";
+            for (MallOrder mallOrder : orders) {
+                if (mallOrder.getDeleted() == 1) {
+                    errorOrderNos += mallOrder.getOrderNo() + " ";
                     continue;
                 }
-                if (newBeeMallOrder.getOrderStatus() != 1 && newBeeMallOrder.getOrderStatus() != 2) {
-                    errorOrderNos += newBeeMallOrder.getOrderNo() + " ";
+                if (mallOrder.getOrderStatus() != 1 && mallOrder.getOrderStatus() != 2) {
+                    errorOrderNos += mallOrder.getOrderNo() + " ";
                 }
             }
             if (StringUtils.isEmpty(errorOrderNos)) {
@@ -141,18 +141,18 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
     @Transactional
     public String closeOrder(Long[] ids) {
         //查询所有的订单 判断状态 修改状态和更新时间
-        List<NewBeeMallOrder> orders = newBeeMallOrderMapper.selectByPrimaryKeys(Arrays.asList(ids));
+        List<MallOrder> orders = newBeeMallOrderMapper.selectByPrimaryKeys(Arrays.asList(ids));
         String errorOrderNos = "";
         if (!CollectionUtils.isEmpty(orders)) {
-            for (NewBeeMallOrder newBeeMallOrder : orders) {
+            for (MallOrder mallOrder : orders) {
                 // deleted=1 一定为已关闭订单
-                if (newBeeMallOrder.getDeleted() == 1) {
-                    errorOrderNos += newBeeMallOrder.getOrderNo() + " ";
+                if (mallOrder.getDeleted() == 1) {
+                    errorOrderNos += mallOrder.getOrderNo() + " ";
                     continue;
                 }
                 //已关闭或者已完成无法关闭订单
-                if (newBeeMallOrder.getOrderStatus() == 4 || newBeeMallOrder.getOrderStatus() < 0) {
-                    errorOrderNos += newBeeMallOrder.getOrderNo() + " ";
+                if (mallOrder.getOrderStatus() == 4 || mallOrder.getOrderStatus() < 0) {
+                    errorOrderNos += mallOrder.getOrderNo() + " ";
                 }
             }
             if (StringUtils.isEmpty(errorOrderNos)) {
@@ -180,16 +180,16 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
     public String saveOrder(FlowerMallUserVO user, List<FlowerMallShoppingCartItemVO> myShoppingCartItems) {
         List<Long> itemIdList = myShoppingCartItems.stream().map(FlowerMallShoppingCartItemVO::getCartItemId).collect(Collectors.toList());
         List<Long> goodsIds = myShoppingCartItems.stream().map(FlowerMallShoppingCartItemVO::getGoodsId).collect(Collectors.toList());
-        List<NewBeeMallGoods> newBeeMallGoods = newBeeMallGoodsMapper.selectByPrimaryKeys(goodsIds);
+        List<MallGoods> mallGoods = newBeeMallGoodsMapper.selectByPrimaryKeys(goodsIds);
         //检查是否包含已下架商品
-        List<NewBeeMallGoods> goodsListNotSelling = newBeeMallGoods.stream()
+        List<MallGoods> goodsListNotSelling = mallGoods.stream()
                 .filter(newBeeMallGoodsTemp -> newBeeMallGoodsTemp.getGoodsSellStatus() != Constants.SELL_STATUS_UP)
                 .collect(Collectors.toList());
         if (!CollectionUtils.isEmpty(goodsListNotSelling)) {
             //goodsListNotSelling 对象非空则表示有下架商品
             NewBeeMallException.fail(goodsListNotSelling.get(0).getGoodsName() + "已下架，无法生成订单");
         }
-        Map<Long, NewBeeMallGoods> newBeeMallGoodsMap = newBeeMallGoods.stream().collect(Collectors.toMap(NewBeeMallGoods::getGoodsId, Function.identity(), (entity1, entity2) -> entity1));
+        Map<Long, MallGoods> newBeeMallGoodsMap = mallGoods.stream().collect(Collectors.toMap(MallGoods::getGoodsId, Function.identity(), (entity1, entity2) -> entity1));
         //判断商品库存
         for (FlowerMallShoppingCartItemVO shoppingCartItemVO : myShoppingCartItems) {
             //查出的商品中不存在购物车中的这条关联商品数据，直接返回错误提醒
@@ -202,7 +202,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
             }
         }
         //删除购物项
-        if (!CollectionUtils.isEmpty(itemIdList) && !CollectionUtils.isEmpty(goodsIds) && !CollectionUtils.isEmpty(newBeeMallGoods)) {
+        if (!CollectionUtils.isEmpty(itemIdList) && !CollectionUtils.isEmpty(goodsIds) && !CollectionUtils.isEmpty(mallGoods)) {
             if (newBeeMallShoppingCartItemMapper.deleteBatch(itemIdList) > 0) {
                 List<StockNumDTO> stockNumDTOS = BeanUtil.copyList(myShoppingCartItems, StockNumDTO.class);
                 int updateStockNumResult = newBeeMallGoodsMapper.updateStockNum(stockNumDTOS);
@@ -213,10 +213,10 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
                 String orderNo = NumberUtil.genOrderNo();
                 int priceTotal = 0;
                 //保存订单
-                NewBeeMallOrder newBeeMallOrder = new NewBeeMallOrder();
-                newBeeMallOrder.setOrderNo(orderNo);
-                newBeeMallOrder.setUserId(user.getUserId());
-                newBeeMallOrder.setUserAddress(user.getAddress());
+                MallOrder mallOrder = new MallOrder();
+                mallOrder.setOrderNo(orderNo);
+                mallOrder.setUserId(user.getUserId());
+                mallOrder.setUserAddress(user.getAddress());
                 //总价
                 for (FlowerMallShoppingCartItemVO flowerMallShoppingCartItemVO : myShoppingCartItems) {
                     priceTotal += flowerMallShoppingCartItemVO.getGoodsCount() * flowerMallShoppingCartItemVO.getSellingPrice();
@@ -224,24 +224,24 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
                 if (priceTotal < 1) {
                     NewBeeMallException.fail(ServiceResultEnum.ORDER_PRICE_ERROR.getResult());
                 }
-                newBeeMallOrder.setTotalPrice(priceTotal);
+                mallOrder.setTotalPrice(priceTotal);
                 //订单body字段，用来作为生成支付单描述信息，暂时未接入第三方支付接口，故该字段暂时设为空字符串
                 String extraInfo = "";
-                newBeeMallOrder.setExtraInfo(extraInfo);
+                mallOrder.setExtraInfo(extraInfo);
                 //生成订单项并保存订单项纪录
-                if (newBeeMallOrderMapper.insertSelective(newBeeMallOrder) > 0) {
+                if (newBeeMallOrderMapper.insertSelective(mallOrder) > 0) {
                     //生成所有的订单项快照，并保存至数据库
-                    List<NewBeeMallOrderItem> newBeeMallOrderItems = new ArrayList<>();
+                    List<MallOrderItem> mallOrderItems = new ArrayList<>();
                     for (FlowerMallShoppingCartItemVO flowerMallShoppingCartItemVO : myShoppingCartItems) {
-                        NewBeeMallOrderItem newBeeMallOrderItem = new NewBeeMallOrderItem();
+                        MallOrderItem mallOrderItem = new MallOrderItem();
                         //使用BeanUtil工具类将newBeeMallShoppingCartItemVO中的属性复制到newBeeMallOrderItem对象中
-                        BeanUtil.copyProperties(flowerMallShoppingCartItemVO, newBeeMallOrderItem);
+                        BeanUtil.copyProperties(flowerMallShoppingCartItemVO, mallOrderItem);
                         //NewBeeMallOrderMapper文件insert()方法中使用了useGeneratedKeys因此orderId可以获取到
-                        newBeeMallOrderItem.setOrderId(newBeeMallOrder.getOrderId());
-                        newBeeMallOrderItems.add(newBeeMallOrderItem);
+                        mallOrderItem.setOrderId(mallOrder.getOrderId());
+                        mallOrderItems.add(mallOrderItem);
                     }
                     //保存至数据库
-                    if (newBeeMallOrderItemMapper.insertBatch(newBeeMallOrderItems) > 0) {
+                    if (newBeeMallOrderItemMapper.insertBatch(mallOrderItems) > 0) {
                         //所有操作成功后，将订单号返回，以供Controller方法跳转到订单详情
                         return orderNo;
                     }
@@ -257,22 +257,22 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
 
     @Override
     public FlowerMallOrderDetailVO getOrderDetailByOrderNo(String orderNo, Long userId) {
-        NewBeeMallOrder newBeeMallOrder = newBeeMallOrderMapper.selectByOrderNo(orderNo);
-        if (newBeeMallOrder == null) {
+        MallOrder mallOrder = newBeeMallOrderMapper.selectByOrderNo(orderNo);
+        if (mallOrder == null) {
             NewBeeMallException.fail(ServiceResultEnum.ORDER_NOT_EXIST_ERROR.getResult());
         }
         //验证是否是当前userId下的订单，否则报错
-        if (!userId.equals(newBeeMallOrder.getUserId())) {
+        if (!userId.equals(mallOrder.getUserId())) {
             NewBeeMallException.fail(ServiceResultEnum.NO_PERMISSION_ERROR.getResult());
         }
-        List<NewBeeMallOrderItem> orderItems = newBeeMallOrderItemMapper.selectByOrderId(newBeeMallOrder.getOrderId());
+        List<MallOrderItem> orderItems = newBeeMallOrderItemMapper.selectByOrderId(mallOrder.getOrderId());
         //获取订单项数据
         if (CollectionUtils.isEmpty(orderItems)) {
             NewBeeMallException.fail(ServiceResultEnum.ORDER_ITEM_NOT_EXIST_ERROR.getResult());
         }
         List<FlowerMallOrderItemVO> flowerMallOrderItemVOS = BeanUtil.copyList(orderItems, FlowerMallOrderItemVO.class);
         FlowerMallOrderDetailVO flowerMallOrderDetailVO = new FlowerMallOrderDetailVO();
-        BeanUtil.copyProperties(newBeeMallOrder, flowerMallOrderDetailVO);
+        BeanUtil.copyProperties(mallOrder, flowerMallOrderDetailVO);
         flowerMallOrderDetailVO.setOrderStatusString(NewBeeMallOrderStatusEnum.getNewBeeMallOrderStatusEnumByStatus(flowerMallOrderDetailVO.getOrderStatus()).getName());
         flowerMallOrderDetailVO.setPayTypeString(PayTypeEnum.getPayTypeEnumByType(flowerMallOrderDetailVO.getPayType()).getName());
         flowerMallOrderDetailVO.setFlowerMallOrderItemVOS(flowerMallOrderItemVOS);
@@ -280,30 +280,30 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
     }
 
     @Override
-    public NewBeeMallOrder getNewBeeMallOrderByOrderNo(String orderNo) {
+    public MallOrder getNewBeeMallOrderByOrderNo(String orderNo) {
         return newBeeMallOrderMapper.selectByOrderNo(orderNo);
     }
 
     @Override
     public PageResult getMyOrders(PageQueryUtil pageUtil) {
         int total = newBeeMallOrderMapper.getTotalNewBeeMallOrders(pageUtil);
-        List<NewBeeMallOrder> newBeeMallOrders = newBeeMallOrderMapper.findNewBeeMallOrderList(pageUtil);
+        List<MallOrder> mallOrders = newBeeMallOrderMapper.findNewBeeMallOrderList(pageUtil);
         List<FlowerMallOrderListVO> orderListVOS = new ArrayList<>();
         if (total > 0) {
             //数据转换 将实体类转成vo
-            orderListVOS = BeanUtil.copyList(newBeeMallOrders, FlowerMallOrderListVO.class);
+            orderListVOS = BeanUtil.copyList(mallOrders, FlowerMallOrderListVO.class);
             //设置订单状态中文显示值
             for (FlowerMallOrderListVO flowerMallOrderListVO : orderListVOS) {
                 flowerMallOrderListVO.setOrderStatusString(NewBeeMallOrderStatusEnum.getNewBeeMallOrderStatusEnumByStatus(flowerMallOrderListVO.getOrderStatus()).getName());
             }
-            List<Long> orderIds = newBeeMallOrders.stream().map(NewBeeMallOrder::getOrderId).collect(Collectors.toList());
+            List<Long> orderIds = mallOrders.stream().map(MallOrder::getOrderId).collect(Collectors.toList());
             if (!CollectionUtils.isEmpty(orderIds)) {
-                List<NewBeeMallOrderItem> orderItems = newBeeMallOrderItemMapper.selectByOrderIds(orderIds);
-                Map<Long, List<NewBeeMallOrderItem>> itemByOrderIdMap = orderItems.stream().collect(groupingBy(NewBeeMallOrderItem::getOrderId));
+                List<MallOrderItem> orderItems = newBeeMallOrderItemMapper.selectByOrderIds(orderIds);
+                Map<Long, List<MallOrderItem>> itemByOrderIdMap = orderItems.stream().collect(groupingBy(MallOrderItem::getOrderId));
                 for (FlowerMallOrderListVO flowerMallOrderListVO : orderListVOS) {
                     //封装每个订单列表对象的订单项数据
                     if (itemByOrderIdMap.containsKey(flowerMallOrderListVO.getOrderId())) {
-                        List<NewBeeMallOrderItem> orderItemListTemp = itemByOrderIdMap.get(flowerMallOrderListVO.getOrderId());
+                        List<MallOrderItem> orderItemListTemp = itemByOrderIdMap.get(flowerMallOrderListVO.getOrderId());
                         //将NewBeeMallOrderItem对象列表转换成NewBeeMallOrderItemVO对象列表
                         List<FlowerMallOrderItemVO> flowerMallOrderItemVOS = BeanUtil.copyList(orderItemListTemp, FlowerMallOrderItemVO.class);
                         flowerMallOrderListVO.setFlowerMallOrderItemVOS(flowerMallOrderItemVOS);
@@ -318,21 +318,21 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
     @Override
     @Transactional
     public String cancelOrder(String orderNo, Long userId) {
-        NewBeeMallOrder newBeeMallOrder = newBeeMallOrderMapper.selectByOrderNo(orderNo);
-        if (newBeeMallOrder != null) {
+        MallOrder mallOrder = newBeeMallOrderMapper.selectByOrderNo(orderNo);
+        if (mallOrder != null) {
             //验证是否是当前userId下的订单，否则报错
-            if (!userId.equals(newBeeMallOrder.getUserId())) {
+            if (!userId.equals(mallOrder.getUserId())) {
                 NewBeeMallException.fail(ServiceResultEnum.NO_PERMISSION_ERROR.getResult());
             }
             //订单状态判断
-            if (newBeeMallOrder.getOrderStatus().intValue() == NewBeeMallOrderStatusEnum.ORDER_SUCCESS.getOrderStatus()
-                    || newBeeMallOrder.getOrderStatus().intValue() == NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_MALLUSER.getOrderStatus()
-                    || newBeeMallOrder.getOrderStatus().intValue() == NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_EXPIRED.getOrderStatus()
-                    || newBeeMallOrder.getOrderStatus().intValue() == NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_JUDGE.getOrderStatus()) {
+            if (mallOrder.getOrderStatus().intValue() == NewBeeMallOrderStatusEnum.ORDER_SUCCESS.getOrderStatus()
+                    || mallOrder.getOrderStatus().intValue() == NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_MALLUSER.getOrderStatus()
+                    || mallOrder.getOrderStatus().intValue() == NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_EXPIRED.getOrderStatus()
+                    || mallOrder.getOrderStatus().intValue() == NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_JUDGE.getOrderStatus()) {
                 return ServiceResultEnum.ORDER_STATUS_ERROR.getResult();
             }
             //修改订单状态&&恢复库存
-            if (newBeeMallOrderMapper.closeOrder(Collections.singletonList(newBeeMallOrder.getOrderId()), NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_MALLUSER.getOrderStatus()) > 0 && recoverStockNum(Collections.singletonList(newBeeMallOrder.getOrderId()))) {
+            if (newBeeMallOrderMapper.closeOrder(Collections.singletonList(mallOrder.getOrderId()), NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_MALLUSER.getOrderStatus()) > 0 && recoverStockNum(Collections.singletonList(mallOrder.getOrderId()))) {
                 return ServiceResultEnum.SUCCESS.getResult();
             } else {
                 return ServiceResultEnum.DB_ERROR.getResult();
@@ -343,19 +343,19 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
 
     @Override
     public String finishOrder(String orderNo, Long userId) {
-        NewBeeMallOrder newBeeMallOrder = newBeeMallOrderMapper.selectByOrderNo(orderNo);
-        if (newBeeMallOrder != null) {
+        MallOrder mallOrder = newBeeMallOrderMapper.selectByOrderNo(orderNo);
+        if (mallOrder != null) {
             //验证是否是当前userId下的订单，否则报错
-            if (!userId.equals(newBeeMallOrder.getUserId())) {
+            if (!userId.equals(mallOrder.getUserId())) {
                 return ServiceResultEnum.NO_PERMISSION_ERROR.getResult();
             }
             //订单状态判断 非出库状态下不进行修改操作
-            if (newBeeMallOrder.getOrderStatus().intValue() != NewBeeMallOrderStatusEnum.ORDER_EXPRESS.getOrderStatus()) {
+            if (mallOrder.getOrderStatus().intValue() != NewBeeMallOrderStatusEnum.ORDER_EXPRESS.getOrderStatus()) {
                 return ServiceResultEnum.ORDER_STATUS_ERROR.getResult();
             }
-            newBeeMallOrder.setOrderStatus((byte) NewBeeMallOrderStatusEnum.ORDER_SUCCESS.getOrderStatus());
-            newBeeMallOrder.setUpdateTime(new Date());
-            if (newBeeMallOrderMapper.updateByPrimaryKeySelective(newBeeMallOrder) > 0) {
+            mallOrder.setOrderStatus((byte) NewBeeMallOrderStatusEnum.ORDER_SUCCESS.getOrderStatus());
+            mallOrder.setUpdateTime(new Date());
+            if (newBeeMallOrderMapper.updateByPrimaryKeySelective(mallOrder) > 0) {
                 return ServiceResultEnum.SUCCESS.getResult();
             } else {
                 return ServiceResultEnum.DB_ERROR.getResult();
@@ -366,18 +366,18 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
 
     @Override
     public String paySuccess(String orderNo, int payType) {
-        NewBeeMallOrder newBeeMallOrder = newBeeMallOrderMapper.selectByOrderNo(orderNo);
-        if (newBeeMallOrder != null) {
+        MallOrder mallOrder = newBeeMallOrderMapper.selectByOrderNo(orderNo);
+        if (mallOrder != null) {
             //订单状态判断 非待支付状态下不进行修改操作
-            if (newBeeMallOrder.getOrderStatus().intValue() != NewBeeMallOrderStatusEnum.ORDER_PRE_PAY.getOrderStatus()) {
+            if (mallOrder.getOrderStatus().intValue() != NewBeeMallOrderStatusEnum.ORDER_PRE_PAY.getOrderStatus()) {
                 return ServiceResultEnum.ORDER_STATUS_ERROR.getResult();
             }
-            newBeeMallOrder.setOrderStatus((byte) NewBeeMallOrderStatusEnum.ORDER_PAID.getOrderStatus());
-            newBeeMallOrder.setPayType((byte) payType);
-            newBeeMallOrder.setPayStatus((byte) PayStatusEnum.PAY_SUCCESS.getPayStatus());
-            newBeeMallOrder.setPayTime(new Date());
-            newBeeMallOrder.setUpdateTime(new Date());
-            if (newBeeMallOrderMapper.updateByPrimaryKeySelective(newBeeMallOrder) > 0) {
+            mallOrder.setOrderStatus((byte) NewBeeMallOrderStatusEnum.ORDER_PAID.getOrderStatus());
+            mallOrder.setPayType((byte) payType);
+            mallOrder.setPayStatus((byte) PayStatusEnum.PAY_SUCCESS.getPayStatus());
+            mallOrder.setPayTime(new Date());
+            mallOrder.setUpdateTime(new Date());
+            if (newBeeMallOrderMapper.updateByPrimaryKeySelective(mallOrder) > 0) {
                 return ServiceResultEnum.SUCCESS.getResult();
             } else {
                 return ServiceResultEnum.DB_ERROR.getResult();
@@ -388,9 +388,9 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
 
     @Override
     public List<FlowerMallOrderItemVO> getOrderItems(Long id) {
-        NewBeeMallOrder newBeeMallOrder = newBeeMallOrderMapper.selectByPrimaryKey(id);
-        if (newBeeMallOrder != null) {
-            List<NewBeeMallOrderItem> orderItems = newBeeMallOrderItemMapper.selectByOrderId(newBeeMallOrder.getOrderId());
+        MallOrder mallOrder = newBeeMallOrderMapper.selectByPrimaryKey(id);
+        if (mallOrder != null) {
+            List<MallOrderItem> orderItems = newBeeMallOrderItemMapper.selectByOrderId(mallOrder.getOrderId());
             //获取订单项数据
             if (!CollectionUtils.isEmpty(orderItems)) {
                 List<FlowerMallOrderItemVO> flowerMallOrderItemVOS = BeanUtil.copyList(orderItems, FlowerMallOrderItemVO.class);
@@ -407,9 +407,9 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
      */
     public Boolean recoverStockNum(List<Long> orderIds) {
         //查询对应的订单项
-        List<NewBeeMallOrderItem> newBeeMallOrderItems = newBeeMallOrderItemMapper.selectByOrderIds(orderIds);
+        List<MallOrderItem> mallOrderItems = newBeeMallOrderItemMapper.selectByOrderIds(orderIds);
         //获取对应的商品id和商品数量并赋值到StockNumDTO对象中
-        List<StockNumDTO> stockNumDTOS = BeanUtil.copyList(newBeeMallOrderItems, StockNumDTO.class);
+        List<StockNumDTO> stockNumDTOS = BeanUtil.copyList(mallOrderItems, StockNumDTO.class);
         //执行恢复库存的操作
         int updateStockNumResult = newBeeMallGoodsMapper.recoverStockNum(stockNumDTOS);
         if (updateStockNumResult < 1) {

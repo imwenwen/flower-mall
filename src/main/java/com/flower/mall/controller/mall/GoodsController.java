@@ -6,7 +6,7 @@ import com.flower.mall.common.NewBeeMallException;
 import com.flower.mall.common.ServiceResultEnum;
 import com.flower.mall.controller.vo.FlowerMallGoodsDetailVO;
 import com.flower.mall.controller.vo.FlowerMallSearchPageCategoryVO;
-import com.flower.mall.entity.NewBeeMallGoods;
+import com.flower.mall.entity.MallGoods;
 import com.flower.mall.service.FlowerMallCategoryService;
 import com.flower.mall.service.NewBeeMallGoodsService;
 import com.flower.mall.util.BeanUtil;
@@ -68,7 +68,7 @@ public class GoodsController {
         if (goodsId < 1) {
             NewBeeMallException.fail("参数异常");
         }
-        NewBeeMallGoods goods = newBeeMallGoodsService.getNewBeeMallGoodsById(goodsId);
+        MallGoods goods = newBeeMallGoodsService.getNewBeeMallGoodsById(goodsId);
         if (Constants.SELL_STATUS_UP != goods.getGoodsSellStatus()) {
             NewBeeMallException.fail(ServiceResultEnum.GOODS_PUT_DOWN.getResult());
         }

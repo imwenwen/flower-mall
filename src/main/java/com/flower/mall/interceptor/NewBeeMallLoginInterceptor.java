@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * newbee-mall系统身份验证拦截器
  *
- * @author 13
- * @qq交流群 796794009
- * @email 2449207463@qq.com
+
  * 
  */
 @Component

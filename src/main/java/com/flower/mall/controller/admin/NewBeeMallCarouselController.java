@@ -6,7 +6,7 @@ import com.flower.mall.entity.Carousel;
 import com.flower.mall.service.FlowerMallCarouselService;
 import com.flower.mall.util.PageQueryUtil;
 import com.flower.mall.util.Result;
-import com.flower.mall.util.ResultGenerator;
+import com.flower.mall.util.MallResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -37,10 +37,10 @@ public class NewBeeMallCarouselController {
     @ResponseBody
     public Result list(@RequestParam Map<String, Object> params) {
         if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit"))) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return MallResult.createFailRes("参数异常！");
         }
         PageQueryUtil pageUtil = new PageQueryUtil(params);
-        return ResultGenerator.genSuccessResult(flowerMallCarouselService.getCarouselPage(pageUtil));
+        return MallResult.createSuccessRes(flowerMallCarouselService.getCarouselPage(pageUtil));
     }
 
     /**
@@ -51,13 +51,13 @@ public class NewBeeMallCarouselController {
     public Result save(@RequestBody Carousel carousel) {
         if (StringUtils.isEmpty(carousel.getCarouselUrl())
                 || Objects.isNull(carousel.getCarouselRank())) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return MallResult.createFailRes("参数异常！");
         }
         String result = flowerMallCarouselService.saveCarousel(carousel);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
-            return ResultGenerator.genSuccessResult();
+            return MallResult.createSuccessRes();
         } else {
-            return ResultGenerator.genFailResult(result);
+            return MallResult.createFailRes(result);
         }
     }
 
@@ -71,13 +71,13 @@ public class NewBeeMallCarouselController {
         if (Objects.isNull(carousel.getCarouselId())
                 || StringUtils.isEmpty(carousel.getCarouselUrl())
                 || Objects.isNull(carousel.getCarouselRank())) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return MallResult.createFailRes("参数异常！");
         }
         String result = flowerMallCarouselService.updateCarousel(carousel);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
-            return ResultGenerator.genSuccessResult();
+            return MallResult.createSuccessRes();
         } else {
-            return ResultGenerator.genFailResult(result);
+            return MallResult.createFailRes(result);
         }
     }
 
@@ -89,9 +89,9 @@ public class NewBeeMallCarouselController {
     public Result info(@PathVariable("id") Integer id) {
         Carousel carousel = flowerMallCarouselService.getCarouselById(id);
         if (carousel == null) {
-            return ResultGenerator.genFailResult(ServiceResultEnum.DATA_NOT_EXIST.getResult());
+            return MallResult.createFailRes(ServiceResultEnum.DATA_NOT_EXIST.getResult());
         }
-        return ResultGenerator.genSuccessResult(carousel);
+        return MallResult.createSuccessRes(carousel);
     }
 
     /**
@@ -101,12 +101,12 @@ public class NewBeeMallCarouselController {
     @ResponseBody
     public Result delete(@RequestBody Integer[] ids) {
         if (ids.length < 1) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return MallResult.createFailRes("参数异常！");
         }
         if (flowerMallCarouselService.deleteBatch(ids)) {
-            return ResultGenerator.genSuccessResult();
+            return MallResult.createSuccessRes();
         } else {
-            return ResultGenerator.genFailResult("删除失败");
+            return MallResult.createFailRes("删除失败");
         }
     }
 

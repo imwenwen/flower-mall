@@ -5,7 +5,7 @@ import lombok.Data;
 
 import java.util.Date;
 @Data
-public class NewBeeMallShoppingCartItem {
+public class MallShoppingCartItem {
     private Long cartItemId;
 
     private Long userId;

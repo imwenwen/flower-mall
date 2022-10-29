@@ -6,7 +6,7 @@ import com.flower.mall.controller.vo.FlowerMallIndexConfigGoodsVO;
 import com.flower.mall.dao.IndexConfigMapper;
 import com.flower.mall.dao.NewBeeMallGoodsMapper;
 import com.flower.mall.entity.IndexConfig;
-import com.flower.mall.entity.NewBeeMallGoods;
+import com.flower.mall.entity.MallGoods;
 import com.flower.mall.service.FlowerMallIndexConfigService;
 import com.flower.mall.util.BeanUtil;
 import com.flower.mall.util.PageQueryUtil;
@@ -84,8 +84,8 @@ public class FlowerMallIndexConfigServiceImpl implements FlowerMallIndexConfigSe
         if (!CollectionUtils.isEmpty(indexConfigs)) {
             //取出所有的goodsId
             List<Long> goodsIds = indexConfigs.stream().map(IndexConfig::getGoodsId).collect(Collectors.toList());
-            List<NewBeeMallGoods> newBeeMallGoods = goodsMapper.selectByPrimaryKeys(goodsIds);
-            flowerMallIndexConfigGoodsVOS = BeanUtil.copyList(newBeeMallGoods, FlowerMallIndexConfigGoodsVO.class);
+            List<MallGoods> mallGoods = goodsMapper.selectByPrimaryKeys(goodsIds);
+            flowerMallIndexConfigGoodsVOS = BeanUtil.copyList(mallGoods, FlowerMallIndexConfigGoodsVO.class);
             for (FlowerMallIndexConfigGoodsVO flowerMallIndexConfigGoodsVO : flowerMallIndexConfigGoodsVOS) {
                 String goodsName = flowerMallIndexConfigGoodsVO.getGoodsName();
                 String goodsIntro = flowerMallIndexConfigGoodsVO.getGoodsIntro();

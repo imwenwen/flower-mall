@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class CommonController {
 
+    //后台登录验证码产生
     @GetMapping("/common/kaptcha")
     public void defaultKaptcha(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
         httpServletResponse.setHeader("Cache-Control", "no-store");
@@ -30,6 +31,7 @@ public class CommonController {
         shearCaptcha.write(httpServletResponse.getOutputStream());
     }
 
+    //商城登录验证码产生
     @GetMapping("/common/mall/kaptcha")
     public void mallKaptcha(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
         httpServletResponse.setHeader("Cache-Control", "no-store");

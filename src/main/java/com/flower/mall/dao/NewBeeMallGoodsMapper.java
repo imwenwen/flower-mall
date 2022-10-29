@@ -1,7 +1,7 @@
 
 package com.flower.mall.dao;
 
-import com.flower.mall.entity.NewBeeMallGoods;
+import com.flower.mall.entity.MallGoods;
 import com.flower.mall.entity.StockNumDTO;
 import com.flower.mall.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Param;
@@ -11,31 +11,31 @@ import java.util.List;
 public interface NewBeeMallGoodsMapper {
     int deleteByPrimaryKey(Long goodsId);
 
-    int insert(NewBeeMallGoods record);
+    int insert(MallGoods record);
 
-    int insertSelective(NewBeeMallGoods record);
+    int insertSelective(MallGoods record);
 
-    NewBeeMallGoods selectByPrimaryKey(Long goodsId);
+    MallGoods selectByPrimaryKey(Long goodsId);
 
-    NewBeeMallGoods selectByCategoryIdAndName(@Param("goodsName") String goodsName, @Param("goodsCategoryId") Long goodsCategoryId);
+    MallGoods selectByCategoryIdAndName(@Param("goodsName") String goodsName, @Param("goodsCategoryId") Long goodsCategoryId);
 
-    int updateByPrimaryKeySelective(NewBeeMallGoods record);
+    int updateByPrimaryKeySelective(MallGoods record);
 
-    int updateByPrimaryKeyWithBLOBs(NewBeeMallGoods record);
+    int updateByPrimaryKeyWithBLOBs(MallGoods record);
 
-    int updateByPrimaryKey(NewBeeMallGoods record);
+    int updateByPrimaryKey(MallGoods record);
 
-    List<NewBeeMallGoods> findNewBeeMallGoodsList(PageQueryUtil pageUtil);
+    List<MallGoods> findNewBeeMallGoodsList(PageQueryUtil pageUtil);
 
     int getTotalNewBeeMallGoods(PageQueryUtil pageUtil);
 
-    List<NewBeeMallGoods> selectByPrimaryKeys(List<Long> goodsIds);
+    List<MallGoods> selectByPrimaryKeys(List<Long> goodsIds);
 
-    List<NewBeeMallGoods> findNewBeeMallGoodsListBySearch(PageQueryUtil pageUtil);
+    List<MallGoods> findNewBeeMallGoodsListBySearch(PageQueryUtil pageUtil);
 
     int getTotalNewBeeMallGoodsBySearch(PageQueryUtil pageUtil);
 
-    int batchInsert(@Param("newBeeMallGoodsList") List<NewBeeMallGoods> newBeeMallGoodsList);
+    int batchInsert(@Param("newBeeMallGoodsList") List<MallGoods> mallGoodsList);
 
     int updateStockNum(@Param("stockNumDTOS") List<StockNumDTO> stockNumDTOS);
 

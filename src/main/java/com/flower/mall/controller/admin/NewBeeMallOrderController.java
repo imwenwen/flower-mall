@@ -3,11 +3,11 @@ package com.flower.mall.controller.admin;
 
 import com.flower.mall.common.ServiceResultEnum;
 import com.flower.mall.controller.vo.FlowerMallOrderItemVO;
-import com.flower.mall.entity.NewBeeMallOrder;
+import com.flower.mall.entity.MallOrder;
 import com.flower.mall.service.NewBeeMallOrderService;
 import com.flower.mall.util.PageQueryUtil;
 import com.flower.mall.util.Result;
-import com.flower.mall.util.ResultGenerator;
+import com.flower.mall.util.MallResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -40,10 +40,10 @@ public class NewBeeMallOrderController {
     @ResponseBody
     public Result list(@RequestParam Map<String, Object> params) {
         if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit"))) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return MallResult.createFailRes("参数异常！");
         }
         PageQueryUtil pageUtil = new PageQueryUtil(params);
-        return ResultGenerator.genSuccessResult(newBeeMallOrderService.getNewBeeMallOrdersPage(pageUtil));
+        return MallResult.createSuccessRes(newBeeMallOrderService.getNewBeeMallOrdersPage(pageUtil));
     }
 
     /**
@@ -51,19 +51,19 @@ public class NewBeeMallOrderController {
      */
     @RequestMapping(value = "/orders/update", method = RequestMethod.POST)
     @ResponseBody
-    public Result update(@RequestBody NewBeeMallOrder newBeeMallOrder) {
-        if (Objects.isNull(newBeeMallOrder.getTotalPrice())
-                || Objects.isNull(newBeeMallOrder.getOrderId())
-                || newBeeMallOrder.getOrderId() < 1
-                || newBeeMallOrder.getTotalPrice() < 1
-                || StringUtils.isEmpty(newBeeMallOrder.getUserAddress())) {
-            return ResultGenerator.genFailResult("参数异常！");
+    public Result update(@RequestBody MallOrder mallOrder) {
+        if (Objects.isNull(mallOrder.getTotalPrice())
+                || Objects.isNull(mallOrder.getOrderId())
+                || mallOrder.getOrderId() < 1
+                || mallOrder.getTotalPrice() < 1
+                || StringUtils.isEmpty(mallOrder.getUserAddress())) {
+            return MallResult.createFailRes("参数异常！");
         }
-        String result = newBeeMallOrderService.updateOrderInfo(newBeeMallOrder);
+        String result = newBeeMallOrderService.updateOrderInfo(mallOrder);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
-            return ResultGenerator.genSuccessResult();
+            return MallResult.createSuccessRes();
         } else {
-            return ResultGenerator.genFailResult(result);
+            return MallResult.createFailRes(result);
         }
     }
 
@@ -75,9 +75,9 @@ public class NewBeeMallOrderController {
     public Result info(@PathVariable("id") Long id) {
         List<FlowerMallOrderItemVO> orderItems = newBeeMallOrderService.getOrderItems(id);
         if (!CollectionUtils.isEmpty(orderItems)) {
-            return ResultGenerator.genSuccessResult(orderItems);
+            return MallResult.createSuccessRes(orderItems);
         }
-        return ResultGenerator.genFailResult(ServiceResultEnum.DATA_NOT_EXIST.getResult());
+        return MallResult.createFailRes(ServiceResultEnum.DATA_NOT_EXIST.getResult());
     }
 
     /**
@@ -87,13 +87,13 @@ public class NewBeeMallOrderController {
     @ResponseBody
     public Result checkDone(@RequestBody Long[] ids) {
         if (ids.length < 1) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return MallResult.createFailRes("参数异常！");
         }
         String result = newBeeMallOrderService.checkDone(ids);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
-            return ResultGenerator.genSuccessResult();
+            return MallResult.createSuccessRes();
         } else {
-            return ResultGenerator.genFailResult(result);
+            return MallResult.createFailRes(result);
         }
     }
 
@@ -104,13 +104,13 @@ public class NewBeeMallOrderController {
     @ResponseBody
     public Result checkOut(@RequestBody Long[] ids) {
         if (ids.length < 1) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return MallResult.createFailRes("参数异常！");
         }
         String result = newBeeMallOrderService.checkOut(ids);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
-            return ResultGenerator.genSuccessResult();
+            return MallResult.createSuccessRes();
         } else {
-            return ResultGenerator.genFailResult(result);
+            return MallResult.createFailRes(result);
         }
     }
 
@@ -121,13 +121,13 @@ public class NewBeeMallOrderController {
     @ResponseBody
     public Result closeOrder(@RequestBody Long[] ids) {
         if (ids.length < 1) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return MallResult.createFailRes("参数异常！");
         }
         String result = newBeeMallOrderService.closeOrder(ids);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
-            return ResultGenerator.genSuccessResult();
+            return MallResult.createSuccessRes();
         } else {
-            return ResultGenerator.genFailResult(result);
+            return MallResult.createFailRes(result);
         }
     }
 

@@ -8,12 +8,12 @@ import com.flower.mall.common.ServiceResultEnum;
 import com.flower.mall.controller.vo.FlowerMallOrderDetailVO;
 import com.flower.mall.controller.vo.FlowerMallShoppingCartItemVO;
 import com.flower.mall.controller.vo.FlowerMallUserVO;
-import com.flower.mall.entity.NewBeeMallOrder;
+import com.flower.mall.entity.MallOrder;
 import com.flower.mall.service.NewBeeMallOrderService;
 import com.flower.mall.service.NewBeeMallShoppingCartService;
 import com.flower.mall.util.PageQueryUtil;
 import com.flower.mall.util.Result;
-import com.flower.mall.util.ResultGenerator;
+import com.flower.mall.util.MallResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -80,9 +80,9 @@ public class OrderController {
         FlowerMallUserVO user = (FlowerMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         String cancelOrderResult = newBeeMallOrderService.cancelOrder(orderNo, user.getUserId());
         if (ServiceResultEnum.SUCCESS.getResult().equals(cancelOrderResult)) {
-            return ResultGenerator.genSuccessResult();
+            return MallResult.createSuccessRes();
         } else {
-            return ResultGenerator.genFailResult(cancelOrderResult);
+            return MallResult.createFailRes(cancelOrderResult);
         }
     }
 
@@ -92,43 +92,43 @@ public class OrderController {
         FlowerMallUserVO user = (FlowerMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         String finishOrderResult = newBeeMallOrderService.finishOrder(orderNo, user.getUserId());
         if (ServiceResultEnum.SUCCESS.getResult().equals(finishOrderResult)) {
-            return ResultGenerator.genSuccessResult();
+            return MallResult.createSuccessRes();
         } else {
-            return ResultGenerator.genFailResult(finishOrderResult);
+            return MallResult.createFailRes(finishOrderResult);
         }
     }
 
     @GetMapping("/selectPayType")
     public String selectPayType(HttpServletRequest request, @RequestParam("orderNo") String orderNo, HttpSession httpSession) {
         FlowerMallUserVO user = (FlowerMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        NewBeeMallOrder newBeeMallOrder = newBeeMallOrderService.getNewBeeMallOrderByOrderNo(orderNo);
+        MallOrder mallOrder = newBeeMallOrderService.getNewBeeMallOrderByOrderNo(orderNo);
         //判断订单userId
-        if (!user.getUserId().equals(newBeeMallOrder.getUserId())) {
+        if (!user.getUserId().equals(mallOrder.getUserId())) {
             NewBeeMallException.fail(ServiceResultEnum.NO_PERMISSION_ERROR.getResult());
         }
         //判断订单状态
-        if (newBeeMallOrder.getOrderStatus().intValue() != NewBeeMallOrderStatusEnum.ORDER_PRE_PAY.getOrderStatus()) {
+        if (mallOrder.getOrderStatus().intValue() != NewBeeMallOrderStatusEnum.ORDER_PRE_PAY.getOrderStatus()) {
             NewBeeMallException.fail(ServiceResultEnum.ORDER_STATUS_ERROR.getResult());
         }
         request.setAttribute("orderNo", orderNo);
-        request.setAttribute("totalPrice", newBeeMallOrder.getTotalPrice());
+        request.setAttribute("totalPrice", mallOrder.getTotalPrice());
         return "mall/pay-select";
     }
 
     @GetMapping("/payPage")
     public String payOrder(HttpServletRequest request, @RequestParam("orderNo") String orderNo, HttpSession httpSession, @RequestParam("payType") int payType) {
         FlowerMallUserVO user = (FlowerMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        NewBeeMallOrder newBeeMallOrder = newBeeMallOrderService.getNewBeeMallOrderByOrderNo(orderNo);
+        MallOrder mallOrder = newBeeMallOrderService.getNewBeeMallOrderByOrderNo(orderNo);
         //判断订单userId
-        if (!user.getUserId().equals(newBeeMallOrder.getUserId())) {
+        if (!user.getUserId().equals(mallOrder.getUserId())) {
             NewBeeMallException.fail(ServiceResultEnum.NO_PERMISSION_ERROR.getResult());
         }
         //判断订单状态
-        if (newBeeMallOrder.getOrderStatus().intValue() != NewBeeMallOrderStatusEnum.ORDER_PRE_PAY.getOrderStatus()) {
+        if (mallOrder.getOrderStatus().intValue() != NewBeeMallOrderStatusEnum.ORDER_PRE_PAY.getOrderStatus()) {
             NewBeeMallException.fail(ServiceResultEnum.ORDER_STATUS_ERROR.getResult());
         }
         request.setAttribute("orderNo", orderNo);
-        request.setAttribute("totalPrice", newBeeMallOrder.getTotalPrice());
+        request.setAttribute("totalPrice", mallOrder.getTotalPrice());
         if (payType == 1) {
             return "mall/alipay";
         } else {
@@ -136,14 +136,21 @@ public class OrderController {
         }
     }
 
+    /**
+     * 付款成功
+     * @param orderNo 订单号
+     * @param payType 订单状态
+     * @return
+     */
     @GetMapping("/paySuccess")
     @ResponseBody
     public Result paySuccess(@RequestParam("orderNo") String orderNo, @RequestParam("payType") int payType) {
+        //更改订单状态
         String payResult = newBeeMallOrderService.paySuccess(orderNo, payType);
         if (ServiceResultEnum.SUCCESS.getResult().equals(payResult)) {
-            return ResultGenerator.genSuccessResult();
+            return MallResult.createSuccessRes();
         } else {
-            return ResultGenerator.genFailResult(payResult);
+            return MallResult.createFailRes(payResult);
         }
     }
 

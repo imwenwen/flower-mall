@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="head-fragment(title,path)">
@@ -36,19 +35,13 @@
                 <div class="user">
                     <ul class="selector">
                         <li>
-                            <a th:href="@{/personal}">
-                                个人中心
-                            </a>
+                            <a th:href="@{/personal}">个人中心</a>
                         </li>
                         <li>
-                            <a th:href="@{/orders}">
-                                我的订单
-                            </a>
+                            <a th:href="@{/orders}">我的订单</a>
                         </li>
                         <li>
-                            <a th:href="@{/logout}">
-                                退出登录
-                            </a>
+                            <a th:href="@{/logout}">退出登录</a>
                         </li>
                     </ul>
                     <a href="##" class="username">
