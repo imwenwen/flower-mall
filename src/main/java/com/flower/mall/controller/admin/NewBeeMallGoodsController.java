@@ -55,11 +55,11 @@ public class NewBeeMallGoodsController {
                 request.setAttribute("secondLevelCategories", secondLevelCategories);
                 request.setAttribute("thirdLevelCategories", thirdLevelCategories);
                 request.setAttribute("path", "goods-edit");
-                return "admin/newbee_mall_goods_edit";
+
             }
         }
         NewBeeMallException.fail("分类数据不完善");
-        return null;
+        return "admin/newbee_mall_goods_edit";
     }
 
     @GetMapping("/goods/edit/{goodsId}")

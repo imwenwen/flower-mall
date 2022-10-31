@@ -6,51 +6,24 @@
 <header th:replace="mall/header::header-fragment"></header>
 <content id="content">
     <nav th:replace="mall/header::nav-fragment"></nav>
-    <div id="banner">
-        <div class="all-sort-list">
-            <th:block th:each="category : ${categories}">
-            <div class="item">
-                <h3><span>·</span><a href="#"><th:block th:text="${category.categoryName}"></th:block></a></h3>
-                <div class="item-list clearfix">
-                    <div class="subitem">
-                        <th:block th:each="secondLevelCategory : ${category.flowerMallSecondLevelCategoryVOS}">
-                        <dl class="fore1">
-                            <dt><a href="#"><th:block th:text="${secondLevelCategory.categoryName}"></th:block></a></dt>
-                            <dd>
-                                <th:block th:each="thirdLevelCategory : ${secondLevelCategory.thirdLevelCategoryVOS}">
-                                <em><a href="#"th:href="@{'/search?goodsCategoryId='+${thirdLevelCategory.categoryId}}">
-                                    <th:block th:text="${thirdLevelCategory.categoryName}"></th:block>
-                                </a></em>
-                                </th:block>
-                            </dd>
-                        </dl>
-                        </th:block>
-                    </div>
-                </div>
-            </div>
-            </th:block>
-        </div>
-        <div class="swiper-container fl">
-            <div class="swiper-wrapper">
-                <!-- 配置了轮播图则显示后台配置的轮播图 -->
-                <th:block th:unless="${#lists.isEmpty(carousels)}">
-                    <th:block th:each="carousel : ${carousels}">
-                        <div class="swiper-slide">
-                            <a >
-                                <img th:src="@{${carousel.carouselUrl}}" alt="">
-                            </a>
-                        </div>
-                    </th:block>
-                </th:block>
-            </div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-        </div>
-    </div>
+    <!-- 轮播图展示 -->
+     <div id="banner">
+         <div class="swiper-container fl" style="margin-left: 9%">
+             <div class="swiper-wrapper">
+                     <th:block th:each="carousel : ${carousels}">
+                         <div class="swiper-slide">
+                                 <img th:src="@{${carousel.carouselUrl}}" alt="">
+                         </div>
+                     </th:block>
+             </div>
+             <div class="swiper-pagination"></div>
+             <div class="swiper-button-prev"></div>
+             <div class="swiper-button-next"></div>
+         </div>
+     </div>
 
-    <div id="sub_banner">
-        <!-- 已配置热销商品则显示配置内容 -->
+     <div id="sub_banner">
+         <!-- 已配置热销商品则显示配置内容 -->
         <th:block th:unless="${#lists.isEmpty(hotGoodses)}">
             <th:block th:each="hotGoodse : ${hotGoodses}">
                 <div class="hot-image">
@@ -66,7 +39,6 @@
         <h2>新品上线</h2>
         <ul>
             <!-- 已配置新品则显示配置内容 -->
-            <th:block th:unless="${#lists.isEmpty(newGoodses)}">
                 <th:block th:each="newGoods : ${newGoodses}">
                     <li>
                         <a th:href="@{'/goods/detail/'+${newGoods.goodsId}}">
@@ -76,7 +48,6 @@
                             <p class="item_price" th:text="${newGoods.sellingPrice}">NewBeeMall</p>
                         </a>
                     </li>
-                </th:block>
             </th:block>
         </ul>
     </div>
@@ -86,7 +57,6 @@
         <a href="#" class="more">查看更多>></a>
         <ul>
             <!-- 已配置推荐商品则显示配置内容 -->
-            <th:block th:unless="${#lists.isEmpty(recommendGoodses)}">
                 <th:block th:each="recommendGoods : ${recommendGoodses}">
                     <li>
                         <a th:href="@{'/goods/detail/'+${recommendGoods.goodsId}}">
@@ -103,7 +73,6 @@
                             </div>
                         </a>
                     </li>
-                </th:block>
             </th:block>
         </ul>
     </div>
