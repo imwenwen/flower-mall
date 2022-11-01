@@ -29,12 +29,10 @@ public class IndexController {
 
     @GetMapping({"/index", "/", "/index.html"})
     public String indexPage(HttpServletRequest request) {
-        List<FlowerMallIndexCategoryVO> categories = flowerMallCategoryService.getCategoriesForIndex();
         List<FlowerMallIndexCarouselVO> carousels = flowerMallCarouselService.getCarouselsForIndex(5);
         List<FlowerMallIndexConfigGoodsVO> hotGoods = flowerMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_HOT.getType(), 5);
         List<FlowerMallIndexConfigGoodsVO> newGoods = flowerMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_NEW.getType(), 5);
         List<FlowerMallIndexConfigGoodsVO> recommendGoods = flowerMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_RECOMMOND.getType(), 10);
-        request.setAttribute("categories", categories);//分类数据
         request.setAttribute("carousels", carousels);//轮播图
         request.setAttribute("hotGoodses", hotGoods);//热销商品
         request.setAttribute("newGoodses", newGoods);//新品

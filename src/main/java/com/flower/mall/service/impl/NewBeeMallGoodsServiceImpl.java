@@ -39,11 +39,6 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 
     @Override
     public String saveNewBeeMallGoods(MallGoods goods) {
-        GoodsCategory goodsCategory = goodsCategoryMapper.selectByPrimaryKey(goods.getGoodsCategoryId());
-        // 分类不存在或者不是三级分类，则该参数字段异常
-        if (goodsCategory == null || goodsCategory.getCategoryLevel().intValue() != NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
-            return ServiceResultEnum.GOODS_CATEGORY_ERROR.getResult();
-        }
         if (goodsMapper.selectByCategoryIdAndName(goods.getGoodsName(), goods.getGoodsCategoryId()) != null) {
             return ServiceResultEnum.SAME_GOODS_EXIST.getResult();
         }
@@ -62,11 +57,7 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 
     @Override
     public String updateNewBeeMallGoods(MallGoods goods) {
-        GoodsCategory goodsCategory = goodsCategoryMapper.selectByPrimaryKey(goods.getGoodsCategoryId());
-        // 分类不存在或者不是三级分类，则该参数字段异常
-        if (goodsCategory == null || goodsCategory.getCategoryLevel().intValue() != NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
-            return ServiceResultEnum.GOODS_CATEGORY_ERROR.getResult();
-        }
+
         MallGoods temp = goodsMapper.selectByPrimaryKey(goods.getGoodsId());
         if (temp == null) {
             return ServiceResultEnum.DATA_NOT_EXIST.getResult();

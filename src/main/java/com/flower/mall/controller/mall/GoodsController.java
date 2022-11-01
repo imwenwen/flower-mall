@@ -35,15 +35,7 @@ public class GoodsController {
             params.put("page", 1);
         }
         params.put("limit", Constants.GOODS_SEARCH_PAGE_LIMIT);
-        //封装分类数据
-        if (params.containsKey("goodsCategoryId") && !StringUtils.isEmpty(params.get("goodsCategoryId") + "")) {
-            Long categoryId = Long.valueOf(params.get("goodsCategoryId") + "");
-            FlowerMallSearchPageCategoryVO flowerMallSearchPageCategoryVO = flowerMallCategoryService.getCategoriesForSearch(categoryId);
-            if (flowerMallSearchPageCategoryVO != null) {
-                request.setAttribute("goodsCategoryId", categoryId);
-                request.setAttribute("searchPageCategoryVO", flowerMallSearchPageCategoryVO);
-            }
-        }
+
         //封装参数供前端回显
         if (params.containsKey("orderBy") && !StringUtils.isEmpty(params.get("orderBy") + "")) {
             request.setAttribute("orderBy", params.get("orderBy") + "");

@@ -2,6 +2,13 @@ var editorD;
 
 $(function () {
 
+    function  fn(){
+        var     name=$("#item1").find("option:selected").val();  //获取value值
+        if(name !==null){
+            version=name;
+        }
+    };
+
     //富文本编辑器 用于商品详情编辑
     const E = window.wangEditor;
     editorD = new E('#wangEditor')
@@ -82,12 +89,6 @@ $('#saveButton').click(function () {
     var goodsSellStatus = $("input[name='goodsSellStatus']:checked").val();
     var goodsDetailContent = editorD.txt.html();
     var goodsCoverImg = $('#goodsCoverImg')[0].src;
-    if (isNull(goodsCategoryId)) {
-        swal("请选择分类", {
-            icon: "error",
-        });
-        return;
-    }
     if (isNull(goodsName)) {
         swal("请输入商品名称", {
             icon: "error",
