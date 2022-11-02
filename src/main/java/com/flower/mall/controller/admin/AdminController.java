@@ -6,6 +6,7 @@ import com.flower.mall.common.ServiceResultEnum;
 import com.flower.mall.entity.AdminUser;
 import com.flower.mall.service.AdminUserService;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/admin")
+@Slf4j
 public class AdminController {
 
     @Resource
@@ -42,21 +44,12 @@ public class AdminController {
     @PostMapping(value = "/login")
     public String login(@RequestParam("userName") String userName,
                         @RequestParam("password") String password,
-                        @RequestParam("verifyCode") String verifyCode,
                         HttpSession session) {
-        if (StringUtils.isEmpty(verifyCode)) {
-            session.setAttribute("errorMsg", "验证码不能为空");
-            return "admin/login";
-        }
         if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(password)) {
             session.setAttribute("errorMsg", "用户名或密码不能为空");
             return "admin/login";
         }
         ShearCaptcha shearCaptcha = (ShearCaptcha) session.getAttribute("verifyCode");
-        if (shearCaptcha == null || !shearCaptcha.verify(verifyCode)) {
-            session.setAttribute("errorMsg", "验证码错误");
-            return "admin/login";
-        }
         AdminUser adminUser = adminUserService.login(userName, password);
         if (adminUser != null) {
             session.setAttribute("loginUser", adminUser.getNickName());

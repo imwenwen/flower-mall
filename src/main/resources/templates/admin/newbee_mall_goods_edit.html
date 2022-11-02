@@ -31,7 +31,6 @@
                                        placeholder="*请输入商品名称(必填)"
                                        th:value="${goods!=null and goods.goodsName!=null }?${goods.goodsName}: ''"
                                        required="true">
-                                &nbsp;&nbsp;
                             </div>
                                 <div class="form-group " style="display:flex;">
                                     <label  class="control-label col-lg-4">商品简介</label>
@@ -41,14 +40,14 @@
                                        required="true">
                             </div>
                             <div class="form-group ">
-                                <label id="resource" for="resource" class="control-label col-lg-4">商品分类</label>
-                                <select id="item1" onchange="fn()" name="resource"
-                                        placeholder="请选择" style="width: 200px;">
-                                    <option value="">请选择</option>
-                                    <!--th:selected="${goods.goodsCategoryId==1}" -->
-                                    <option value="1" >热门花种</option>
-                                    <option value="2" >新品上线</option>
-                                    <option value="3" >为你推荐</option>
+                                <label  class="control-label col-lg-4">商品分类</label>
+                                <select style="width: 200px;">
+                                <option th:each="category: ${goodsCategoryList}"
+                                        th:text="${category.categoryName}"
+                                        th:selected="${category.categoryId}"
+                                        th:name="${category.categoryName}"
+                                        required="true">
+                                </option>
                                 </select>
                             </div>
                             <div class="form-group" style="display:flex;">

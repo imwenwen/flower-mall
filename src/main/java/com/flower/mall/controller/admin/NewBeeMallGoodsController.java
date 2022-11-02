@@ -9,9 +9,11 @@ import com.flower.mall.entity.GoodsCategory;
 import com.flower.mall.entity.MallGoods;
 import com.flower.mall.service.FlowerMallCategoryService;
 import com.flower.mall.service.NewBeeMallGoodsService;
+import com.flower.mall.util.JsonUtil;
 import com.flower.mall.util.PageQueryUtil;
 import com.flower.mall.util.Result;
 import com.flower.mall.util.MallResult;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 
@@ -27,6 +29,7 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/admin")
+@Slf4j
 public class NewBeeMallGoodsController {
 
     @Resource
@@ -36,13 +39,15 @@ public class NewBeeMallGoodsController {
 
     @GetMapping("/goods")
     public String goodsPage(HttpServletRequest request) {
-        request.setAttribute("path", "newbee_mall_goods");
+        request.setAttribute("path", "mall_goods");
         return "admin/newbee_mall_goods";
     }
 
     @GetMapping("/goods/edit")
     public String edit(HttpServletRequest request) {
         request.setAttribute("path", "edit");
+        List<GoodsCategory> categoryList = flowerMallCategoryService.getCategoryList();
+        request.setAttribute("goodsCategoryList", categoryList);
         return "admin/newbee_mall_goods_edit";
     }
 

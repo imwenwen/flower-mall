@@ -79,7 +79,7 @@ $(function () {
 
 $('#saveButton').click(function () {
     var goodsId = $('#goodsId').val();
-    var goodsCategoryId = $('#levelThree option:selected').val();
+    var goodsCategoryId = $('#goodsCategoryId').val();
     var goodsName = $('#goodsName').val();
     var tag = $('#tag').val();
     var originalPrice = $('#originalPrice').val();
@@ -89,6 +89,7 @@ $('#saveButton').click(function () {
     var goodsSellStatus = $("input[name='goodsSellStatus']:checked").val();
     var goodsDetailContent = editorD.txt.html();
     var goodsCoverImg = $('#goodsCoverImg')[0].src;
+    console.log("11111111"+goodsCategoryId);
     if (isNull(goodsName)) {
         swal("请输入商品名称", {
             icon: "error",
@@ -182,6 +183,7 @@ $('#saveButton').click(function () {
         "goodsCarousel": goodsCoverImg,
         "goodsSellStatus": goodsSellStatus
     };
+    console.log("1111111111111111"+data)
     if (goodsId > 0) {
         url = '/admin/goods/update';
         swlMessage = '修改成功';
@@ -236,67 +238,4 @@ $('#saveButton').click(function () {
 
 $('#cancelButton').click(function () {
     window.location.href = "/admin/goods";
-});
-
-$('#levelOne').on('change', function () {
-    $.ajax({
-        url: '/admin/categories/listForSelect?categoryId=' + $(this).val(),
-        type: 'GET',
-        success: function (result) {
-            if (result.resultCode == 200) {
-                var levelTwoSelect = '';
-                var secondLevelCategories = result.data.secondLevelCategories;
-                var length2 = secondLevelCategories.length;
-                for (var i = 0; i < length2; i++) {
-                    levelTwoSelect += '<option value=\"' + secondLevelCategories[i].categoryId + '\">' + secondLevelCategories[i].categoryName + '</option>';
-                }
-                $('#levelTwo').html(levelTwoSelect);
-                var levelThreeSelect = '';
-                var thirdLevelCategories = result.data.thirdLevelCategories;
-                var length3 = thirdLevelCategories.length;
-                for (var i = 0; i < length3; i++) {
-                    levelThreeSelect += '<option value=\"' + thirdLevelCategories[i].categoryId + '\">' + thirdLevelCategories[i].categoryName + '</option>';
-                }
-                $('#levelThree').html(levelThreeSelect);
-            } else {
-                swal(result.message, {
-                    icon: "error",
-                });
-            }
-            ;
-        },
-        error: function () {
-            swal("操作失败", {
-                icon: "error",
-            });
-        }
-    });
-});
-
-$('#levelTwo').on('change', function () {
-    $.ajax({
-        url: '/admin/categories/listForSelect?categoryId=' + $(this).val(),
-        type: 'GET',
-        success: function (result) {
-            if (result.resultCode == 200) {
-                var levelThreeSelect = '';
-                var thirdLevelCategories = result.data.thirdLevelCategories;
-                var length = thirdLevelCategories.length;
-                for (var i = 0; i < length; i++) {
-                    levelThreeSelect += '<option value=\"' + thirdLevelCategories[i].categoryId + '\">' + thirdLevelCategories[i].categoryName + '</option>';
-                }
-                $('#levelThree').html(levelThreeSelect);
-            } else {
-                swal(result.message, {
-                    icon: "error",
-                });
-            }
-            ;
-        },
-        error: function () {
-            swal("操作失败", {
-                icon: "error",
-            });
-        }
-    });
 });
