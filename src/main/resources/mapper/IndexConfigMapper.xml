@@ -75,7 +75,7 @@
     </update>
     <insert id="insert" parameterType="com.flower.mall.entity.IndexConfig">
     insert into mall_index_config (config_id, config_name, config_type,
-      goods_id, redirect_url, config_rank, 
+      goods_id, config_rank,
       deleted, create_time, create_user,
       update_time, update_user)
     values (#{configId,jdbcType=BIGINT}, #{configName,jdbcType=VARCHAR}, #{configType,jdbcType=TINYINT}, 
@@ -97,9 +97,6 @@
             </if>
             <if test="goodsId != null">
                 goods_id,
-            </if>
-            <if test="redirectUrl != null">
-                redirect_url,
             </if>
             <if test="configRank != null">
                 config_rank,
@@ -133,9 +130,6 @@
             <if test="goodsId != null">
                 #{goodsId,jdbcType=BIGINT},
             </if>
-            <if test="redirectUrl != null">
-                #{redirectUrl,jdbcType=VARCHAR},
-            </if>
             <if test="configRank != null">
                 #{configRank,jdbcType=INTEGER},
             </if>
@@ -168,9 +162,6 @@
             <if test="goodsId != null">
                 goods_id = #{goodsId,jdbcType=BIGINT},
             </if>
-            <if test="redirectUrl != null">
-                redirect_url = #{redirectUrl,jdbcType=VARCHAR},
-            </if>
             <if test="configRank != null">
                 config_rank = #{configRank,jdbcType=INTEGER},
             </if>
@@ -197,7 +188,6 @@
     set config_name = #{configName,jdbcType=VARCHAR},
       config_type = #{configType,jdbcType=TINYINT},
       goods_id = #{goodsId,jdbcType=BIGINT},
-      redirect_url = #{redirectUrl,jdbcType=VARCHAR},
       config_rank = #{configRank,jdbcType=INTEGER},
       deleted = #{deleted,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},

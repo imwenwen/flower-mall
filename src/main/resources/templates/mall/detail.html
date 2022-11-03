@@ -19,7 +19,7 @@
     <div class="intro mt20 w clearfix">
         <div class="left fl" style="position: relative;">
             <div class="swiper-container fl">
-                <img th:src="@{${goodsDetail.goodsCoverImg}}">
+                <img th:src="@{/static${goodsDetail.goodsCoverImg}}">
             </div>
         </div>
         <div class="right fr">
@@ -40,14 +40,14 @@
                 <dl>
                     <dt>承诺</dt>
                     <dd><a class="J_Cont" title="满足7天无理由退换货申请的前提下，包邮商品需要买家承担退货邮费，非包邮商品需要买家承担发货和退货邮费。" href="#"
-                           target="_blank"><img th:src="@{/mall/image/7d.jpg}">7天无理由</a></dd>
+                           target="_blank"><img th:src="@{/static/mall/image/7d.jpg}">7天无理由</a></dd>
                 </dl>
                 <dl>
                     <dt>支付</dt>
-                    <dd><a href="##" target="_blank"><img th:src="@{/mall/image/hua.png}">蚂蚁花呗</a><a href="##"
+                    <dd><a href="##" target="_blank"><img th:src="@{/static/mall/image/hua.png}">蚂蚁花呗</a><a href="##"
                                                                                                      target="_blank"><img
-                            th:src="@{/mall/image/card.png}">信用卡支付</a><a href="##" target="_blank"><img
-                            th:src="@{/mall/image/ji.png}">集分宝</a></dd>
+                            th:src="@{/static/mall/image/card.png}">信用卡支付</a><a href="##" target="_blank"><img
+                            th:src="@{/static/mall/image/ji.png}">集分宝</a></dd>
                 </dl>
                 <dl>
                     <dt>支持</dt>
@@ -66,9 +66,9 @@
 <div th:replace="mall/footer::footer-fragment"></div>
 
 <!-- jQuery -->
-<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
-<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
-<script th:src="@{/mall/js/search.js}" type="text/javascript"></script>
+<script th:src="@{/static/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/static/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/static/mall/js/search.js}" type="text/javascript"></script>
 <script type="text/javascript">
     /**
      * 添加到购物车

@@ -39,7 +39,7 @@ public class FlowerMallIndexConfigServiceImpl implements FlowerMallIndexConfigSe
 
     @Override
     public String saveIndexConfig(IndexConfig indexConfig) {
-        if (goodsMapper.selectByPrimaryKey(indexConfig.getGoodsId()) == null) {
+        if (goodsMapper.selectgoodsById(indexConfig.getGoodsId()) == null) {
             return ServiceResultEnum.GOODS_NOT_EXIST.getResult();
         }
         if (indexConfigMapper.selectByTypeAndGoodsId(indexConfig.getConfigType(), indexConfig.getGoodsId()) != null) {
@@ -53,7 +53,7 @@ public class FlowerMallIndexConfigServiceImpl implements FlowerMallIndexConfigSe
 
     @Override
     public String updateIndexConfig(IndexConfig indexConfig) {
-        if (goodsMapper.selectByPrimaryKey(indexConfig.getGoodsId()) == null) {
+        if (goodsMapper.selectgoodsById(indexConfig.getGoodsId()) == null) {
             return ServiceResultEnum.GOODS_NOT_EXIST.getResult();
         }
         IndexConfig temp = indexConfigMapper.selectByPrimaryKey(indexConfig.getConfigId());

@@ -13,19 +13,17 @@ public interface NewBeeMallGoodsMapper {
 
     int insert(MallGoods record);
 
-    int insertSelective(MallGoods record);
+    int insertFlowerMallGoods(MallGoods record);
 
-    MallGoods selectByPrimaryKey(Long goodsId);
+    MallGoods selectgoodsById(Long goodsId);
 
-    MallGoods selectByCategoryIdAndName(@Param("goodsName") String goodsName, @Param("goodsCategoryId") Long goodsCategoryId);
-
-    int updateByPrimaryKeySelective(MallGoods record);
+    int updateGoods(MallGoods record);
 
     int updateByPrimaryKeyWithBLOBs(MallGoods record);
 
     int updateByPrimaryKey(MallGoods record);
 
-    List<MallGoods> findNewBeeMallGoodsList(PageQueryUtil pageUtil);
+    List<MallGoods> getFlowerMallGoodsPage(PageQueryUtil pageUtil);
 
     int getTotalNewBeeMallGoods(PageQueryUtil pageUtil);
 

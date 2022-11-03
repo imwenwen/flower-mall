@@ -35,7 +35,7 @@ public class NewBeeMallShoppingCartServiceImpl implements NewBeeMallShoppingCart
             temp.setGoodsCount(mallShoppingCartItem.getGoodsCount());
             return updateNewBeeMallCartItem(temp);
         }
-        MallGoods mallGoods = newBeeMallGoodsMapper.selectByPrimaryKey(mallShoppingCartItem.getGoodsId());
+        MallGoods mallGoods = newBeeMallGoodsMapper.selectgoodsById(mallShoppingCartItem.getGoodsId());
         //商品为空
         if (mallGoods == null) {
             return ServiceResultEnum.GOODS_NOT_EXIST.getResult();

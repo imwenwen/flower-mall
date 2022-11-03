@@ -7,14 +7,14 @@ import com.flower.mall.util.PageResult;
 
 import java.util.List;
 
-public interface NewBeeMallGoodsService {
+public interface FlowerMallGoodsService {
     /**
      * 后台分页
      *
      * @param pageUtil
      * @return
      */
-    PageResult getNewBeeMallGoodsPage(PageQueryUtil pageUtil);
+    PageResult getFlowerMallGoodsPage(PageQueryUtil pageUtil);
 
     /**
      * 添加商品
@@ -22,7 +22,7 @@ public interface NewBeeMallGoodsService {
      * @param goods
      * @return
      */
-    String saveNewBeeMallGoods(MallGoods goods);
+    String saveFlowerMallGoods(MallGoods goods);
 
     /**
      * 批量新增商品数据
@@ -46,7 +46,7 @@ public interface NewBeeMallGoodsService {
      * @param id
      * @return
      */
-    MallGoods getNewBeeMallGoodsById(Long id);
+    MallGoods getFlowerMallGoodsById(Long id);
 
     /**
      * 批量修改销售状态(上架下架)

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="mall/header::head-fragment('花花的店-个人中心','personal')">
 </head>
-<link th:href="@{/mall/css/bootstrap-modal.css}" rel="stylesheet">
+<link th:href="@{/static/mall/css/bootstrap-modal.css}" rel="stylesheet">
 <body>
 <header th:replace="mall/header::header-fragment"></header>
 <!-- nav -->
@@ -85,11 +85,11 @@
 <div th:replace="mall/footer::footer-fragment"></div>
 
 <!-- jQuery -->
-<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/static/admin/plugins/jquery/jquery.min.js}"></script>
 <!-- Bootstrap 3 -->
-<script th:src="@{/mall/js/bootstrap3.js}"></script>
-<script th:src="@{/mall/js/search.js}" type="text/javascript"></script>
-<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/static/mall/js/bootstrap3.js}"></script>
+<script th:src="@{/static/mall/js/search.js}" type="text/javascript"></script>
+<script th:src="@{/static/admin/plugins/sweetalert/sweetalert.min.js}"></script>
 <script type="text/javascript">
     function openUpdateModal() {
         $('#personalInfoModal').modal('show');

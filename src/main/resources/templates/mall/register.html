@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>花花的店-注册</title>
-    <link rel="stylesheet" th:href="@{mall/css/common.css}">
-    <link rel="stylesheet" th:href="@{mall/styles/login.css}">
-    <link rel="stylesheet" th:href="@{mall/styles/header.css}">
-    <link rel="stylesheet" th:href="@{/admin/plugins/sweetalert/sweetalert.css}"/>
+    <link rel="stylesheet" th:href="@{/staticmall/css/common.css}">
+    <link rel="stylesheet" th:href="@{/staticmall/styles/login.css}">
+    <link rel="stylesheet" th:href="@{/staticmall/styles/header.css}">
+    <link rel="stylesheet" th:href="@{/static/admin/plugins/sweetalert/sweetalert.css}"/>
 </head>
 <body>
 <div class="top center">
@@ -39,7 +39,7 @@
                         验证码:&nbsp;
                         <input class="login-info-input verify-code" type="text" name="verifyCode" id="verifyCode"
                                placeholder="请输入验证码"/>
-                        <img alt="单击图片刷新！" style="top: 16px;position: relative;" th:src="@{/common/mall/kaptcha}"
+                        <img alt="单击图片刷新！" style="top: 16px;position: relative;" th:src="@{/static/common/mall/kaptcha}"
                              onclick="this.src='/common/mall/kaptcha?d='+new Date()*1">
                     </div>
                 </div>
@@ -52,9 +52,9 @@
 </div>
 </body>
 <!-- jQuery -->
-<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
-<script th:src="@{/admin/dist/js/public.js}"></script>
-<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/static/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/static/admin/dist/js/public.js}"></script>
+<script th:src="@{/static/admin/plugins/sweetalert/sweetalert.min.js}"></script>
 <script type="text/javascript">
 
     //注册按钮onclick事件改为register()即可

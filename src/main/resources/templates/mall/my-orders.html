@@ -28,8 +28,8 @@
                             <ul class="order-list">
                                 <th:block th:if="${#lists.isEmpty(orderPageResult.list)}">
                                     <img style="margin-top: 16px;"
-                                         th:src="@{/mall/image/null-content.png}">
-                                    <small><a th:href="@{/index}">&nbsp;&nbsp;&nbsp;&nbsp;去购物&gt;</a>
+                                         th:src="@{/static/mall/image/null-content.png}">
+                                    <small><a th:href="@{/static/index}">&nbsp;&nbsp;&nbsp;&nbsp;去购物&gt;</a>
                                     </small>
                                 </th:block>
                                 <th:block th:unless="${#lists.isEmpty(orderPageResult.list)}">
@@ -75,13 +75,13 @@
                                                                 <li>
                                                                     <div class="figure figure-thumb">
                                                                         <a target="_blank"
-                                                                           th:href="@{'/goods/detail/'+${item.goodsId}}">
-                                                                            <img th:src="@{${item.goodsCoverImg}}"
+                                                                           th:href="@{/static'/goods/detail/'+${item.goodsId}}">
+                                                                            <img th:src="@{/static${item.goodsCoverImg}}"
                                                                                  width="80" height="80" alt="">
                                                                         </a>
                                                                     </div>
                                                                     <p class="name"><a target="_blank"
-                                                                                       th:href="@{'/goods/detail/'+${item.goodsId}}"
+                                                                                       th:href="@{/static'/goods/detail/'+${item.goodsId}}"
                                                                                        th:text="${item.goodsName}">newbee</a>
                                                                     </p>
                                                                     <p class="price"
@@ -91,7 +91,7 @@
                                                         </ul>
                                                     </td>
                                                     <td class="order-actions"><a class="btn btn-small btn-line-gray"
-                                                                                 th:href="@{${'/orders/'+order.orderNo}}">订单详情</a>
+                                                                                 th:href="@{/static${'/orders/'+order.orderNo}}">订单详情</a>
                                                     </td>
                                                 </tr>
                                                 </tbody>
@@ -107,22 +107,22 @@
                             <div class="newbee-pagenavi">
                                 <th:block th:if="${orderPageResult.currPage-2 >=1}"><a
                                         class="numbers"
-                                        th:href="@{'/orders?page=' + ${orderPageResult.currPage-2}}"
+                                        th:href="@{/static'/orders?page=' + ${orderPageResult.currPage-2}}"
                                         th:text="${orderPageResult.currPage -2}">1</a>
                                 </th:block>
                                 <th:block th:if="${orderPageResult.currPage-1 >=1}"><a
                                         class="numbers"
-                                        th:href="@{'/orders?page=' + ${orderPageResult.currPage-1}}"
+                                        th:href="@{/static'/orders?page=' + ${orderPageResult.currPage-1}}"
                                         th:text="${orderPageResult.currPage -1}">1</a>
                                 </th:block>
                                 <a href="##" class="numbers current" th:text="${orderPageResult.currPage}">1</a>
                                 <th:block th:if="${orderPageResult.currPage+1<=orderPageResult.totalPage}"><a
                                         class="numbers"
-                                        th:href="@{'/orders?page=' + ${orderPageResult.currPage+1}}"
+                                        th:href="@{/static'/orders?page=' + ${orderPageResult.currPage+1}}"
                                         th:text="${orderPageResult.currPage +1}">1</a></th:block>
                                 <th:block th:if="${orderPageResult.currPage+2<=orderPageResult.totalPage}"><a
                                         class="numbers"
-                                        th:href="@{'/orders?page=' + ${orderPageResult.currPage+2}}"
+                                        th:href="@{/static'/orders?page=' + ${orderPageResult.currPage+2}}"
                                         th:text="${orderPageResult.currPage +2}">1</a></th:block>
                             </div>
                         </div>
@@ -138,8 +138,8 @@
 <div th:replace="mall/footer::footer-fragment"></div>
 
 <!-- jQuery -->
-<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
-<script th:src="@{/mall/js/search.js}" type="text/javascript"></script>
+<script th:src="@{/static/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/static/mall/js/search.js}" type="text/javascript"></script>
 
 </body>
 </html>

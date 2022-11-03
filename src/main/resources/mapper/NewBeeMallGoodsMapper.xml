@@ -40,21 +40,10 @@
             (#{goods.goodsName},#{goods.goodsIntro},#{goods.goodsCategoryId},#{goods.goodsCoverImg},#{goods.goodsCarousel},#{goods.goodsDetailContent},#{goods.originalPrice},#{goods.sellingPrice},#{goods.stockNum})
         </foreach>
     </insert>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
-        select
-        <include refid="Base_Column_List"/>
-        ,
-        <include refid="Blob_Column_List"/>
+    <select id="selectgoodsById" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+        select *
         from mall_goods_info
         where goods_id = #{goodsId,jdbcType=BIGINT}
-    </select>
-    <select id="selectByCategoryIdAndName" resultMap="ResultMapWithBLOBs">
-        select
-        <include refid="Base_Column_List"/>
-        ,
-        <include refid="Blob_Column_List"/>
-        from mall_goods_info
-        where goods_name = #{goodsName,jdbcType=VARCHAR} and goods_category_id = #{goodsCategoryId,jdbcType=BIGINT}
     </select>
     <update id="updateStockNum">
         <foreach collection="stockNumDTOS" item="stockNumDTO">
@@ -75,7 +64,7 @@
             #{id}
         </foreach>
     </update>
-    <select id="findNewBeeMallGoodsList" parameterType="Map" resultMap="BaseResultMap">
+    <select id="getFlowerMallGoodsPage" parameterType="Map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from mall_goods_info
@@ -199,7 +188,7 @@
       #{updateUser,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{goodsDetailContent,jdbcType=LONGVARCHAR}
       )
   </insert>
-    <insert id="insertSelective" parameterType="com.flower.mall.entity.MallGoods">
+    <insert id="insertFlowerMallGoods" parameterType="com.flower.mall.entity.MallGoods">
         insert into mall_goods_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="goodsId != null">
@@ -302,7 +291,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.flower.mall.entity.MallGoods">
+    <update id="updateGoods" parameterType="com.flower.mall.entity.MallGoods">
         update mall_goods_info
         <set>
             <if test="goodsName != null">

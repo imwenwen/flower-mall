@@ -68,9 +68,9 @@ INSERT INTO `mall_carousel` VALUES (14, 'http://localhost:8081/upload/20221031_2
 -- ----------------------------
 DROP TABLE IF EXISTS `mall_goods_category`;
 CREATE TABLE `mall_goods_category`  (
-                                        `category_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '分类id',
+                                        `goods_category_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '分类id',
                                         `category_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '分类名称',
-                                        PRIMARY KEY (`category_id`) USING BTREE
+                                        PRIMARY KEY (`goods_category_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 107 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------

@@ -11,7 +11,7 @@ public class GoodsCategory {
     /**
      * 分类id
      */
-    private Long categoryId;
+    private Long goodsCategoryId;
 
     /**
      * 分类名称

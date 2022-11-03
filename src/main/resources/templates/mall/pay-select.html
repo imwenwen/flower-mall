@@ -37,11 +37,11 @@
                         <ul class="clearfix payment-list J_paymentList J_linksign-customize">
                             <li class="J_alipay">
                                 <input type="radio" name="payOnlineBank" id="alipay" value="alipay">
-                                <img onclick="payOrder(1)" th:src="@{/mall/image/pay/payOnline_zfb.png}" alt="支付宝"
+                                <img onclick="payOrder(1)" th:src="@{/static/mall/image/pay/payOnline_zfb.png}" alt="支付宝"
                                      style="margin-left: 0;"></li>
                             <li id="J_weixin">
                                 <input type="radio" name="payOnlineBank" id="alipay" value="alipay">
-                                <img onclick="payOrder(2)" th:src="@{/mall/image/pay/weixinpay.png}" alt="微信支付"
+                                <img onclick="payOrder(2)" th:src="@{/static/mall/image/pay/weixinpay.png}" alt="微信支付"
                                      style="margin-left: 0;">
                             </li>
                         </ul>
@@ -56,7 +56,7 @@
 <div th:replace="mall/footer::footer-fragment"></div>
 
 <!-- jQuery -->
-<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/static/admin/plugins/jquery/jquery.min.js}"></script>
 <script type="text/javascript">
     //给出提醒
     $('.J_bank').click(function () {

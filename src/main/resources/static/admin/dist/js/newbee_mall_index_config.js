@@ -7,7 +7,6 @@ $(function () {
         colModel: [
             {label: 'id', name: 'configId', index: 'configId', width: 50, key: true, hidden: true},
             {label: '配置项名称', name: 'configName', index: 'configName', width: 180},
-            {label: '跳转链接', name: 'redirectUrl', index: 'redirectUrl', width: 120},
             {label: '排序值', name: 'configRank', index: 'configRank', width: 120},
             {label: '商品编号', name: 'goodsId', index: 'goodsId', width: 120},
             {label: '添加时间', name: 'createTime', index: 'createTime', width: 120}
@@ -64,7 +63,6 @@ function configAdd() {
 $('#saveButton').click(function () {
     var configName = $("#configName").val();
     var configType = $("#configType").val();
-    var redirectUrl = $("#redirectUrl").val();
     var goodsId = $("#goodsId").val();
     var configRank = $("#configRank").val();
     if (!validCN_ENString2_18(configName)) {
@@ -74,7 +72,6 @@ $('#saveButton').click(function () {
         var data = {
             "configName": configName,
             "configType": configType,
-            "redirectUrl": redirectUrl,
             "goodsId": goodsId,
             "configRank": configRank
         };
@@ -86,7 +83,6 @@ $('#saveButton').click(function () {
                 "configId": id,
                 "configName": configName,
                 "configType": configType,
-                "redirectUrl": redirectUrl,
                 "goodsId": goodsId,
                 "configRank": configRank
             };
@@ -131,7 +127,6 @@ function configEdit() {
     $('#indexConfigModal').modal('show');
     $("#configId").val(id);
     $("#configName").val(rowData.configName);
-    $("#redirectUrl").val(rowData.redirectUrl);
     $("#goodsId").val(rowData.goodsId);
     $("#configRank").val(rowData.configRank);
 }

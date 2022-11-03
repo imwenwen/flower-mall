@@ -5,10 +5,9 @@ import com.flower.mall.common.Constants;
 import com.flower.mall.common.NewBeeMallException;
 import com.flower.mall.common.ServiceResultEnum;
 import com.flower.mall.controller.vo.FlowerMallGoodsDetailVO;
-import com.flower.mall.controller.vo.FlowerMallSearchPageCategoryVO;
 import com.flower.mall.entity.MallGoods;
 import com.flower.mall.service.FlowerMallCategoryService;
-import com.flower.mall.service.NewBeeMallGoodsService;
+import com.flower.mall.service.FlowerMallGoodsService;
 import com.flower.mall.util.BeanUtil;
 import com.flower.mall.util.PageQueryUtil;
 import org.springframework.stereotype.Controller;
@@ -25,7 +24,7 @@ import java.util.Map;
 public class GoodsController {
 
     @Resource
-    private NewBeeMallGoodsService newBeeMallGoodsService;
+    private FlowerMallGoodsService flowerMallGoodsService;
     @Resource
     private FlowerMallCategoryService flowerMallCategoryService;
 
@@ -51,7 +50,7 @@ public class GoodsController {
         params.put("goodsSellStatus", Constants.SELL_STATUS_UP);
         //封装商品数据
         PageQueryUtil pageUtil = new PageQueryUtil(params);
-        request.setAttribute("pageResult", newBeeMallGoodsService.searchNewBeeMallGoods(pageUtil));
+        request.setAttribute("pageResult", flowerMallGoodsService.searchNewBeeMallGoods(pageUtil));
         return "mall/search";
     }
 
@@ -60,7 +59,7 @@ public class GoodsController {
         if (goodsId < 1) {
             NewBeeMallException.fail("参数异常");
         }
-        MallGoods goods = newBeeMallGoodsService.getNewBeeMallGoodsById(goodsId);
+        MallGoods goods = flowerMallGoodsService.getFlowerMallGoodsById(goodsId);
         if (Constants.SELL_STATUS_UP != goods.getGoodsSellStatus()) {
             NewBeeMallException.fail(ServiceResultEnum.GOODS_PUT_DOWN.getResult());
         }
