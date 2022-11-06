@@ -154,12 +154,13 @@
 }
 
 #nav .banner_x .logo {
-    width: 240px;
+    width: 300px;
     text-indent: -10000px;
-    background: url(../image/login-logo-2.png) no-repeat;
+    background: url(../image/login-logo-23.png) no-repeat;
     background-size: 100%;
     background-position: center;
-    margin-top: 10px;
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 #nav .banner_x .icon-search {

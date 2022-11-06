@@ -26,8 +26,8 @@ public class NewBeeMallCarouselController {
 
     @GetMapping("/carousels")
     public String carouselPage(HttpServletRequest request) {
-        request.setAttribute("path", "newbee_mall_carousel");
-        return "admin/newbee_mall_carousel";
+        request.setAttribute("path", "mall_carousel");
+        return "admin/flower_mall_carousel";
     }
 
     /**

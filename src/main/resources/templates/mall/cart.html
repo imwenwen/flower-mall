@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>花花的店-购物车</title>
-    <link rel="stylesheet" th:href="@{/staticmall/css/iconfont.css}">
-    <link rel="stylesheet" th:href="@{/staticmall/css/common.css}">
-    <link rel="stylesheet" th:href="@{/staticmall/styles/header.css}">
-    <link rel="stylesheet" th:href="@{/staticmall/styles/cart.css}">
+    <link rel="stylesheet" th:href="@{/static/mall/css/iconfont.css}">
+    <link rel="stylesheet" th:href="@{/static/mall/css/common.css}">
+    <link rel="stylesheet" th:href="@{/static/mall/styles/header.css}">
+    <link rel="stylesheet" th:href="@{/static/mall/styles/cart.css}">
     <link rel="stylesheet" th:href="@{/static/admin/plugins/sweetalert/sweetalert.css}"/>
 </head>
 <body>
@@ -15,7 +15,7 @@
     <div class="banner_x center">
         <a th:href="@{/static/index}" target="_blank">
             <div class="logo fl">
-                <img src="mall/image/new-bee-logo-3.png"/>
+                <img src="/static/mall/image/new-bee-logo-3.png"/>
             </div>
         </a>
 
@@ -46,7 +46,7 @@
                     <div class="content2 center">
                         <div class="sub_content fl ">
                         </div>
-                        <div class="sub_content cover fl"><img th:src="@{/static${item.goodsCoverImg}}"></div>
+                        <div class="sub_content cover fl"><img th:src="@{${item.goodsCoverImg}}"></div>
                         <div class="sub_content fl ft20" th:text="${item.goodsName}">商品名称</div>
                         <div class="sub_content fl" th:text="${item.sellingPrice+'元'}">1299元</div>
                         <div class="sub_content fl">
@@ -66,7 +66,7 @@
         <div class="pre_order mt20 center">
             <div class="tips fl ml20">
                 <ul>
-                    <li><a th:href="@{/static/index}">继续购物</a></li>
+                    <li><a th:href="@{/index}">继续购物</a></li>
                     <li>|</li>
                     <li>共<span th:text="${itemsTotal}">13</span>件商品</li>
                     <div class="clear"></div>
