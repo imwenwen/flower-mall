@@ -56,6 +56,9 @@
                             <button class="btn btn-danger" onclick="putDownGoods()"><i
                                     class="fa fa-arrow-down"></i>&nbsp;下架商品
                             </button>
+                            <button class="btn btn-info" onclick="addCategory()"><i
+                                    class="fa fa-plus"></i>&nbsp;添加分类
+                            </button>
                         </div>
                         <table id="jqGrid" class="table table-bordered">
                         </table>
@@ -63,6 +66,40 @@
                     </div><!-- /.card-body -->
                 </div>
             </div><!-- /.container-fluid -->
+        </div>
+        <div class="content">
+            <!-- 模态框（Modal） -->
+            <div class="modal fade" id="carouselModal" tabindex="-1" role="dialog"
+                 aria-labelledby="carouselModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h6 class="modal-title" id="carouselModalLabel">Modal</h6>
+                        </div>
+                        <div class="modal-body">
+                            <form id="indexConfigForm">
+                                <div class="form-group">
+                                    <div class="alert alert-danger" id="edit-error-msg" style="display: none;">
+                                        错误信息展示栏。
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="categoryName" class="control-label">分类名称:</label>
+                                    <input type="text" class="form-control" id="categoryName" name="categoryName"
+                                           placeholder="请输入分类名称">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" id="saveButton">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal -->
         </div>
     </div>
     <!-- /.content-wrapper -->

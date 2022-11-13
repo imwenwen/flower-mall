@@ -5,7 +5,7 @@
 <body>
 <header th:replace="mall/header::header-fragment"></header>
 
-<div id="detail">
+<div id="detail" style="height: 1000px;background-color:#ececec">
     <!-- nav -->
     <nav th:replace="mall/header::nav-fragment"></nav>
 
@@ -16,18 +16,19 @@
         </div>
     </div>
 
-    <div class="intro mt20 w clearfix">
+    <div class="intro mt20 w clearfix" >
         <div class="left fl" style="position: relative;">
             <div class="swiper-container fl">
-                <img th:src="@{/static${goodsDetail.goodsCoverImg}}">
+                <img th:src="@{${goodsDetail.goodsCoverImg}}">
             </div>
         </div>
         <div class="right fr">
-            <div class="h3 ml20 mt20" th:text="${goodsDetail.goodsName}">NewBeeMall</div>
-            <div class="sub_title mr40 ml20 mt10" th:text="${goodsDetail.goodsIntro}">NewBeeMall</div>
+            <div class="h3 ml20 mt20" th:text="${goodsDetail.goodsName}">goodsName</div>
+            <div class="sub_title mr40 ml20 mt10" th:text="${goodsDetail.goodsIntro}">goodsIntro</div>
             <div class="item_price mr40 ml20 mt10">
                 <th:block th:text="${goodsDetail.sellingPrice}+'.00 元'"></th:block>
                 <del>
+                    <span>原价</span>
                     <th:block th:text="${goodsDetail.originalPrice}+'.00 元'"></th:block>
                 </del>
             </div>
@@ -39,31 +40,18 @@
             <div class="tb-extra ml20" id="J_tbExtra">
                 <dl>
                     <dt>承诺</dt>
-                    <dd><a class="J_Cont" title="满足7天无理由退换货申请的前提下，包邮商品需要买家承担退货邮费，非包邮商品需要买家承担发货和退货邮费。" href="#"
-                           target="_blank"><img th:src="@{/static/mall/image/7d.jpg}">7天无理由</a></dd>
-                </dl>
-                <dl>
-                    <dt>支付</dt>
-                    <dd><a href="##" target="_blank"><img th:src="@{/static/mall/image/hua.png}">蚂蚁花呗</a><a href="##"
-                                                                                                     target="_blank"><img
-                            th:src="@{/static/mall/image/card.png}">信用卡支付</a><a href="##" target="_blank"><img
-                            th:src="@{/static/mall/image/ji.png}">集分宝</a></dd>
+                    <dd>💐鲜花都是使用最新花材</dd>
                 </dl>
                 <dl>
                     <dt>支持</dt>
-                    <dd>折旧变现，买新更省钱。<a style="float:none;text-decoration: underline;" href="##">详情</a></dd>
+                    <dd>若有因其他不可抗因素本店都将无理由支持退换货！！</dd>
                 </dl>
 
             </div>
         </div>
-        <div class="clear"></div>
-    </div>
-    <!-- 这里使用的是 th:utext 标签，用 th:text 不会解析 html，用 th:utext 会解析 html -->
-    <div class="goods mt20 w clearfix" th:utext="${goodsDetail.goodsDetailContent}">
+
     </div>
 </div>
-
-<div th:replace="mall/footer::footer-fragment"></div>
 
 <!-- jQuery -->
 <script th:src="@{/static/admin/plugins/jquery/jquery.min.js}"></script>

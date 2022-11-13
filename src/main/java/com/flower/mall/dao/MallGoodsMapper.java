@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface NewBeeMallGoodsMapper {
+public interface MallGoodsMapper {
     int deleteByPrimaryKey(Long goodsId);
 
     int insert(MallGoods record);

@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @MapperScan("com.flower.mall.dao")
 @SpringBootApplication
-public class NewBeeMallApplication {
+public class FlowerApplication {
     public static void main(String[] args) {
-        SpringApplication.run(NewBeeMallApplication.class, args);
+        SpringApplication.run(FlowerApplication.class, args);
     }
 }

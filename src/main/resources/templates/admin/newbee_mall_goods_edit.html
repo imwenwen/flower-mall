@@ -32,7 +32,7 @@
                                        th:value="${goods!=null and goods.goodsName!=null }?${goods.goodsName}: ''"
                                        required="true">
                             </div>
-                                <div class="form-group " style="display:flex;">
+                            <div class="form-group " style="display:flex;">
                                     <label  class="control-label col-lg-4">商品简介</label>
                                 <input type="text" class="form-control col-sm-6" id="goodsIntro" name="goodsIntro"
                                        placeholder="*请输入商品简介(100字以内)"
@@ -46,7 +46,7 @@
                                 </select>
                             </div>
                             <div class="form-group" style="display:flex;">
-                                <label  class="control-label col-lg-4">商品分类</label>
+                                <label  class="control-label col-lg-4">商品价格</label>
                                 <input type="number" class="form-control col-sm-6" id="originalPrice"
                                        name="originalPrice"
                                        placeholder="*请输入商品价格"
@@ -88,7 +88,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-4">
                                         <th:block th:if="${null == goods}">
-                                            <img id="goodsCoverImg" src="/admin/dist/img/img-upload.png"
+                                            <img id="goodsCoverImg" src="/static/admin/dist/img/img-upload.png"
                                                  style="height: 64px;width: 64px;">
                                         </th:block>
                                         <th:block th:unless="${null == goods}">
@@ -107,8 +107,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group" id="wangEditor" th:utext="${goods!=null and goods.goodsDetailContent !=null}?${goods.goodsDetailContent}: ''">
+                            <div class="form-group " style="display:flex;">
+                                <label  class="control-label col-lg-4">商品详细信息</label>
+                                <input type="text" class="form-control col-sm-6" id="goodsDetailContent" name="goodsDetailContent"
+                                       placeholder="请输入商品详细信息"
+                                       th:value="${goods!=null and goods.goodsDetailContent!=null }?${goods.goodsDetailContent}: ''"
+                                       >
                             </div>
+<!--                            <div class="form-group" id="wangEditor" th:utext="${goods!=null and goods.goodsDetailContent !=null}?${goods.goodsDetailContent}: ''">-->
+<!--                            </div>-->
                             <div class="form-group">
                                 <!-- 按钮 -->
                                 &nbsp;<button class="btn btn-info float-right" style="margin-left: 5px;"
@@ -140,10 +147,10 @@
 <!-- ajaxupload -->
 <script th:src="@{/static/admin/plugins/ajaxupload/ajaxupload.js}"></script>
 <!-- wangEditor -->
-<script type="text/javascript" src="//unpkg.com/wangeditor/dist/wangEditor.min.js"></script>
+<!--<script type="text/javascript" src="//unpkg.com/wangeditor/dist/wangEditor.min.js"></script>-->
 <script th:src="@{/static/admin/dist/js/public.js}"></script>
 <script>
-    var editorD;
+
 
     $(function () {
 
@@ -153,50 +160,6 @@
                 version=name;
             }
         };
-
-        //富文本编辑器 用于商品详情编辑
-        const E = window.wangEditor;
-        editorD = new E('#wangEditor')
-        // 设置编辑区域高度为 750px
-        editorD.config.height = 750
-        //配置服务端图片上传地址
-        editorD.config.uploadImgServer = '/admin/upload/files'
-        editorD.config.uploadFileName = 'files'
-        //限制图片大小 2M
-        editorD.config.uploadImgMaxSize = 2 * 1024 * 1024
-        //限制一次最多能传几张图片 一次最多上传 5 个图片
-        editorD.config.uploadImgMaxLength = 5
-        //隐藏插入网络图片的功能
-        editorD.config.showLinkImg = false
-        editorD.config.uploadImgHooks = {
-            // 图片上传并返回了结果，图片插入已成功
-            success: function (xhr) {
-                console.log('success', xhr)
-            },
-            // 图片上传并返回了结果，但图片插入时出错了
-            fail: function (xhr, editor, resData) {
-                console.log('fail', resData)
-            },
-            // 上传图片出错，一般为 http 请求的错误
-            error: function (xhr, editor, resData) {
-                console.log('error', xhr, resData)
-            },
-            // 上传图片超时
-            timeout: function (xhr) {
-                console.log('timeout')
-            },
-            customInsert: function (insertImgFn, result) {
-                if (result != null && result.resultCode == 200) {
-                    // insertImgFn 可把图片插入到编辑器，传入图片 src ，执行函数即可
-                    result.data.forEach(img => {
-                        insertImgFn(img)
-                    });
-                } else {
-                    alert("error");
-                }
-            }
-        }
-        editorD.create();
 
         //图片上传插件初始化 用于商品预览图上传
         new AjaxUpload('#uploadGoodsCoverImg', {
@@ -232,9 +195,9 @@
         var goodsIntro = $('#goodsIntro').val();
         var stockNum = $('#stockNum').val();
         var goodsSellStatus = $("input[name='goodsSellStatus']:checked").val();
-        var goodsDetailContent = editorD.txt.html();
+        var goodsDetailContent = $('#goodsDetailContent').val();
         var goodsCoverImg = $('#goodsCoverImg')[0].src;
-        console.log("11111111"+goodsCategoryId);
+
         if (isNull(goodsName)) {
             swal("请输入商品名称", {
                 icon: "error",

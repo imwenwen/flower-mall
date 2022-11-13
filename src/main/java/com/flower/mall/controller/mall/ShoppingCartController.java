@@ -2,12 +2,12 @@
 package com.flower.mall.controller.mall;
 
 import com.flower.mall.common.Constants;
-import com.flower.mall.common.NewBeeMallException;
+import com.flower.mall.common.MyException;
 import com.flower.mall.common.ServiceResultEnum;
 import com.flower.mall.controller.vo.FlowerMallShoppingCartItemVO;
 import com.flower.mall.controller.vo.FlowerMallUserVO;
 import com.flower.mall.entity.MallShoppingCartItem;
-import com.flower.mall.service.NewBeeMallShoppingCartService;
+import com.flower.mall.service.ShoppingCartService;
 import com.flower.mall.util.Result;
 import com.flower.mall.util.MallResult;
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,7 @@ import java.util.List;
 public class ShoppingCartController {
 
     @Resource
-    private NewBeeMallShoppingCartService newBeeMallShoppingCartService;
+    private ShoppingCartService shoppingCartService;
 
     @GetMapping("/shop-cart")
     public String cartListPage(HttpServletRequest request,
@@ -31,19 +31,19 @@ public class ShoppingCartController {
         FlowerMallUserVO user = (FlowerMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         int itemsTotal = 0;
         int priceTotal = 0;
-        List<FlowerMallShoppingCartItemVO> myShoppingCartItems = newBeeMallShoppingCartService.getMyShoppingCartItems(user.getUserId());
+        List<FlowerMallShoppingCartItemVO> myShoppingCartItems = shoppingCartService.getMyShoppingCartItems(user.getUserId());
         if (!CollectionUtils.isEmpty(myShoppingCartItems)) {
             //购物项总数
             itemsTotal = myShoppingCartItems.stream().mapToInt(FlowerMallShoppingCartItemVO::getGoodsCount).sum();
             if (itemsTotal < 1) {
-                NewBeeMallException.fail("购物项不能为空");
+                MyException.fail("购物项不能为空");
             }
             //总价
             for (FlowerMallShoppingCartItemVO flowerMallShoppingCartItemVO : myShoppingCartItems) {
                 priceTotal += flowerMallShoppingCartItemVO.getGoodsCount() * flowerMallShoppingCartItemVO.getSellingPrice();
             }
             if (priceTotal < 1) {
-                NewBeeMallException.fail("购物项价格异常");
+                MyException.fail("购物项价格异常");
             }
         }
         request.setAttribute("itemsTotal", itemsTotal);
@@ -58,7 +58,7 @@ public class ShoppingCartController {
                                                  HttpSession httpSession) {
         FlowerMallUserVO user = (FlowerMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         mallShoppingCartItem.setUserId(user.getUserId());
-        String saveResult = newBeeMallShoppingCartService.saveNewBeeMallCartItem(mallShoppingCartItem);
+        String saveResult = shoppingCartService.saveNewBeeMallCartItem(mallShoppingCartItem);
         //添加成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(saveResult)) {
             return MallResult.createSuccessRes();
@@ -73,7 +73,7 @@ public class ShoppingCartController {
                                                    HttpSession httpSession) {
         FlowerMallUserVO user = (FlowerMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         mallShoppingCartItem.setUserId(user.getUserId());
-        String updateResult = newBeeMallShoppingCartService.updateNewBeeMallCartItem(mallShoppingCartItem);
+        String updateResult = shoppingCartService.updateNewBeeMallCartItem(mallShoppingCartItem);
         //修改成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(updateResult)) {
             return MallResult.createSuccessRes();
@@ -87,7 +87,7 @@ public class ShoppingCartController {
     public Result updateNewBeeMallShoppingCartItem(@PathVariable("newBeeMallShoppingCartItemId") Long newBeeMallShoppingCartItemId,
                                                    HttpSession httpSession) {
         FlowerMallUserVO user = (FlowerMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        Boolean deleteResult = newBeeMallShoppingCartService.deleteById(newBeeMallShoppingCartItemId,user.getUserId());
+        Boolean deleteResult = shoppingCartService.deleteById(newBeeMallShoppingCartItemId,user.getUserId());
         //删除成功
         if (deleteResult) {
             return MallResult.createSuccessRes();
@@ -101,7 +101,7 @@ public class ShoppingCartController {
                              HttpSession httpSession) {
         int priceTotal = 0;
         FlowerMallUserVO user = (FlowerMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        List<FlowerMallShoppingCartItemVO> myShoppingCartItems = newBeeMallShoppingCartService.getMyShoppingCartItems(user.getUserId());
+        List<FlowerMallShoppingCartItemVO> myShoppingCartItems = shoppingCartService.getMyShoppingCartItems(user.getUserId());
         if (CollectionUtils.isEmpty(myShoppingCartItems)) {
             //无数据则不跳转至结算页
             return "/shop-cart";
@@ -111,7 +111,7 @@ public class ShoppingCartController {
                 priceTotal += flowerMallShoppingCartItemVO.getGoodsCount() * flowerMallShoppingCartItemVO.getSellingPrice();
             }
             if (priceTotal < 1) {
-                NewBeeMallException.fail("购物项价格异常");
+                MyException.fail("购物项价格异常");
             }
         }
         request.setAttribute("priceTotal", priceTotal);

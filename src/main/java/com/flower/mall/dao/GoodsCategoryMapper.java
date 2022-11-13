@@ -9,4 +9,8 @@ import java.util.List;
 
 public interface GoodsCategoryMapper {
     List<GoodsCategory> getCategoryList();
+
+    int checkCategoryByName(@Param("categoryName") String categoryName);
+
+    void addCategory(@Param("categoryName")String categoryName);
 }

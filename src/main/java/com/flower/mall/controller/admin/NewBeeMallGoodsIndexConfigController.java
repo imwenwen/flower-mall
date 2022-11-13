@@ -2,7 +2,7 @@
 package com.flower.mall.controller.admin;
 
 import com.flower.mall.common.IndexConfigTypeEnum;
-import com.flower.mall.common.NewBeeMallException;
+import com.flower.mall.common.MyException;
 import com.flower.mall.common.ServiceResultEnum;
 import com.flower.mall.entity.IndexConfig;
 import com.flower.mall.service.FlowerMallIndexConfigService;
@@ -30,12 +30,12 @@ public class NewBeeMallGoodsIndexConfigController {
     public String indexConfigsPage(HttpServletRequest request, @RequestParam("configType") int configType) {
         IndexConfigTypeEnum indexConfigTypeEnum = IndexConfigTypeEnum.getIndexConfigTypeEnumByType(configType);
         if (indexConfigTypeEnum.equals(IndexConfigTypeEnum.DEFAULT)) {
-            NewBeeMallException.fail("参数异常");
+            MyException.fail("参数异常");
         }
 
         request.setAttribute("path", indexConfigTypeEnum.getName());
         request.setAttribute("configType", configType);
-        return "admin/newbee_mall_index_config";
+        return "admin/index_config";
     }
 
     /**

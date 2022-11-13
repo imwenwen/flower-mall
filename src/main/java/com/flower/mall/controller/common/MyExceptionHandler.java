@@ -1,7 +1,7 @@
 
 package com.flower.mall.controller.common;
 
-import com.flower.mall.common.NewBeeMallException;
+import com.flower.mall.common.MyException;
 import com.flower.mall.util.Result;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -13,14 +13,14 @@ import javax.servlet.http.HttpServletRequest;
  * newbee-mall全局异常处理
  */
 @RestControllerAdvice
-public class NewBeeMallExceptionHandler {
+public class MyExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public Object handleException(Exception e, HttpServletRequest req) {
         Result result = new Result();
         result.setResultCode(500);
         //区分是否为自定义异常
-        if (e instanceof NewBeeMallException) {
+        if (e instanceof MyException) {
             result.setMessage(e.getMessage());
         } else {
             e.printStackTrace();

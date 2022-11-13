@@ -6,7 +6,7 @@ import com.flower.mall.common.ServiceResultEnum;
 import com.flower.mall.controller.vo.FlowerMallUserVO;
 import com.flower.mall.dao.MallUserMapper;
 import com.flower.mall.entity.MallUser;
-import com.flower.mall.service.NewBeeMallUserService;
+import com.flower.mall.service.UserService;
 import com.flower.mall.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
-public class NewBeeMallUserServiceImpl implements NewBeeMallUserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private MallUserMapper mallUserMapper;

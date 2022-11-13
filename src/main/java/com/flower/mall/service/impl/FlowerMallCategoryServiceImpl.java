@@ -20,4 +20,20 @@ public class FlowerMallCategoryServiceImpl implements FlowerMallCategoryService 
     public List<GoodsCategory> getCategoryList() {
         return this.goodsCategoryMapper.getCategoryList();
     }
+
+    @Override
+    public boolean checkCategoryByName(String categoryName) {
+        //判断名字是否重复 count=1 已经重复了 不能在添加了
+      int count =  this.goodsCategoryMapper.checkCategoryByName(categoryName);
+      if(count==1){
+          return true;
+      }else {
+          return false;
+      }
+    }
+
+    @Override
+    public void addCategory(String categoryName) {
+        this.goodsCategoryMapper.addCategory(categoryName);
+    }
 }

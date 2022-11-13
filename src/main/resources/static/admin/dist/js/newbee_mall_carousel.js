@@ -84,7 +84,6 @@ function carouselAdd() {
 
 //绑定modal上的保存按钮
 $('#saveButton').click(function () {
-    var redirectUrl = $("#redirectUrl").val();
     var carouselRank = $("#carouselRank").val();
     var carouselUrl = $('#carouselImg')[0].src;
     var data = {
@@ -99,7 +98,6 @@ $('#saveButton').click(function () {
             "carouselId": id,
             "carouselUrl": carouselUrl,
             "carouselRank": carouselRank,
-            "redirectUrl": redirectUrl
         };
     }
     $.ajax({
@@ -189,7 +187,7 @@ function deleteCarousel() {
 
 function reset() {
     $("#carouselRank").val(0);
-    $("#carouselImg").attr("src", '/admin/dist/img/img-upload.png');
+    $("#carouselImg").attr("src", '/static/admin/dist/img/img-upload.png');
     $("#carouselImg").attr("style", "height: 64px;width: 64px;display:block;");
     $('#edit-error-msg').css("display", "none");
 }

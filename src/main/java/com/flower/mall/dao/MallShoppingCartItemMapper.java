@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface NewBeeMallShoppingCartItemMapper {
+public interface MallShoppingCartItemMapper {
     int deleteByPrimaryKey(Long cartItemId);
 
     int insert(MallShoppingCartItem record);
@@ -17,7 +17,7 @@ public interface NewBeeMallShoppingCartItemMapper {
 
     MallShoppingCartItem selectByUserIdAndGoodsId(@Param("newBeeMallUserId") Long newBeeMallUserId, @Param("goodsId") Long goodsId);
 
-    List<MallShoppingCartItem> selectByUserId(@Param("newBeeMallUserId") Long newBeeMallUserId, @Param("number") int number);
+    List<MallShoppingCartItem> selectByUserId(@Param("newBeeMallUserId") Long newBeeMallUserId);
 
     int selectCountByUserId(Long newBeeMallUserId);
 

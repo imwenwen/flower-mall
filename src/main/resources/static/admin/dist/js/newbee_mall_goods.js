@@ -77,6 +77,14 @@ function reload() {
 }
 
 /**
+ * 添加分类
+ */
+function addCategory() {
+    $('.modal-title').html('添加分类');
+    $('#carouselModal').modal('show');
+}
+
+/**
  * 添加商品
  */
 function addGoods() {
@@ -133,6 +141,40 @@ function putUpGoods() {
     )
     ;
 }
+//保存商品分类
+$('#saveButton').click(function () {
+    var categoryName = $("#categoryName").val();
+    var data = {
+        "categoryName": categoryName
+    };
+    var url = '/admin/category/save';
+    $.ajax({
+        type: 'POST',//方法类型
+        url: url,
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (result) {
+            if (result.resultCode == 200) {
+                $('#carouselModal').modal('hide');
+                swal("保存成功", {
+                    icon: "success",
+                });
+                reload();
+            } else {
+                $('#carouselModal').modal('hide');
+                swal(result.message, {
+                    icon: "error",
+                });
+            }
+            ;
+        },
+        error: function () {
+            swal("操作失败", {
+                icon: "error",
+            });
+        }
+    });
+});
 
 /**
  * 下架

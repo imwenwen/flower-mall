@@ -19,7 +19,7 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/admin")
-public class NewBeeMallCarouselController {
+public class MallCarouselController {
 
     @Resource
     FlowerMallCarouselService flowerMallCarouselService;

@@ -8,7 +8,7 @@ import com.flower.mall.util.PageResult;
 
 import javax.servlet.http.HttpSession;
 
-public interface NewBeeMallUserService {
+public interface UserService {
     /**
      * 后台分页
      *

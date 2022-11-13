@@ -4,7 +4,7 @@ package com.flower.mall.controller.admin;
 import com.flower.mall.common.ServiceResultEnum;
 import com.flower.mall.controller.vo.FlowerMallOrderItemVO;
 import com.flower.mall.entity.MallOrder;
-import com.flower.mall.service.NewBeeMallOrderService;
+import com.flower.mall.service.OrderService;
 import com.flower.mall.util.PageQueryUtil;
 import com.flower.mall.util.Result;
 import com.flower.mall.util.MallResult;
@@ -25,7 +25,7 @@ import java.util.Objects;
 public class NewBeeMallOrderController {
 
     @Resource
-    private NewBeeMallOrderService newBeeMallOrderService;
+    private OrderService orderService;
 
     @GetMapping("/orders")
     public String ordersPage(HttpServletRequest request) {
@@ -43,7 +43,7 @@ public class NewBeeMallOrderController {
             return MallResult.createFailRes("参数异常！");
         }
         PageQueryUtil pageUtil = new PageQueryUtil(params);
-        return MallResult.createSuccessRes(newBeeMallOrderService.getNewBeeMallOrdersPage(pageUtil));
+        return MallResult.createSuccessRes(orderService.getNewBeeMallOrdersPage(pageUtil));
     }
 
     /**
@@ -59,7 +59,7 @@ public class NewBeeMallOrderController {
                 || StringUtils.isEmpty(mallOrder.getUserAddress())) {
             return MallResult.createFailRes("参数异常！");
         }
-        String result = newBeeMallOrderService.updateOrderInfo(mallOrder);
+        String result = orderService.updateOrderInfo(mallOrder);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return MallResult.createSuccessRes();
         } else {
@@ -73,7 +73,7 @@ public class NewBeeMallOrderController {
     @GetMapping("/order-items/{id}")
     @ResponseBody
     public Result info(@PathVariable("id") Long id) {
-        List<FlowerMallOrderItemVO> orderItems = newBeeMallOrderService.getOrderItems(id);
+        List<FlowerMallOrderItemVO> orderItems = orderService.getOrderItems(id);
         if (!CollectionUtils.isEmpty(orderItems)) {
             return MallResult.createSuccessRes(orderItems);
         }
@@ -89,7 +89,7 @@ public class NewBeeMallOrderController {
         if (ids.length < 1) {
             return MallResult.createFailRes("参数异常！");
         }
-        String result = newBeeMallOrderService.checkDone(ids);
+        String result = orderService.checkDone(ids);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return MallResult.createSuccessRes();
         } else {
@@ -106,7 +106,7 @@ public class NewBeeMallOrderController {
         if (ids.length < 1) {
             return MallResult.createFailRes("参数异常！");
         }
-        String result = newBeeMallOrderService.checkOut(ids);
+        String result = orderService.checkOut(ids);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return MallResult.createSuccessRes();
         } else {
@@ -123,7 +123,7 @@ public class NewBeeMallOrderController {
         if (ids.length < 1) {
             return MallResult.createFailRes("参数异常！");
         }
-        String result = newBeeMallOrderService.closeOrder(ids);
+        String result = orderService.closeOrder(ids);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return MallResult.createSuccessRes();
         } else {

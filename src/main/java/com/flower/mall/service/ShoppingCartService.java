@@ -6,7 +6,7 @@ import com.flower.mall.entity.MallShoppingCartItem;
 
 import java.util.List;
 
-public interface NewBeeMallShoppingCartService {
+public interface ShoppingCartService {
 
     /**
      * 保存商品至购物车中

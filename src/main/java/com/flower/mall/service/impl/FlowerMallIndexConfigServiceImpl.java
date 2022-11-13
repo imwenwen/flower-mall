@@ -4,7 +4,7 @@ package com.flower.mall.service.impl;
 import com.flower.mall.common.ServiceResultEnum;
 import com.flower.mall.controller.vo.FlowerMallIndexConfigGoodsVO;
 import com.flower.mall.dao.IndexConfigMapper;
-import com.flower.mall.dao.NewBeeMallGoodsMapper;
+import com.flower.mall.dao.MallGoodsMapper;
 import com.flower.mall.entity.IndexConfig;
 import com.flower.mall.entity.MallGoods;
 import com.flower.mall.service.FlowerMallIndexConfigService;
@@ -27,7 +27,7 @@ public class FlowerMallIndexConfigServiceImpl implements FlowerMallIndexConfigSe
     private IndexConfigMapper indexConfigMapper;
 
     @Autowired
-    private NewBeeMallGoodsMapper goodsMapper;
+    private MallGoodsMapper goodsMapper;
 
     @Override
     public PageResult getConfigsPage(PageQueryUtil pageUtil) {

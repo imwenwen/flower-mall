@@ -3,7 +3,7 @@ package com.flower.mall.interceptor;
 
 import com.flower.mall.common.Constants;
 import com.flower.mall.controller.vo.FlowerMallUserVO;
-import com.flower.mall.dao.NewBeeMallShoppingCartItemMapper;
+import com.flower.mall.dao.MallShoppingCartItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 public class NewBeeMallCartNumberInterceptor implements HandlerInterceptor {
 
     @Autowired
-    private NewBeeMallShoppingCartItemMapper newBeeMallShoppingCartItemMapper;
+    private MallShoppingCartItemMapper mallShoppingCartItemMapper;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
@@ -31,7 +31,7 @@ public class NewBeeMallCartNumberInterceptor implements HandlerInterceptor {
             //如果当前为登陆状态，就查询数据库并设置购物车中的数量值
             FlowerMallUserVO flowerMallUserVO = (FlowerMallUserVO) request.getSession().getAttribute(Constants.MALL_USER_SESSION_KEY);
             //设置购物车中的数量
-            flowerMallUserVO.setShopCartItemCount(newBeeMallShoppingCartItemMapper.selectCountByUserId(flowerMallUserVO.getUserId()));
+            flowerMallUserVO.setShopCartItemCount(mallShoppingCartItemMapper.selectCountByUserId(flowerMallUserVO.getUserId()));
             request.getSession().setAttribute(Constants.MALL_USER_SESSION_KEY, flowerMallUserVO);
         }
         return true;

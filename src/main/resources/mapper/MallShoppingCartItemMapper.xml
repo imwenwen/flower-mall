@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.flower.mall.dao.NewBeeMallShoppingCartItemMapper">
+<mapper namespace="com.flower.mall.dao.MallShoppingCartItemMapper">
     <resultMap id="BaseResultMap" type="com.flower.mall.entity.MallShoppingCartItem">
         <id column="cart_item_id" jdbcType="BIGINT" property="cartItemId"/>
         <result column="user_id" jdbcType="BIGINT" property="userId"/>
@@ -31,7 +31,6 @@
         <include refid="Base_Column_List"/>
         from mall_shopping_cart_item
         where user_id = #{newBeeMallUserId,jdbcType=BIGINT} and deleted = 0
-        limit #{number}
     </select>
     <select id="selectCountByUserId" resultType="int">
     select

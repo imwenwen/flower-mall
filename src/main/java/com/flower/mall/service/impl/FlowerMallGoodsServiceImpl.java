@@ -1,11 +1,11 @@
 
 package com.flower.mall.service.impl;
 
-import com.flower.mall.common.NewBeeMallException;
+import com.flower.mall.common.MyException;
 import com.flower.mall.common.ServiceResultEnum;
 import com.flower.mall.controller.vo.FlowerMallSearchGoodsVO;
 import com.flower.mall.dao.GoodsCategoryMapper;
-import com.flower.mall.dao.NewBeeMallGoodsMapper;
+import com.flower.mall.dao.MallGoodsMapper;
 import com.flower.mall.entity.MallGoods;
 import com.flower.mall.service.FlowerMallGoodsService;
 import com.flower.mall.util.BeanUtil;
@@ -23,7 +23,7 @@ import java.util.List;
 public class FlowerMallGoodsServiceImpl implements FlowerMallGoodsService {
 
     @Autowired
-    private NewBeeMallGoodsMapper goodsMapper;
+    private MallGoodsMapper goodsMapper;
     @Autowired
     private GoodsCategoryMapper goodsCategoryMapper;
 
@@ -71,7 +71,7 @@ public class FlowerMallGoodsServiceImpl implements FlowerMallGoodsService {
     public MallGoods getFlowerMallGoodsById(Long id) {
         MallGoods mallGoods = goodsMapper.selectgoodsById(id);
         if (mallGoods == null) {
-            NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
+            MyException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
         }
         return mallGoods;
     }

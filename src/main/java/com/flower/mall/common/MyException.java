@@ -1,12 +1,12 @@
 
 package com.flower.mall.common;
 
-public class NewBeeMallException extends RuntimeException {
+public class MyException extends RuntimeException {
 
-    public NewBeeMallException() {
+    public MyException() {
     }
 
-    public NewBeeMallException(String message) {
+    public MyException(String message) {
         super(message);
     }
 
@@ -16,7 +16,7 @@ public class NewBeeMallException extends RuntimeException {
      * @param message
      */
     public static void fail(String message) {
-        throw new NewBeeMallException(message);
+        throw new MyException(message);
     }
 
 }

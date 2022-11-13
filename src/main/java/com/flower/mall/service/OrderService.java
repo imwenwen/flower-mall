@@ -11,7 +11,7 @@ import com.flower.mall.util.PageResult;
 
 import java.util.List;
 
-public interface NewBeeMallOrderService {
+public interface OrderService {
     /**
      * 后台分页
      *

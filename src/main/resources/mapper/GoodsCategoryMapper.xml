@@ -5,7 +5,13 @@
         <id column="goods_category_id" jdbcType="BIGINT" property="goodsCategoryId"/>
         <result column="category_name" jdbcType="VARCHAR" property="categoryName"/>
     </resultMap>
+    <insert id="addCategory">
+        INSERT INTO `mall_goods_category`(`category_name`)VALUES(#{categoryName})
+    </insert>
     <select id="getCategoryList" resultMap="BaseResultMap" >
         select goods_category_id, category_name from mall_goods_category
+    </select>
+    <select id="checkCategoryByName" resultType="java.lang.Integer">
+        select count(1) from mall_goods_category where category_name = #{categoryName}  limit 1;
     </select>
 </mapper>

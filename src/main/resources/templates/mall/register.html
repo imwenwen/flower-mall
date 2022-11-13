@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>花花的店-注册</title>
-    <link rel="stylesheet" th:href="@{/staticmall/css/common.css}">
-    <link rel="stylesheet" th:href="@{/staticmall/styles/login.css}">
-    <link rel="stylesheet" th:href="@{/staticmall/styles/header.css}">
+    <link rel="stylesheet" th:href="@{/static/mall/css/common.css}">
+    <link rel="stylesheet" th:href="@{/static/mall/styles/login.css}">
+    <link rel="stylesheet" th:href="@{/static/mall/styles/header.css}">
     <link rel="stylesheet" th:href="@{/static/admin/plugins/sweetalert/sweetalert.css}"/>
 </head>
 <body>
 <div class="top center">
     <div class="logo center">
-        <a href="./index.html" target="_blank"><img src="mall/image/login-logo-2.png" alt=""></a>
+        <a href="./index.html" target="_blank"><img src="/static/mall/image/login-logo-2.png" alt=""></a>
     </div>
 </div>
 
@@ -19,7 +19,7 @@
     <div class="login">
         <div class="login_center">
             <div class="login_top">
-                <div class="left fl">会员注册</div>
+                <div class="left fl">用户注册</div>
                 <div class="right fr">您已有账号？<a href="login.html" target="_self">请登录</a></div>
                 <div class="clear"></div>
                 <div class="under-line center"></div>
@@ -39,7 +39,7 @@
                         验证码:&nbsp;
                         <input class="login-info-input verify-code" type="text" name="verifyCode" id="verifyCode"
                                placeholder="请输入验证码"/>
-                        <img alt="单击图片刷新！" style="top: 16px;position: relative;" th:src="@{/static/common/mall/kaptcha}"
+                        <img alt="单击图片刷新！" style="top: 16px;position: relative;" th:src="@{/common/mall/kaptcha}"
                              onclick="this.src='/common/mall/kaptcha?d='+new Date()*1">
                     </div>
                 </div>

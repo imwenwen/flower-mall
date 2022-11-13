@@ -16,6 +16,9 @@ import javax.annotation.Resource;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * 花花商品的数据库操作层
+ */
 @Controller
 public class MallGoodsController {
     @Resource

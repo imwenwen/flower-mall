@@ -2,7 +2,7 @@
 package com.flower.mall.controller.mall;
 
 import com.flower.mall.common.Constants;
-import com.flower.mall.common.NewBeeMallException;
+import com.flower.mall.common.MyException;
 import com.flower.mall.common.ServiceResultEnum;
 import com.flower.mall.controller.vo.FlowerMallGoodsDetailVO;
 import com.flower.mall.entity.MallGoods;
@@ -57,11 +57,11 @@ public class GoodsController {
     @GetMapping("/goods/detail/{goodsId}")
     public String detailPage(@PathVariable("goodsId") Long goodsId, HttpServletRequest request) {
         if (goodsId < 1) {
-            NewBeeMallException.fail("参数异常");
+            MyException.fail("参数异常");
         }
         MallGoods goods = flowerMallGoodsService.getFlowerMallGoodsById(goodsId);
         if (Constants.SELL_STATUS_UP != goods.getGoodsSellStatus()) {
-            NewBeeMallException.fail(ServiceResultEnum.GOODS_PUT_DOWN.getResult());
+            MyException.fail(ServiceResultEnum.GOODS_PUT_DOWN.getResult());
         }
         FlowerMallGoodsDetailVO goodsDetailVO = new FlowerMallGoodsDetailVO();
         BeanUtil.copyProperties(goods, goodsDetailVO);

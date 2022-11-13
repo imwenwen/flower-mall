@@ -6,7 +6,7 @@ import com.flower.mall.common.Constants;
 import com.flower.mall.common.ServiceResultEnum;
 import com.flower.mall.controller.vo.FlowerMallUserVO;
 import com.flower.mall.entity.MallUser;
-import com.flower.mall.service.NewBeeMallUserService;
+import com.flower.mall.service.UserService;
 import com.flower.mall.util.MD5Util;
 import com.flower.mall.util.Result;
 import com.flower.mall.util.MallResult;
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 public class PersonalController {
 
     @Resource
-    private NewBeeMallUserService newBeeMallUserService;
+    private UserService userService;
 
     @GetMapping("/personal")
     public String personalPage(HttpServletRequest request,
@@ -72,7 +72,7 @@ public class PersonalController {
         if (shearCaptcha == null || !shearCaptcha.verify(verifyCode)) {
             return MallResult.createFailRes(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
         }
-        String loginResult = newBeeMallUserService.login(loginName, MD5Util.MD5Encode(password, "UTF-8"), httpSession);
+        String loginResult = userService.login(loginName, MD5Util.MD5Encode(password, "UTF-8"), httpSession);
         //登录成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(loginResult)) {
             //删除session中的verifyCode
@@ -102,7 +102,7 @@ public class PersonalController {
         if (shearCaptcha == null || !shearCaptcha.verify(verifyCode)) {
             return MallResult.createFailRes(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
         }
-        String registerResult = newBeeMallUserService.register(loginName, password);
+        String registerResult = userService.register(loginName, password);
         //注册成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(registerResult)) {
             //删除session中的verifyCode
@@ -116,7 +116,7 @@ public class PersonalController {
     @PostMapping("/personal/updateInfo")
     @ResponseBody
     public Result updateInfo(@RequestBody MallUser mallUser, HttpSession httpSession) {
-        FlowerMallUserVO mallUserTemp = newBeeMallUserService.updateUserInfo(mallUser, httpSession);
+        FlowerMallUserVO mallUserTemp = userService.updateUserInfo(mallUser, httpSession);
         if (mallUserTemp == null) {
             Result result = MallResult.createFailRes("修改失败");
             return result;

@@ -12,4 +12,8 @@ import java.util.List;
 public interface FlowerMallCategoryService {
 
     List<GoodsCategory> getCategoryList();
+
+    boolean checkCategoryByName(String categoryName);
+
+    void addCategory(String categoryName);
 }
