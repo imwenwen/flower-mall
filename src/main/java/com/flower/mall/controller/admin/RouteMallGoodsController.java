@@ -25,6 +25,12 @@ public class RouteMallGoodsController {
     @Resource
     private FlowerMallCategoryService flowerMallCategoryService;
 
+    @GetMapping("/carousels")
+    public String carouselPage(HttpServletRequest request) {
+        request.setAttribute("path", "mall_carousel");
+        return "admin/flower_mall_carousel";
+    }
+
     @GetMapping("/goods")
     public String goodsPage(HttpServletRequest request) {
         request.setAttribute("path", "mall_goods");

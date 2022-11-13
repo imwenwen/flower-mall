@@ -24,11 +24,7 @@ public class MallCarouselController {
     @Resource
     FlowerMallCarouselService flowerMallCarouselService;
 
-    @GetMapping("/carousels")
-    public String carouselPage(HttpServletRequest request) {
-        request.setAttribute("path", "mall_carousel");
-        return "admin/flower_mall_carousel";
-    }
+
 
     /**
      * 列表
