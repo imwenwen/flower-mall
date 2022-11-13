@@ -75,13 +75,13 @@
                                                                 <li>
                                                                     <div class="figure figure-thumb">
                                                                         <a target="_blank"
-                                                                           th:href="@{/static'/goods/detail/'+${item.goodsId}}">
-                                                                            <img th:src="@{/static${item.goodsCoverImg}}"
+                                                                           th:href="@{'/goods/detail/'+${item.goodsId}}">
+                                                                            <img th:src="@{${item.goodsCoverImg}}"
                                                                                  width="80" height="80" alt="">
                                                                         </a>
                                                                     </div>
                                                                     <p class="name"><a target="_blank"
-                                                                                       th:href="@{/static'/goods/detail/'+${item.goodsId}}"
+                                                                                       th:href="@{'/goods/detail/'+${item.goodsId}}"
                                                                                        th:text="${item.goodsName}">newbee</a>
                                                                     </p>
                                                                     <p class="price"
@@ -91,7 +91,7 @@
                                                         </ul>
                                                     </td>
                                                     <td class="order-actions"><a class="btn btn-small btn-line-gray"
-                                                                                 th:href="@{/static${'/orders/'+order.orderNo}}">订单详情</a>
+                                                                                 th:href="@{${'/orders/'+order.orderNo}}">订单详情</a>
                                                     </td>
                                                 </tr>
                                                 </tbody>
