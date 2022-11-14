@@ -19,8 +19,6 @@
                 <div class="uc-content-box order-list-box">
                     <div class="box-hd">
                         <h1 class="title">我的订单
-                            <small>请谨防钓鱼链接或诈骗电话，<a href="##">了解更多&gt;</a>
-                            </small>
                         </h1>
                     </div>
                     <div class="box-bd">
@@ -29,7 +27,7 @@
                                 <th:block th:if="${#lists.isEmpty(orderPageResult.list)}">
                                     <img style="margin-top: 16px;"
                                          th:src="@{/static/mall/image/null-content.png}">
-                                    <small><a th:href="@{/static/index}">&nbsp;&nbsp;&nbsp;&nbsp;去购物&gt;</a>
+                                    <small><a th:href="@{/index}">&nbsp;&nbsp;&nbsp;&nbsp;去购物&gt;</a>
                                     </small>
                                 </th:block>
                                 <th:block th:unless="${#lists.isEmpty(orderPageResult.list)}">
@@ -107,22 +105,22 @@
                             <div class="newbee-pagenavi">
                                 <th:block th:if="${orderPageResult.currPage-2 >=1}"><a
                                         class="numbers"
-                                        th:href="@{/static'/orders?page=' + ${orderPageResult.currPage-2}}"
+                                        th:href="@{'/orders?page=' + ${orderPageResult.currPage-2}}"
                                         th:text="${orderPageResult.currPage -2}">1</a>
                                 </th:block>
                                 <th:block th:if="${orderPageResult.currPage-1 >=1}"><a
                                         class="numbers"
-                                        th:href="@{/static'/orders?page=' + ${orderPageResult.currPage-1}}"
+                                        th:href="@{'/orders?page=' + ${orderPageResult.currPage-1}}"
                                         th:text="${orderPageResult.currPage -1}">1</a>
                                 </th:block>
                                 <a href="##" class="numbers current" th:text="${orderPageResult.currPage}">1</a>
                                 <th:block th:if="${orderPageResult.currPage+1<=orderPageResult.totalPage}"><a
                                         class="numbers"
-                                        th:href="@{/static'/orders?page=' + ${orderPageResult.currPage+1}}"
+                                        th:href="@{'/orders?page=' + ${orderPageResult.currPage+1}}"
                                         th:text="${orderPageResult.currPage +1}">1</a></th:block>
                                 <th:block th:if="${orderPageResult.currPage+2<=orderPageResult.totalPage}"><a
                                         class="numbers"
-                                        th:href="@{/static'/orders?page=' + ${orderPageResult.currPage+2}}"
+                                        th:href="@{'/orders?page=' + ${orderPageResult.currPage+2}}"
                                         th:text="${orderPageResult.currPage +2}">1</a></th:block>
                             </div>
                         </div>

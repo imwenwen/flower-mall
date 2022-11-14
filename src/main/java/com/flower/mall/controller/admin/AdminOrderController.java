@@ -22,7 +22,7 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/admin")
-public class NewBeeMallOrderController {
+public class AdminOrderController {
 
     @Resource
     private OrderService orderService;
@@ -30,7 +30,7 @@ public class NewBeeMallOrderController {
     @GetMapping("/orders")
     public String ordersPage(HttpServletRequest request) {
         request.setAttribute("path", "orders");
-        return "admin/newbee_mall_order";
+        return "admin/mall_order";
     }
 
     /**

@@ -27,7 +27,7 @@ public class MallCarouselController {
 
 
     /**
-     * 列表
+     * 轮播图列表
      */
     @RequestMapping(value = "/carousels/list", method = RequestMethod.GET)
     @ResponseBody

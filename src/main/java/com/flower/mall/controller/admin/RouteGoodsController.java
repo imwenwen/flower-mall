@@ -18,7 +18,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin")
 @Slf4j
-public class RouteMallGoodsController {
+public class RouteGoodsController {
 
     @Resource
     private FlowerMallGoodsService flowerMallGoodsService;
@@ -28,13 +28,13 @@ public class RouteMallGoodsController {
     @GetMapping("/carousels")
     public String carouselPage(HttpServletRequest request) {
         request.setAttribute("path", "mall_carousel");
-        return "admin/flower_mall_carousel";
+        return "admin/carousel";
     }
 
     @GetMapping("/goods")
     public String goodsPage(HttpServletRequest request) {
         request.setAttribute("path", "mall_goods");
-        return "admin/newbee_mall_goods";
+        return "admin/goods";
     }
 
     //新增商品
@@ -43,7 +43,7 @@ public class RouteMallGoodsController {
         List<GoodsCategory> categoryList = flowerMallCategoryService.getCategoryList();
         request.setAttribute("path", "edit");
         request.setAttribute("goodsCategoryList", categoryList);
-        return "admin/newbee_mall_goods_edit";
+        return "admin/goods_edit";
     }
 
     //选中商品修改
@@ -54,7 +54,7 @@ public class RouteMallGoodsController {
         request.setAttribute("goodsCategoryList", categoryList);
         request.setAttribute("goods", mallGoods);
         request.setAttribute("path", "goods-edit");
-        return "admin/newbee_mall_goods_edit";
+        return "admin/goods_edit";
     }
 
 

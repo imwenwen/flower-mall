@@ -29,11 +29,6 @@ public class AdminController {
         return "admin/login";
     }
 
-    @GetMapping({"/test"})
-    public String test() {
-        return "admin/test";
-    }
-
 
     @GetMapping({"", "/", "/index", "/index.html"})
     public String index(HttpServletRequest request) {
@@ -49,13 +44,10 @@ public class AdminController {
             session.setAttribute("errorMsg", "用户名或密码不能为空");
             return "admin/login";
         }
-        ShearCaptcha shearCaptcha = (ShearCaptcha) session.getAttribute("verifyCode");
         AdminUser adminUser = adminUserService.login(userName, password);
         if (adminUser != null) {
             session.setAttribute("loginUser", adminUser.getNickName());
             session.setAttribute("loginUserId", adminUser.getAdminUserId());
-            //session过期时间设置为7200秒 即两小时
-            //session.setMaxInactiveInterval(60 * 60 * 2);
             return "redirect:/admin/index";
         } else {
             session.setAttribute("errorMsg", "登录失败");

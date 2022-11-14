@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
-public class NewBeeMallUserController {
+public class UserController {
 
     @Resource
     private UserService userService;
@@ -24,7 +24,7 @@ public class NewBeeMallUserController {
     @GetMapping("/users")
     public String usersPage(HttpServletRequest request) {
         request.setAttribute("path", "users");
-        return "admin/newbee_mall_user";
+        return "admin/user";
     }
 
     /**
