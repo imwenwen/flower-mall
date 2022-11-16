@@ -6,7 +6,6 @@ import com.flower.mall.common.MyException;
 import com.flower.mall.common.ServiceResultEnum;
 import com.flower.mall.controller.vo.FlowerMallGoodsDetailVO;
 import com.flower.mall.entity.MallGoods;
-import com.flower.mall.service.FlowerMallCategoryService;
 import com.flower.mall.service.FlowerMallGoodsService;
 import com.flower.mall.util.BeanUtil;
 import com.flower.mall.util.PageQueryUtil;
@@ -25,14 +24,15 @@ public class GoodsController {
 
     @Resource
     private FlowerMallGoodsService flowerMallGoodsService;
-    @Resource
-    private FlowerMallCategoryService flowerMallCategoryService;
+
 
     @GetMapping({"/search", "/search.html"})
     public String searchPage(@RequestParam Map<String, Object> params, HttpServletRequest request) {
+        //没有传页码 默认第一页
         if (StringUtils.isEmpty(params.get("page"))) {
             params.put("page", 1);
         }
+        //默认一页10条
         params.put("limit", Constants.GOODS_SEARCH_PAGE_LIMIT);
 
         //封装参数供前端回显
@@ -54,12 +54,17 @@ public class GoodsController {
         return "mall/search";
     }
 
+    /**
+     * 根据花花id  获取花花详情
+     * @param goodsId
+     * @param request
+     * @return
+     */
     @GetMapping("/goods/detail/{goodsId}")
     public String detailPage(@PathVariable("goodsId") Long goodsId, HttpServletRequest request) {
-        if (goodsId < 1) {
-            MyException.fail("参数异常");
-        }
+        //根据id获取花花
         MallGoods goods = flowerMallGoodsService.getFlowerMallGoodsById(goodsId);
+        //花花如果不是上架状态 提示错误
         if (Constants.SELL_STATUS_UP != goods.getGoodsSellStatus()) {
             MyException.fail(ServiceResultEnum.GOODS_PUT_DOWN.getResult());
         }
