@@ -48,7 +48,7 @@ public class OrderController {
         if (StringUtils.isEmpty(params.get("page"))) {
             params.put("page", 1);
         }
-        params.put("limit", Constants.ORDER_SEARCH_PAGE_LIMIT);
+        params.put("limit", 3);
         //封装我的订单数据
         PageQueryUtil pageUtil = new PageQueryUtil(params);
         request.setAttribute("orderPageResult", orderService.getMyOrders(pageUtil));

@@ -13,13 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * newbee-mall购物车数量处理
+ * mall购物车数量处理
  *
 
  * 
  */
 @Component
-public class NewBeeMallCartNumberInterceptor implements HandlerInterceptor {
+public class CartNumberInterceptor implements HandlerInterceptor {
 
     @Autowired
     private MallShoppingCartItemMapper mallShoppingCartItemMapper;

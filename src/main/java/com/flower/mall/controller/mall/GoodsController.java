@@ -33,7 +33,7 @@ public class GoodsController {
             params.put("page", 1);
         }
         //默认一页10条
-        params.put("limit", Constants.GOODS_SEARCH_PAGE_LIMIT);
+        params.put("limit", 10);
 
         //封装参数供前端回显
         if (params.containsKey("orderBy") && !StringUtils.isEmpty(params.get("orderBy") + "")) {

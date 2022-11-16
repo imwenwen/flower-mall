@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService {
         registerUser.setLoginName(loginName);
         registerUser.setNickName(loginName);
         String passwordMD5 = MD5Util.MD5Encode(password, "UTF-8");
+        //密码加密
         registerUser.setPasswordMd5(passwordMD5);
         if (mallUserMapper.insertSelective(registerUser) > 0) {
             return ServiceResultEnum.SUCCESS.getResult();
@@ -72,13 +73,13 @@ public class UserServiceImpl implements UserService {
         MallUser userFromDB = mallUserMapper.selectByPrimaryKey(userTemp.getUserId());
         if (userFromDB != null) {
             if (!StringUtils.isEmpty(mallUser.getNickName())) {
-                userFromDB.setNickName(NewBeeMallUtils.cleanString(mallUser.getNickName()));
+                userFromDB.setNickName(MyUtils.cleanString(mallUser.getNickName()));
             }
             if (!StringUtils.isEmpty(mallUser.getAddress())) {
-                userFromDB.setAddress(NewBeeMallUtils.cleanString(mallUser.getAddress()));
+                userFromDB.setAddress(MyUtils.cleanString(mallUser.getAddress()));
             }
             if (!StringUtils.isEmpty(mallUser.getIntroduceSign())) {
-                userFromDB.setIntroduceSign(NewBeeMallUtils.cleanString(mallUser.getIntroduceSign()));
+                userFromDB.setIntroduceSign(MyUtils.cleanString(mallUser.getIntroduceSign()));
             }
             if (mallUserMapper.updateByPrimaryKeySelective(userFromDB) > 0) {
                 FlowerMallUserVO flowerMallUserVO = new FlowerMallUserVO();

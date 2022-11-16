@@ -4,10 +4,8 @@ import org.springframework.util.StringUtils;
 
 import java.net.URI;
 
-/**
- * @author 13
- */
-public class NewBeeMallUtils {
+
+public class MyUtils {
 
     public static URI getHost(URI uri) {
         URI effectiveURI = null;

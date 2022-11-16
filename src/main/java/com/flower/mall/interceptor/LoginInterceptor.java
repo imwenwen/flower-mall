@@ -10,16 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * newbee-mall系统身份验证拦截器
- *
-
- * 
+ * mall系统身份验证拦截器
  */
 @Component
-public class NewBeeMallLoginInterceptor implements HandlerInterceptor {
+public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
+        //根据浏览器session 缓存中 没有登陆标识的话 提示去登陆界面
         if (null == request.getSession().getAttribute(Constants.MALL_USER_SESSION_KEY)) {
             response.sendRedirect(request.getContextPath() + "/login");
             return false;

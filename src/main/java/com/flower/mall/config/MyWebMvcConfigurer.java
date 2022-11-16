@@ -3,8 +3,8 @@ package com.flower.mall.config;
 
 import com.flower.mall.common.Constants;
 import com.flower.mall.interceptor.AdminLoginInterceptor;
-import com.flower.mall.interceptor.NewBeeMallCartNumberInterceptor;
-import com.flower.mall.interceptor.NewBeeMallLoginInterceptor;
+import com.flower.mall.interceptor.CartNumberInterceptor;
+import com.flower.mall.interceptor.LoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -17,9 +17,9 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
     @Autowired
     private AdminLoginInterceptor adminLoginInterceptor;
     @Autowired
-    private NewBeeMallLoginInterceptor newBeeMallLoginInterceptor;
+    private LoginInterceptor loginInterceptor;
     @Autowired
-    private NewBeeMallCartNumberInterceptor newBeeMallCartNumberInterceptor;
+    private CartNumberInterceptor cartNumberInterceptor;
 
     public void addInterceptors(InterceptorRegistry registry) {
         // 添加一个拦截器，拦截以/admin为前缀的url路径（后台登陆拦截）
@@ -29,13 +29,13 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
                 .excludePathPatterns("/admin/dist/**")
                 .excludePathPatterns("/admin/plugins/**");
         // 购物车中的数量统一处理
-        registry.addInterceptor(newBeeMallCartNumberInterceptor)
+        registry.addInterceptor(cartNumberInterceptor)
                 .excludePathPatterns("/admin/**")
                 .excludePathPatterns("/register")
                 .excludePathPatterns("/login")
                 .excludePathPatterns("/logout");
         // 商城页面登陆拦截
-        registry.addInterceptor(newBeeMallLoginInterceptor)
+        registry.addInterceptor(loginInterceptor)
                 .excludePathPatterns("/admin/**")
                 .excludePathPatterns("/register")
                 .excludePathPatterns("/login")

@@ -2,7 +2,7 @@
 package com.flower.mall.controller.common;
 
 import com.flower.mall.common.Constants;
-import com.flower.mall.util.NewBeeMallUtils;
+import com.flower.mall.util.MyUtils;
 import com.flower.mall.util.Result;
 import com.flower.mall.util.MallResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,9 +52,10 @@ public class UploadController {
                     throw new IOException("文件夹创建失败,路径为：" + fileDirectory);
                 }
             }
+            //把内存中图片写入磁盘
             file.transferTo(destFile);
             Result resultSuccess = MallResult.createSuccessRes();
-            resultSuccess.setData(NewBeeMallUtils.getHost(new URI(httpServletRequest.getRequestURL() + "")) + "/upload/" + newFileName);
+            resultSuccess.setData(MyUtils.getHost(new URI(httpServletRequest.getRequestURL() + "")) + "/upload/" + newFileName);
             return resultSuccess;
         } catch (IOException e) {
             e.printStackTrace();
@@ -105,7 +106,7 @@ public class UploadController {
                     }
                 }
                 multipartFiles.get(i).transferTo(destFile);
-                fileNames.add(NewBeeMallUtils.getHost(new URI(httpServletRequest.getRequestURL() + "")) + "/upload/" + newFileName);
+                fileNames.add(MyUtils.getHost(new URI(httpServletRequest.getRequestURL() + "")) + "/upload/" + newFileName);
             } catch (IOException e) {
                 e.printStackTrace();
                 return MallResult.createFailRes("文件上传失败");
