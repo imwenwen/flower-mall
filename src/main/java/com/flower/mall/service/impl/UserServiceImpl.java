@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     private MallUserMapper mallUserMapper;
 
     @Override
-    public PageResult getNewBeeMallUsersPage(PageQueryUtil pageUtil) {
+    public PageResult getUsersPage(PageQueryUtil pageUtil) {
         List<MallUser> mallUsers = mallUserMapper.findMallUserList(pageUtil);
         int total = mallUserMapper.getTotalMallUsers(pageUtil);
         PageResult pageResult = new PageResult(mallUsers, total, pageUtil.getLimit(), pageUtil.getPage());

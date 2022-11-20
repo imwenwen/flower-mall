@@ -22,9 +22,9 @@ public interface MallOrderMapper {
 
     int updateByPrimaryKey(MallOrder record);
 
-    List<MallOrder> findNewBeeMallOrderList(PageQueryUtil pageUtil);
+    List<MallOrder> findOrderList(PageQueryUtil pageUtil);
 
-    int getTotalNewBeeMallOrders(PageQueryUtil pageUtil);
+    int getTotalOrders(PageQueryUtil pageUtil);
 
     List<MallOrder> selectByPrimaryKeys(@Param("orderIds") List<Long> orderIds);
 

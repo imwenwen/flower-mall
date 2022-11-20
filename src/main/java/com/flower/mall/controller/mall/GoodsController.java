@@ -50,7 +50,7 @@ public class GoodsController {
         params.put("goodsSellStatus", Constants.SELL_STATUS_UP);
         //封装商品数据
         PageQueryUtil pageUtil = new PageQueryUtil(params);
-        request.setAttribute("pageResult", flowerMallGoodsService.searchNewBeeMallGoods(pageUtil));
+        request.setAttribute("pageResult", flowerMallGoodsService.searchGoods(pageUtil));
         return "mall/search";
     }
 

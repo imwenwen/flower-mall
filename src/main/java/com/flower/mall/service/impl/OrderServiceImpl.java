@@ -41,9 +41,9 @@ public class OrderServiceImpl implements OrderService {
     private MallGoodsMapper mallGoodsMapper;
 
     @Override
-    public PageResult getNewBeeMallOrdersPage(PageQueryUtil pageUtil) {
-        List<MallOrder> mallOrders = mallOrderMapper.findNewBeeMallOrderList(pageUtil);
-        int total = mallOrderMapper.getTotalNewBeeMallOrders(pageUtil);
+    public PageResult getOrdersPage(PageQueryUtil pageUtil) {
+        List<MallOrder> mallOrders = mallOrderMapper.findOrderList(pageUtil);
+        int total = mallOrderMapper.getTotalOrders(pageUtil);
         PageResult pageResult = new PageResult(mallOrders, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }
@@ -186,7 +186,7 @@ public class OrderServiceImpl implements OrderService {
         List<MallGoods> mallGoods = mallGoodsMapper.selectByPrimaryKeys(goodsIds);
         //检查是否包含已下架商品
         List<MallGoods> goodsListNotSelling = mallGoods.stream()
-                .filter(newBeeMallGoodsTemp -> newBeeMallGoodsTemp.getGoodsSellStatus() != Constants.SELL_STATUS_UP)
+                .filter(e -> e.getGoodsSellStatus() != Constants.SELL_STATUS_UP)
                 .collect(Collectors.toList());
         if (!CollectionUtils.isEmpty(goodsListNotSelling)) {
             //goodsListNotSelling 对象非空则表示有下架商品
@@ -235,7 +235,7 @@ public class OrderServiceImpl implements OrderService {
                     List<MallOrderItem> mallOrderItems = new ArrayList<>();
                     for (FlowerMallShoppingCartItemVO flowerMallShoppingCartItemVO : myShoppingCartItems) {
                         MallOrderItem mallOrderItem = new MallOrderItem();
-                        //使用BeanUtil工具类将newBeeMallShoppingCartItemVO中的属性复制到newBeeMallOrderItem对象中
+                        //使用BeanUtil工具类将ShoppingCartItemVO中的属性复制到newBeeMallOrderItem对象中
                         BeanUtil.copyProperties(flowerMallShoppingCartItemVO, mallOrderItem);
                         //NewBeeMallOrderMapper文件insert()方法中使用了useGeneratedKeys因此orderId可以获取到
                         mallOrderItem.setOrderId(mallOrder.getOrderId());
@@ -274,28 +274,28 @@ public class OrderServiceImpl implements OrderService {
         List<FlowerMallOrderItemVO> flowerMallOrderItemVOS = BeanUtil.copyList(orderItems, FlowerMallOrderItemVO.class);
         FlowerMallOrderDetailVO flowerMallOrderDetailVO = new FlowerMallOrderDetailVO();
         BeanUtil.copyProperties(mallOrder, flowerMallOrderDetailVO);
-        flowerMallOrderDetailVO.setOrderStatusString(OrderStatusEnum.getNewBeeMallOrderStatusEnumByStatus(flowerMallOrderDetailVO.getOrderStatus()).getName());
+        flowerMallOrderDetailVO.setOrderStatusString(OrderStatusEnum.getOrderStatusEnumByStatus(flowerMallOrderDetailVO.getOrderStatus()).getName());
         flowerMallOrderDetailVO.setPayTypeString(PayTypeEnum.getPayTypeEnumByType(flowerMallOrderDetailVO.getPayType()).getName());
         flowerMallOrderDetailVO.setFlowerMallOrderItemVOS(flowerMallOrderItemVOS);
         return flowerMallOrderDetailVO;
     }
 
     @Override
-    public MallOrder getNewBeeMallOrderByOrderNo(String orderNo) {
+    public MallOrder getOrderByOrderNo(String orderNo) {
         return mallOrderMapper.selectByOrderNo(orderNo);
     }
 
     @Override
     public PageResult getMyOrders(PageQueryUtil pageUtil) {
-        int total = mallOrderMapper.getTotalNewBeeMallOrders(pageUtil);
-        List<MallOrder> mallOrders = mallOrderMapper.findNewBeeMallOrderList(pageUtil);
+        int total = mallOrderMapper.getTotalOrders(pageUtil);
+        List<MallOrder> mallOrders = mallOrderMapper.findOrderList(pageUtil);
         List<FlowerMallOrderListVO> orderListVOS = new ArrayList<>();
         if (total > 0) {
             //数据转换 将实体类转成vo
             orderListVOS = BeanUtil.copyList(mallOrders, FlowerMallOrderListVO.class);
             //设置订单状态中文显示值
             for (FlowerMallOrderListVO flowerMallOrderListVO : orderListVOS) {
-                flowerMallOrderListVO.setOrderStatusString(OrderStatusEnum.getNewBeeMallOrderStatusEnumByStatus(flowerMallOrderListVO.getOrderStatus()).getName());
+                flowerMallOrderListVO.setOrderStatusString(OrderStatusEnum.getOrderStatusEnumByStatus(flowerMallOrderListVO.getOrderStatus()).getName());
             }
             List<Long> orderIds = mallOrders.stream().map(MallOrder::getOrderId).collect(Collectors.toList());
             if (!CollectionUtils.isEmpty(orderIds)) {

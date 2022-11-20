@@ -25,15 +25,15 @@ public interface MallGoodsMapper {
 
     List<MallGoods> getFlowerMallGoodsPage(PageQueryUtil pageUtil);
 
-    int getTotalNewBeeMallGoods(PageQueryUtil pageUtil);
+    int getTotalGoods(PageQueryUtil pageUtil);
 
     List<MallGoods> selectByPrimaryKeys(List<Long> goodsIds);
 
-    List<MallGoods> findNewBeeMallGoodsListBySearch(PageQueryUtil pageUtil);
+    List<MallGoods> findGoodsListBySearch(PageQueryUtil pageUtil);
 
-    int getTotalNewBeeMallGoodsBySearch(PageQueryUtil pageUtil);
+    int getTotalGoodsBySearch(PageQueryUtil pageUtil);
 
-    int batchInsert(@Param("newBeeMallGoodsList") List<MallGoods> mallGoodsList);
+    int batchInsert(@Param("mallGoodsList") List<MallGoods> mallGoodsList);
 
     int updateStockNum(@Param("stockNumDTOS") List<StockNumDTO> stockNumDTOS);
 

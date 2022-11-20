@@ -30,7 +30,7 @@ public class FlowerMallGoodsServiceImpl implements FlowerMallGoodsService {
     @Override
     public PageResult getFlowerMallGoodsPage(PageQueryUtil pageUtil) {
         List<MallGoods> goodsList = goodsMapper.getFlowerMallGoodsPage(pageUtil);
-        int total = goodsMapper.getTotalNewBeeMallGoods(pageUtil);
+        int total = goodsMapper.getTotalGoods(pageUtil);
         PageResult pageResult = new PageResult(goodsList, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }
@@ -44,14 +44,7 @@ public class FlowerMallGoodsServiceImpl implements FlowerMallGoodsService {
     }
 
     @Override
-    public void batchSaveNewBeeMallGoods(List<MallGoods> mallGoodsList) {
-        if (!CollectionUtils.isEmpty(mallGoodsList)) {
-            goodsMapper.batchInsert(mallGoodsList);
-        }
-    }
-
-    @Override
-    public String updateNewBeeMallGoods(MallGoods goods) {
+    public String updateGoods(MallGoods goods) {
 
         //1.查询数据库存不存在该商品
         MallGoods temp = goodsMapper.selectgoodsById(goods.getGoodsId());
@@ -82,9 +75,9 @@ public class FlowerMallGoodsServiceImpl implements FlowerMallGoodsService {
     }
 
     @Override
-    public PageResult searchNewBeeMallGoods(PageQueryUtil pageUtil) {
-        List<MallGoods> goodsList = goodsMapper.findNewBeeMallGoodsListBySearch(pageUtil);
-        int total = goodsMapper.getTotalNewBeeMallGoodsBySearch(pageUtil);
+    public PageResult searchGoods(PageQueryUtil pageUtil) {
+        List<MallGoods> goodsList = goodsMapper.findGoodsListBySearch(pageUtil);
+        int total = goodsMapper.getTotalGoodsBySearch(pageUtil);
         List<FlowerMallSearchGoodsVO> flowerMallSearchGoodsVOS = new ArrayList<>();
         if (!CollectionUtils.isEmpty(goodsList)) {
             flowerMallSearchGoodsVOS = BeanUtil.copyList(goodsList, FlowerMallSearchGoodsVO.class);

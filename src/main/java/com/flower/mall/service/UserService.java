@@ -15,7 +15,7 @@ public interface UserService {
      * @param pageUtil
      * @return
      */
-    PageResult getNewBeeMallUsersPage(PageQueryUtil pageUtil);
+    PageResult getUsersPage(PageQueryUtil pageUtil);
 
     /**
      * 用户注册

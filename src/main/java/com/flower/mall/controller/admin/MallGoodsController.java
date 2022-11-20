@@ -3,7 +3,6 @@ package com.flower.mall.controller.admin;
 
 import com.flower.mall.common.ServiceResultEnum;
 import com.flower.mall.entity.MallGoods;
-import com.flower.mall.service.FlowerMallCategoryService;
 import com.flower.mall.service.FlowerMallGoodsService;
 import com.flower.mall.util.MallResult;
 import com.flower.mall.util.PageQueryUtil;
@@ -73,7 +72,7 @@ public class MallGoodsController {
             return MallResult.createFailRes("参数异常！");
         }
         //更新商品
-        String result = flowerMallGoodsService.updateNewBeeMallGoods(mallGoods);
+        String result = flowerMallGoodsService.updateGoods(mallGoods);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return MallResult.createSuccessRes();
         } else {

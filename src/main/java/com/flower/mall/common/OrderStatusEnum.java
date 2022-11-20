@@ -26,7 +26,7 @@ public enum OrderStatusEnum {
         this.name = name;
     }
 
-    public static OrderStatusEnum getNewBeeMallOrderStatusEnumByStatus(int orderStatus) {
+    public static OrderStatusEnum getOrderStatusEnumByStatus(int orderStatus) {
         for (OrderStatusEnum orderStatusEnum : OrderStatusEnum.values()) {
             if (orderStatusEnum.getOrderStatus() == orderStatus) {
                 return orderStatusEnum;

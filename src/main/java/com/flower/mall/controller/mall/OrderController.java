@@ -101,7 +101,7 @@ public class OrderController {
     @GetMapping("/selectPayType")
     public String selectPayType(HttpServletRequest request, @RequestParam("orderNo") String orderNo, HttpSession httpSession) {
         FlowerMallUserVO user = (FlowerMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        MallOrder mallOrder = orderService.getNewBeeMallOrderByOrderNo(orderNo);
+        MallOrder mallOrder = orderService.getOrderByOrderNo(orderNo);
         //判断订单userId
         if (!user.getUserId().equals(mallOrder.getUserId())) {
             MyException.fail(ServiceResultEnum.NO_PERMISSION_ERROR.getResult());
@@ -118,7 +118,7 @@ public class OrderController {
     @GetMapping("/payPage")
     public String payOrder(HttpServletRequest request, @RequestParam("orderNo") String orderNo, HttpSession httpSession, @RequestParam("payType") int payType) {
         FlowerMallUserVO user = (FlowerMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        MallOrder mallOrder = orderService.getNewBeeMallOrderByOrderNo(orderNo);
+        MallOrder mallOrder = orderService.getOrderByOrderNo(orderNo);
         //判断订单userId
         if (!user.getUserId().equals(mallOrder.getUserId())) {
             MyException.fail(ServiceResultEnum.NO_PERMISSION_ERROR.getResult());

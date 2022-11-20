@@ -1,11 +1,6 @@
 .order-header {
   position: relative;
 }
-.order-header .newbee-mall-logo {
-  width: 100px;
-  height: 85px;
-  margin: 20px 360px;
-}
 .order-header span {
   font-size: 22px;
   position: absolute;

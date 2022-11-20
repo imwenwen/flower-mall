@@ -43,7 +43,7 @@ public class AdminOrderController {
             return MallResult.createFailRes("参数异常！");
         }
         PageQueryUtil pageUtil = new PageQueryUtil(params);
-        return MallResult.createSuccessRes(orderService.getNewBeeMallOrdersPage(pageUtil));
+        return MallResult.createSuccessRes(orderService.getOrdersPage(pageUtil));
     }
 
     /**

@@ -88,7 +88,7 @@
         </if>
     </select>
 
-    <select id="findNewBeeMallGoodsListBySearch" parameterType="Map" resultMap="BaseResultMap">
+    <select id="findGoodsListBySearch" parameterType="Map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from mall_goods_info
@@ -124,7 +124,7 @@
         </if>
     </select>
 
-    <select id="getTotalNewBeeMallGoodsBySearch" parameterType="Map" resultType="int">
+    <select id="getTotalGoodsBySearch" parameterType="Map" resultType="int">
         select count(*) from mall_goods_info
         <where>
             <if test="keyword!=null and keyword!=''">
@@ -153,7 +153,7 @@
         </foreach>
         );
     </select>
-    <select id="getTotalNewBeeMallGoods" parameterType="Map" resultType="int">
+    <select id="getTotalGoods" parameterType="Map" resultType="int">
         select count(*) from mall_goods_info
         <where>
             <if test="goodsName!=null and goodsName!=''">

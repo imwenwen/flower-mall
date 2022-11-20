@@ -1,4 +1,4 @@
-var newbeeSwiper = new Swiper('.swiper-container', {
+new Swiper('.swiper-container', {
     //设置自动播放
     autoplay: {
         delay: 2000,
@@ -15,8 +15,7 @@ var newbeeSwiper = new Swiper('.swiper-container', {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
     }
-})
-
+});
 $('.all-sort-list > .item').hover(function () {
     var eq = $('.all-sort-list > .item').index(this),				//获取当前滑过是第几个元素
         h = $('.all-sort-list').offset().top,						//获取当前下拉菜单距离窗口多少像素

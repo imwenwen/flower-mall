@@ -18,7 +18,7 @@ public interface OrderService {
      * @param pageUtil
      * @return
      */
-    PageResult getNewBeeMallOrdersPage(PageQueryUtil pageUtil);
+    PageResult getOrdersPage(PageQueryUtil pageUtil);
 
     /**
      * 订单信息修改
@@ -76,7 +76,7 @@ public interface OrderService {
      * @param orderNo
      * @return
      */
-    MallOrder getNewBeeMallOrderByOrderNo(String orderNo);
+    MallOrder getOrderByOrderNo(String orderNo);
 
     /**
      * 我的订单列表

@@ -37,7 +37,7 @@ public class UserController {
             return MallResult.createFailRes("参数异常！");
         }
         PageQueryUtil pageUtil = new PageQueryUtil(params);
-        return MallResult.createSuccessRes(userService.getNewBeeMallUsersPage(pageUtil));
+        return MallResult.createSuccessRes(userService.getUsersPage(pageUtil));
     }
 
     /**

@@ -1,4 +1,4 @@
-var newbeeSwiper = new Swiper('.swiper-container', {
+new Swiper('.swiper-container', {
     //设置自动播放
     autoplay: {
         delay: 3000,
@@ -15,4 +15,4 @@ var newbeeSwiper = new Swiper('.swiper-container', {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
     }
-})
+});
