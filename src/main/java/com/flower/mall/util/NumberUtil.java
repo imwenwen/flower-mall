@@ -1,5 +1,7 @@
 package com.flower.mall.util;
 
+import cn.hutool.core.util.RandomUtil;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,8 +49,8 @@ public class NumberUtil {
      */
     public static String genOrderNo() {
         StringBuffer buffer = new StringBuffer(String.valueOf(System.currentTimeMillis()));
-        int num = genRandomNum(4);
-        buffer.append(num);
+        String randomNumbers = RandomUtil.randomNumbers(4);
+        buffer.append(randomNumbers);
         return buffer.toString();
     }
 }

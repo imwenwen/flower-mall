@@ -143,7 +143,10 @@ public class OrderServiceImpl implements OrderService {
         //查询所有的订单 判断状态 修改状态和更新时间
         List<MallOrder> orders = mallOrderMapper.selectByPrimaryKeys(Arrays.asList(ids));
         String errorOrderNos = "";
-        if (!CollectionUtils.isEmpty(orders)) {
+        //根据订单查询不到直接返回数据不存在错误信息
+        if(CollectionUtils.isEmpty(orders)){
+            return ServiceResultEnum.DATA_NOT_EXIST.getResult();
+        }
             for (MallOrder mallOrder : orders) {
                 // deleted=1 一定为已关闭订单
                 if (mallOrder.getDeleted() == 1) {
@@ -157,7 +160,8 @@ public class OrderServiceImpl implements OrderService {
             }
             if (StringUtils.isEmpty(errorOrderNos)) {
                 //订单状态正常 可以执行关闭操作 修改订单状态和更新时间&&恢复库存
-                if (mallOrderMapper.closeOrder(Arrays.asList(ids), OrderStatusEnum.ORDER_CLOSED_BY_JUDGE.getOrderStatus()) > 0 && recoverStockNum(Arrays.asList(ids))) {
+                int closeOrderNum = mallOrderMapper.closeOrder(Arrays.asList(ids), OrderStatusEnum.ORDER_CLOSED_BY_JUDGE.getOrderStatus());
+                if (closeOrderNum> 0 && recoverStockNum(Arrays.asList(ids))) {
                     return ServiceResultEnum.SUCCESS.getResult();
                 } else {
                     return ServiceResultEnum.DB_ERROR.getResult();
@@ -170,9 +174,8 @@ public class OrderServiceImpl implements OrderService {
                     return "你选择的订单不能执行关闭操作";
                 }
             }
-        }
         //未查询到数据 返回错误提示
-        return ServiceResultEnum.DATA_NOT_EXIST.getResult();
+
     }
 
     @Override
@@ -209,7 +212,7 @@ public class OrderServiceImpl implements OrderService {
                 if (updateStockNumResult < 1) {
                     MyException.fail(ServiceResultEnum.SHOPPING_ITEM_COUNT_ERROR.getResult());
                 }
-                //生成订单号
+                //生成订单号  时间+随机4位小数
                 String orderNo = NumberUtil.genOrderNo();
                 int priceTotal = 0;
                 //保存订单
@@ -221,15 +224,13 @@ public class OrderServiceImpl implements OrderService {
                 for (FlowerMallShoppingCartItemVO flowerMallShoppingCartItemVO : myShoppingCartItems) {
                     priceTotal += flowerMallShoppingCartItemVO.getGoodsCount() * flowerMallShoppingCartItemVO.getSellingPrice();
                 }
-                if (priceTotal < 1) {
-                    MyException.fail(ServiceResultEnum.ORDER_PRICE_ERROR.getResult());
-                }
                 mallOrder.setTotalPrice(priceTotal);
                 //订单body字段，用来作为生成支付单描述信息，暂时未接入第三方支付接口，故该字段暂时设为空字符串
                 String extraInfo = "";
                 mallOrder.setExtraInfo(extraInfo);
                 //生成订单项并保存订单项纪录
-                if (mallOrderMapper.insertSelective(mallOrder) > 0) {
+                int saveOrder = mallOrderMapper.insertSelective(mallOrder);
+                if (saveOrder>0) {
                     //生成所有的订单项快照，并保存至数据库
                     List<MallOrderItem> mallOrderItems = new ArrayList<>();
                     for (FlowerMallShoppingCartItemVO flowerMallShoppingCartItemVO : myShoppingCartItems) {
