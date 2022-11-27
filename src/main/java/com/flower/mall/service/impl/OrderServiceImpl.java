@@ -303,8 +303,8 @@ public class OrderServiceImpl implements OrderService {
                     if (itemByOrderIdMap.containsKey(flowerMallOrderListVO.getOrderId())) {
                         List<MallOrderItem> orderItemListTemp = itemByOrderIdMap.get(flowerMallOrderListVO.getOrderId());
                         //将NewBeeMallOrderItem对象列表转换成NewBeeMallOrderItemVO对象列表
-                        List<FlowerMallOrderItemVO> flowerMallOrderItemVOS = BeanUtil.copyList(orderItemListTemp, FlowerMallOrderItemVO.class);
-                        flowerMallOrderListVO.setFlowerMallOrderItemVOS(flowerMallOrderItemVOS);
+                        List<FlowerMallOrderItemVO> flowerMallOrderItemList = BeanUtil.copyList(orderItemListTemp, FlowerMallOrderItemVO.class);
+                        flowerMallOrderListVO.setFlowerMallOrderItemVOS(flowerMallOrderItemList);
                     }
                 }
             }
