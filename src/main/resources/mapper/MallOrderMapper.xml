@@ -10,7 +10,6 @@
         <result column="pay_type" jdbcType="TINYINT" property="payType"/>
         <result column="pay_time" jdbcType="TIMESTAMP" property="payTime"/>
         <result column="order_status" jdbcType="TINYINT" property="orderStatus"/>
-        <result column="extra_info" jdbcType="VARCHAR" property="extraInfo"/>
         <result column="user_address" jdbcType="VARCHAR" property="userAddress"/>
         <result column="deleted" jdbcType="TINYINT" property="deleted"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
@@ -18,7 +17,7 @@
     </resultMap>
     <sql id="Base_Column_List">
     order_id, order_no, user_id, total_price, pay_status, pay_type, pay_time, order_status,
-    extra_info, user_name, user_phone, user_address, deleted, create_time, update_time
+     user_address, deleted, create_time, update_time
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -107,12 +106,12 @@
     <insert id="insert" parameterType="com.flower.mall.entity.MallOrder">
     insert into mall_order (order_id, order_no, user_id,
       total_price, pay_status, pay_type, 
-      pay_time, order_status, extra_info, 
+      pay_time, order_status,
       user_address,deleted, create_time, update_time
       )
     values (#{orderId,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, 
       #{totalPrice,jdbcType=INTEGER}, #{payStatus,jdbcType=TINYINT}, #{payType,jdbcType=TINYINT}, 
-      #{payTime,jdbcType=TIMESTAMP}, #{orderStatus,jdbcType=TINYINT}, #{extraInfo,jdbcType=VARCHAR}, 
+      #{payTime,jdbcType=TIMESTAMP}, #{orderStatus,jdbcType=TINYINT},
        #{userAddress,jdbcType=VARCHAR},#{deleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -144,9 +143,7 @@
             <if test="orderStatus != null">
                 order_status,
             </if>
-            <if test="extraInfo != null">
-                extra_info,
-            </if>
+
             <if test="userAddress != null">
                 user_address,
             </if>
@@ -250,9 +247,7 @@
             <if test="orderStatus != null">
                 order_status = #{orderStatus,jdbcType=TINYINT},
             </if>
-            <if test="extraInfo != null">
-                extra_info = #{extraInfo,jdbcType=VARCHAR},
-            </if>
+
             <if test="userAddress != null">
                 user_address = #{userAddress,jdbcType=VARCHAR},
             </if>
@@ -277,7 +272,6 @@
       pay_type = #{payType,jdbcType=TINYINT},
       pay_time = #{payTime,jdbcType=TIMESTAMP},
       order_status = #{orderStatus,jdbcType=TINYINT},
-      extra_info = #{extraInfo,jdbcType=VARCHAR},
       user_address = #{userAddress,jdbcType=VARCHAR},
       deleted = #{deleted,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},

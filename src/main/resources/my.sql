@@ -11,7 +11,7 @@
  Target Server Version : 50740
  File Encoding         : 65001
 
- Date: 20/11/2022 23:06:57
+ Date: 27/11/2022 21:38:30
 */
 
 SET NAMES utf8mb4;
@@ -191,9 +191,6 @@ CREATE TABLE `mall_order` (
                               `pay_type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0.无 1.支付宝支付 2.微信支付',
                               `pay_time` datetime DEFAULT NULL COMMENT '支付时间',
                               `order_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '订单状态:0.待支付 1.已支付 2.配货完成 3:出库成功 4.交易成功 -1.手动关闭 -2.超时关闭 -3.商家关闭',
-                              `extra_info` varchar(100) NOT NULL DEFAULT '' COMMENT '订单body',
-                              `user_name` varchar(30) NOT NULL DEFAULT '' COMMENT '收货人姓名',
-                              `user_phone` varchar(11) NOT NULL DEFAULT '' COMMENT '收货人手机号',
                               `user_address` varchar(100) NOT NULL DEFAULT '' COMMENT '收货人收货地址',
                               `deleted` tinyint(4) NOT NULL DEFAULT '0' COMMENT '删除标识字段(0-未删除 1-已删除)',
                               `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -205,9 +202,9 @@ CREATE TABLE `mall_order` (
 -- Records of mall_order
 -- ----------------------------
 BEGIN;
-INSERT INTO `mall_order` (`order_id`, `order_no`, `user_id`, `total_price`, `pay_status`, `pay_type`, `pay_time`, `order_status`, `extra_info`, `user_name`, `user_phone`, `user_address`, `deleted`, `create_time`, `update_time`) VALUES (1, '16687763263866005', 10, 6, 0, 0, NULL, 0, '', '', '', '福建省三明市三元区三明学院', 0, '2022-11-18 20:58:46', '2022-11-18 20:58:46');
-INSERT INTO `mall_order` (`order_id`, `order_no`, `user_id`, `total_price`, `pay_status`, `pay_type`, `pay_time`, `order_status`, `extra_info`, `user_name`, `user_phone`, `user_address`, `deleted`, `create_time`, `update_time`) VALUES (2, '16687764974901811', 10, 9, 0, 0, NULL, -3, '', '', '', '福建省三明市三元区三明学院', 0, '2022-11-18 21:01:37', '2022-11-20 22:41:41');
-INSERT INTO `mall_order` (`order_id`, `order_no`, `user_id`, `total_price`, `pay_status`, `pay_type`, `pay_time`, `order_status`, `extra_info`, `user_name`, `user_phone`, `user_address`, `deleted`, `create_time`, `update_time`) VALUES (3, '16689550575537804', 1, 6, 1, 1, '2022-11-20 22:39:59', -1, '', '', '', '111', 0, '2022-11-20 22:37:39', '2022-11-20 22:40:05');
+INSERT INTO `mall_order` (`order_id`, `order_no`, `user_id`, `total_price`, `pay_status`, `pay_type`, `pay_time`, `order_status`, `user_address`, `deleted`, `create_time`, `update_time`) VALUES (1, '16687763263866005', 10, 6, 0, 0, NULL, 0, '福建省三明市三元区三明学院', 0, '2022-11-18 20:58:46', '2022-11-18 20:58:46');
+INSERT INTO `mall_order` (`order_id`, `order_no`, `user_id`, `total_price`, `pay_status`, `pay_type`, `pay_time`, `order_status`, `user_address`, `deleted`, `create_time`, `update_time`) VALUES (2, '16687764974901811', 10, 9, 0, 0, NULL, -3, '福建省三明市三元区三明学院', 0, '2022-11-18 21:01:37', '2022-11-20 22:41:41');
+INSERT INTO `mall_order` (`order_id`, `order_no`, `user_id`, `total_price`, `pay_status`, `pay_type`, `pay_time`, `order_status`, `user_address`, `deleted`, `create_time`, `update_time`) VALUES (3, '16689550575537804', 1, 6, 1, 1, '2022-11-20 22:39:59', -1, '111', 0, '2022-11-20 22:37:39', '2022-11-20 22:40:05');
 COMMIT;
 
 -- ----------------------------
@@ -248,7 +245,7 @@ CREATE TABLE `mall_shopping_cart_item` (
                                            `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                                            `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最新修改时间',
                                            PRIMARY KEY (`cart_item_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of mall_shopping_cart_item
@@ -257,6 +254,7 @@ BEGIN;
 INSERT INTO `mall_shopping_cart_item` (`cart_item_id`, `user_id`, `goods_id`, `goods_count`, `deleted`, `create_time`, `update_time`) VALUES (77, 10, 10915, 1, 1, '2022-11-18 20:57:54', '2022-11-18 20:57:54');
 INSERT INTO `mall_shopping_cart_item` (`cart_item_id`, `user_id`, `goods_id`, `goods_count`, `deleted`, `create_time`, `update_time`) VALUES (78, 10, 10925, 1, 1, '2022-11-18 21:01:27', '2022-11-18 21:01:27');
 INSERT INTO `mall_shopping_cart_item` (`cart_item_id`, `user_id`, `goods_id`, `goods_count`, `deleted`, `create_time`, `update_time`) VALUES (79, 1, 10915, 1, 1, '2022-11-20 22:35:15', '2022-11-20 22:35:15');
+INSERT INTO `mall_shopping_cart_item` (`cart_item_id`, `user_id`, `goods_id`, `goods_count`, `deleted`, `create_time`, `update_time`) VALUES (80, 1, 10926, 1, 1, '2022-11-20 23:16:33', '2022-11-20 23:16:33');
 COMMIT;
 
 -- ----------------------------

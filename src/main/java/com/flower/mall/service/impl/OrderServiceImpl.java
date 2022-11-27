@@ -225,9 +225,6 @@ public class OrderServiceImpl implements OrderService {
                     priceTotal += flowerMallShoppingCartItemVO.getGoodsCount() * flowerMallShoppingCartItemVO.getSellingPrice();
                 }
                 mallOrder.setTotalPrice(priceTotal);
-                //订单body字段，用来作为生成支付单描述信息，暂时未接入第三方支付接口，故该字段暂时设为空字符串
-                String extraInfo = "";
-                mallOrder.setExtraInfo(extraInfo);
                 //生成订单项并保存订单项纪录
                 int saveOrder = mallOrderMapper.insertSelective(mallOrder);
                 if (saveOrder>0) {
