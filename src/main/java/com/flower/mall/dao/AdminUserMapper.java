@@ -3,7 +3,9 @@ package com.flower.mall.dao;
 
 import com.flower.mall.entity.AdminUser;
 import org.apache.ibatis.annotations.Param;
-
+/**
+ * 管理员用户 持久层
+ */
 public interface AdminUserMapper {
     int insert(AdminUser record);
 
