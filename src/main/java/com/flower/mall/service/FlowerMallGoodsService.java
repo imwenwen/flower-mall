@@ -1,6 +1,8 @@
 
 package com.flower.mall.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.flower.mall.entity.MallGoods;
 import com.flower.mall.util.PageQueryUtil;
 import com.flower.mall.util.PageResult;
@@ -49,8 +51,8 @@ public interface FlowerMallGoodsService {
     /**
      * 商品搜索
      *
-     * @param pageUtil
+     * @param keyword 关键词
      * @return
      */
-    PageResult searchGoods(PageQueryUtil pageUtil);
+    PageResult searchGoodsBy(String keyword, IPage iPage, int goodsSellStatus);
 }

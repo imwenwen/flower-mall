@@ -1,6 +1,7 @@
 
 package com.flower.mall.dao;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.flower.mall.entity.MallGoods;
 import com.flower.mall.entity.StockNumDTO;
 import com.flower.mall.util.PageQueryUtil;
@@ -29,10 +30,6 @@ public interface MallGoodsMapper {
 
     List<MallGoods> selectByPrimaryKeys(List<Long> goodsIds);
 
-    List<MallGoods> findGoodsListBySearch(PageQueryUtil pageUtil);
-
-    int getTotalGoodsBySearch(PageQueryUtil pageUtil);
-
     int batchInsert(@Param("mallGoodsList") List<MallGoods> mallGoodsList);
 
     int updateStockNum(@Param("stockNumDTOS") List<StockNumDTO> stockNumDTOS);
@@ -41,4 +38,5 @@ public interface MallGoodsMapper {
 
     int batchUpdateSellStatus(@Param("orderIds")Long[] orderIds,@Param("sellStatus") int sellStatus);
 
+    IPage<MallGoods> searchGoodsBy(IPage iPage,@Param("keyword")String keyword,@Param("goodsSellStatus") int goodsSellStatus);
 }

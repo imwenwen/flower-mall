@@ -28,5 +28,5 @@ public interface FlowerMallCarouselService {
      * @param number
      * @return
      */
-    List<FlowerMallIndexCarouselVO> getCarouselsForIndex(int number);
+    List<FlowerMallIndexCarouselVO> getCarouselsBy(int number);
 }

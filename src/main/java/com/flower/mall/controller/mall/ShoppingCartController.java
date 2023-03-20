@@ -31,6 +31,7 @@ public class ShoppingCartController {
         FlowerMallUserVO user = (FlowerMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         int itemsTotal = 0;
         int priceTotal = 0;
+        //根据用户id获取当前用户的购物车商品信息
         List<FlowerMallShoppingCartItemVO> myShoppingCartItems = shoppingCartService.getMyShoppingCartItems(user.getUserId());
         if (!CollectionUtils.isEmpty(myShoppingCartItems)) {
             //购物项总数
@@ -42,7 +43,8 @@ public class ShoppingCartController {
             for (FlowerMallShoppingCartItemVO flowerMallShoppingCartItemVO : myShoppingCartItems) {
                 priceTotal += flowerMallShoppingCartItemVO.getGoodsCount() * flowerMallShoppingCartItemVO.getSellingPrice();
             }
-            if (priceTotal < 1) {
+            //总价小于0
+            if (priceTotal < 0) {
                 MyException.fail("购物项价格异常");
             }
         }

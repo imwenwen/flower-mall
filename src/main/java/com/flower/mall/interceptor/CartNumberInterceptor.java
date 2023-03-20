@@ -14,8 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * mall购物车数量处理
- *
-
+ *每一次请求的时候都会进入这个方法 更新购物车的数据
  * 
  */
 @Component

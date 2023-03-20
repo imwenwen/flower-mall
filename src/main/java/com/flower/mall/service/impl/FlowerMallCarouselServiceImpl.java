@@ -69,12 +69,14 @@ public class FlowerMallCarouselServiceImpl implements FlowerMallCarouselService 
     }
 
     @Override
-    public List<FlowerMallIndexCarouselVO> getCarouselsForIndex(int number) {
-        List<FlowerMallIndexCarouselVO> flowerMallIndexCarouselVOS = new ArrayList<>(number);
+    public List<FlowerMallIndexCarouselVO> getCarouselsBy(int number) {
+        List<FlowerMallIndexCarouselVO> flowerMallIndexCarousels = new ArrayList<>(number);
+        //查询 number大小的轮播图 默认number=5,隐藏条件是根据carousel_rank排序值(字段越大越靠前)
         List<Carousel> carousels = carouselMapper.findCarouselsByNum(number);
         if (!CollectionUtils.isEmpty(carousels)) {
-            flowerMallIndexCarouselVOS = BeanUtil.copyList(carousels, FlowerMallIndexCarouselVO.class);
+            //拷贝复制方法 将获取到的carousels对象转变成我们前端页面要展示的FlowerMallIndexCarouselVO
+            flowerMallIndexCarousels = BeanUtil.copyList(carousels, FlowerMallIndexCarouselVO.class);
         }
-        return flowerMallIndexCarouselVOS;
+        return flowerMallIndexCarousels;
     }
 }

@@ -1,6 +1,8 @@
 
 package com.flower.mall.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.flower.mall.common.MyException;
 import com.flower.mall.common.ServiceResultEnum;
 import com.flower.mall.controller.vo.FlowerMallSearchGoodsVO;
@@ -75,27 +77,8 @@ public class FlowerMallGoodsServiceImpl implements FlowerMallGoodsService {
     }
 
     @Override
-    public PageResult searchGoods(PageQueryUtil pageUtil) {
-        List<MallGoods> goodsList = goodsMapper.findGoodsListBySearch(pageUtil);
-        int total = goodsMapper.getTotalGoodsBySearch(pageUtil);
-        List<FlowerMallSearchGoodsVO> flowerMallSearchGoodsVOS = new ArrayList<>();
-        if (!CollectionUtils.isEmpty(goodsList)) {
-            flowerMallSearchGoodsVOS = BeanUtil.copyList(goodsList, FlowerMallSearchGoodsVO.class);
-            for (FlowerMallSearchGoodsVO flowerMallSearchGoodsVO : flowerMallSearchGoodsVOS) {
-                String goodsName = flowerMallSearchGoodsVO.getGoodsName();
-                String goodsIntro = flowerMallSearchGoodsVO.getGoodsIntro();
-                // 字符串过长导致文字超出的问题
-                if (goodsName.length() > 28) {
-                    goodsName = goodsName.substring(0, 28) + "...";
-                    flowerMallSearchGoodsVO.setGoodsName(goodsName);
-                }
-                if (goodsIntro.length() > 30) {
-                    goodsIntro = goodsIntro.substring(0, 30) + "...";
-                    flowerMallSearchGoodsVO.setGoodsIntro(goodsIntro);
-                }
-            }
-        }
-        PageResult pageResult = new PageResult(flowerMallSearchGoodsVOS, total, pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
+    public PageResult searchGoodsBy(String keyword,IPage iPage, int goodsSellStatus) {
+       IPage<MallGoods> ipage= goodsMapper.searchGoodsBy(iPage,keyword,goodsSellStatus);
+        return new PageResult(ipage.getRecords(),ipage.getTotal(),ipage.getSize(),ipage.getPages());
     }
 }

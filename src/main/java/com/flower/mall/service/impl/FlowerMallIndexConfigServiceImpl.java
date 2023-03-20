@@ -78,29 +78,33 @@ public class FlowerMallIndexConfigServiceImpl implements FlowerMallIndexConfigSe
     }
 
     @Override
-    public List<FlowerMallIndexConfigGoodsVO> getConfigGoodsesForIndex(int configType, int number) {
-        List<FlowerMallIndexConfigGoodsVO> flowerMallIndexConfigGoodsVOS = new ArrayList<>(number);
+    public List<FlowerMallIndexConfigGoodsVO> getConfigGoodsBy(int configType, int number) {
+        List<FlowerMallIndexConfigGoodsVO> flowerMallIndexConfigGoods = new ArrayList<>(number);
+        //根据类型搜索配置表获取 配置表上面的商品ids
         List<IndexConfig> indexConfigs = indexConfigMapper.findIndexConfigsByTypeAndNum(configType, number);
         if (!CollectionUtils.isEmpty(indexConfigs)) {
-            //取出所有的goodsId
+            //取出所有的goodsId商品ids,
             List<Long> goodsIds = indexConfigs.stream().map(IndexConfig::getGoodsId).collect(Collectors.toList());
+            //根据查询商品表 查询商品
             List<MallGoods> mallGoods = goodsMapper.selectByPrimaryKeys(goodsIds);
-            flowerMallIndexConfigGoodsVOS = BeanUtil.copyList(mallGoods, FlowerMallIndexConfigGoodsVO.class);
-            for (FlowerMallIndexConfigGoodsVO flowerMallIndexConfigGoodsVO : flowerMallIndexConfigGoodsVOS) {
+            flowerMallIndexConfigGoods = BeanUtil.copyList(mallGoods, FlowerMallIndexConfigGoodsVO.class);
+            for (FlowerMallIndexConfigGoodsVO flowerMallIndexConfigGoodsVO : flowerMallIndexConfigGoods) {
                 String goodsName = flowerMallIndexConfigGoodsVO.getGoodsName();
                 String goodsIntro = flowerMallIndexConfigGoodsVO.getGoodsIntro();
                 // 字符串过长导致文字超出的问题
+                //商品名称超过30个字，超出部分用...代替
                 if (goodsName.length() > 30) {
                     goodsName = goodsName.substring(0, 30) + "...";
                     flowerMallIndexConfigGoodsVO.setGoodsName(goodsName);
                 }
-                if (goodsIntro.length() > 22) {
-                    goodsIntro = goodsIntro.substring(0, 22) + "...";
+                //商品简介超过30个字，超出部分用...代替
+                if (goodsIntro.length() > 30) {
+                    goodsIntro = goodsIntro.substring(0, 30) + "...";
                     flowerMallIndexConfigGoodsVO.setGoodsIntro(goodsIntro);
                 }
             }
         }
-        return flowerMallIndexConfigGoodsVOS;
+        return flowerMallIndexConfigGoods;
     }
 
     @Override

@@ -10,8 +10,8 @@ import com.flower.mall.service.UserService;
 import com.flower.mall.util.MD5Util;
 import com.flower.mall.util.Result;
 import com.flower.mall.util.MallResult;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -58,24 +58,29 @@ public class PersonalController {
                         @RequestParam("verifyCode") String verifyCode,
                         @RequestParam("password") String password,
                         HttpSession httpSession) {
-        if (StringUtils.isEmpty(loginName)) {
+        //判断用户名是否为空
+        if (StringUtils.isBlank(loginName)) {
             return MallResult.createFailRes(ServiceResultEnum.LOGIN_NAME_NULL.getResult());
         }
-        if (StringUtils.isEmpty(password)) {
+        //判断密码是否为空
+        if (StringUtils.isBlank(password)) {
             return MallResult.createFailRes(ServiceResultEnum.LOGIN_PASSWORD_NULL.getResult());
         }
-        if (StringUtils.isEmpty(verifyCode)) {
+        //判断验证码是否为空
+        if (StringUtils.isBlank(verifyCode)) {
             return MallResult.createFailRes(ServiceResultEnum.LOGIN_VERIFY_CODE_NULL.getResult());
         }
+        //生成验证码会存入session，通过Constants.MALL_VERIFY_CODE_KEY获取到验证码和输入的验证码进行校验
         ShearCaptcha shearCaptcha = (ShearCaptcha) httpSession.getAttribute(Constants.MALL_VERIFY_CODE_KEY);
 
+        //验证码和输入的验证码进行校验
         if (shearCaptcha == null || !shearCaptcha.verify(verifyCode)) {
             return MallResult.createFailRes(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
         }
         String loginResult = userService.login(loginName, MD5Util.MD5Encode(password, "UTF-8"), httpSession);
         //登录成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(loginResult)) {
-            //删除session中的verifyCode
+            //删除session中的verifyCode 删除验证码
             httpSession.removeAttribute(Constants.MALL_VERIFY_CODE_KEY);
             return MallResult.createSuccessRes();
         }
@@ -89,16 +94,22 @@ public class PersonalController {
                            @RequestParam("verifyCode") String verifyCode,
                            @RequestParam("password") String password,
                            HttpSession httpSession) {
-        if (StringUtils.isEmpty(loginName)) {
+        //判断用户名是否为空
+        if (StringUtils.isBlank(loginName)) {
             return MallResult.createFailRes(ServiceResultEnum.LOGIN_NAME_NULL.getResult());
         }
-        if (StringUtils.isEmpty(password)) {
+        //判断密码是否为空
+        if (StringUtils.isBlank(password)) {
             return MallResult.createFailRes(ServiceResultEnum.LOGIN_PASSWORD_NULL.getResult());
         }
-        if (StringUtils.isEmpty(verifyCode)) {
+        //判断验证码是否为空
+        if (StringUtils.isBlank(verifyCode)) {
             return MallResult.createFailRes(ServiceResultEnum.LOGIN_VERIFY_CODE_NULL.getResult());
         }
+        //生成验证码会存入session，通过Constants.MALL_VERIFY_CODE_KEY获取到验证码和输入的验证码进行校验
         ShearCaptcha shearCaptcha = (ShearCaptcha) httpSession.getAttribute(Constants.MALL_VERIFY_CODE_KEY);
+
+        //验证码和输入的验证码进行校验
         if (shearCaptcha == null || !shearCaptcha.verify(verifyCode)) {
             return MallResult.createFailRes(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
         }
@@ -118,12 +129,10 @@ public class PersonalController {
     public Result updateInfo(@RequestBody MallUser mallUser, HttpSession httpSession) {
         FlowerMallUserVO mallUserTemp = userService.updateUserInfo(mallUser, httpSession);
         if (mallUserTemp == null) {
-            Result result = MallResult.createFailRes("修改失败");
-            return result;
+            return MallResult.createFailRes("修改失败");
         } else {
             //返回成功
-            Result result = MallResult.createSuccessRes();
-            return result;
+            return  MallResult.createSuccessRes();
         }
     }
 }

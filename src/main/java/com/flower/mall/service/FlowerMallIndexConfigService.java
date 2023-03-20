@@ -29,7 +29,7 @@ public interface FlowerMallIndexConfigService {
      * @param number
      * @return
      */
-    List<FlowerMallIndexConfigGoodsVO> getConfigGoodsesForIndex(int configType, int number);
+    List<FlowerMallIndexConfigGoodsVO> getConfigGoodsBy(int configType, int number);
 
     Boolean deleteBatch(Long[] ids);
 }

@@ -6,7 +6,7 @@
 <header th:replace="mall/header::header-fragment"></header>
 <content id="content">
     <nav th:replace="mall/header::nav-fragment"></nav>
-    <!-- 轮播图展示 -->
+    <!-- 轮播图展示,根据carousels遍历 获取每一个的轮播图地址 -->
      <div id="banner">
          <div class="swiper-container fl">
              <div class="swiper-wrapper">
@@ -23,7 +23,7 @@
      </div>
 
      <div id="sub_banner">
-         <!-- 已配置热销商品则显示配置内容 -->
+         <!-- 已配置热销商品则显示配置内容，根据hotGoodses遍历 获取每一个的热门商品的 名字、封面 -->
         <th:block th:unless="${#lists.isEmpty(hotGoodses)}">
             <th:block th:each="hotGoodse : ${hotGoodses}">
                 <div class="hot-image">
@@ -38,7 +38,7 @@
     <div id="flash">
         <h2>新品上线</h2>
         <ul>
-            <!-- 已配置新品则显示配置内容 -->
+            <!-- 已配置新品则显示配置内容 根据newGoodses遍历 获取每一个的热门商品的 名字、封面、简介、销售单价 -->
                 <th:block th:each="newGoods : ${newGoodses}">
                     <li>
                         <a th:href="@{'/goods/detail/'+${newGoods.goodsId}}">
@@ -55,7 +55,7 @@
     <div id="recommend">
         <h2>为你推荐</h2>
         <ul>
-            <!-- 已配置推荐商品则显示配置内容 -->
+            <!-- 已配置推荐商品则显示配置内容 根据recommendGoodses遍历 获取每一个的热门商品的 名字、封面、简介、销售单价 -->
                 <th:block th:each="recommendGoods : ${recommendGoodses}">
                     <li>
                         <a th:href="@{'/goods/detail/'+${recommendGoods.goodsId}}">

@@ -11,14 +11,12 @@
 <div class="classify">
     <div class="category">
         <div class="category_bar">
-            <th:block th:if="${flowerMallSearchPageCategoryVO==null}">
                 <th:block th:if="${keyword!=null and keyword !=''}">
-                    <div class="findword">搜索 "
+                    <div class="findword">搜索商品名称 "
                         <th:block th:text="${keyword}"></th:block>
-                        "
+                        ",为您搜索到如下内容，如不是你想要到内容，请增加关键字
                     </div>
                 </th:block>
-            </th:block>
         </div>
     </div>
 </div>
@@ -40,6 +38,8 @@
                 </div>
             </th:block>
         </th:block>
+        <div class="clear"></div>
+        <div class="clear"></div>
         <div class="clear"></div>
     </div>
 </div>
