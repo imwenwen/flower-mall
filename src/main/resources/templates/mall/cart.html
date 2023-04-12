@@ -48,14 +48,14 @@
                         </div>
                         <div class="sub_content cover fl"><img th:src="@{${item.goodsCoverImg}}"></div>
                         <div class="sub_content fl ft20" th:text="${item.goodsName}">商品名称</div>
-                        <div class="sub_content fl" th:text="${item.sellingPrice+'元'}">1299元</div>
+                        <div class="sub_content fl" th:text="${item.sellingPrice+'元'}"></div>
                         <div class="sub_content fl">
                             <input class="goods_count" th:id="${'goodsCount'+item.cartItemId}" type="number"
                                    th:onblur="'updateItem('+${item.cartItemId}+')'"
                                    th:value="${item.goodsCount}" step="1" min="1"
                                    >
                         </div>
-                        <div class="sub_content fl" th:text="${item.goodsCount*item.sellingPrice+'元'}">1299元</div>
+                        <div class="sub_content fl" th:text="${item.goodsCount*item.sellingPrice+'元'}"></div>
                         <div class="sub_content fl"><a href="##" th:onclick="'deleteItem('+${item.cartItemId}+')'">×</a>
                         </div>
                         <div class="clear"></div>
@@ -68,12 +68,12 @@
                 <ul>
                     <li><a th:href="@{/index}">继续购物</a></li>
                     <li>|</li>
-                    <li>共<span th:text="${itemsTotal}">13</span>件商品</li>
+                    <li>共<span th:text="${itemsTotal}"></span>件商品</li>
                     <div class="clear"></div>
                 </ul>
             </div>
             <div class="order_div fr">
-                <div class="order_total fl">合计（不含运费）：<span th:text="${priceTotal}+'.00元'">1299.00元</span></div>
+                <div class="order_total fl">合计（不含运费）：<span th:text="${priceTotal}+'.00元'"></span></div>
                 <div class="order_button fr">
                     <th:block th:if="${itemsTotal == 0}">
                         <input class="order_button_c" type="button" name="tip"

@@ -38,12 +38,15 @@
                                                 <div class="order-summary">
                                                     <th:block th:if="${order.orderStatus<0}">
                                                         <div class="order-status-closed">
+                                                        </div>
                                                     </th:block>
                                                     <th:block th:if="${order.orderStatus==0}">
                                                         <div class="order-status-need-pay">
+                                                        </div>
                                                     </th:block>
                                                     <th:block th:if="${order.orderStatus>0}">
                                                         <div class="order-status-success">
+                                                        </div>
                                                     </th:block>
                                                     <th:block th:text="${' '+order.orderStatusString}"></th:block>
                                                 </div>
